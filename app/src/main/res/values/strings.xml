@@ -1,6 +1,13 @@
 <resources>
     <string name="app_name">AstroWeather</string>
+    <string name="made_by">Made by:</string>
+    <string name="artur_karlinski">Artur Karliński</string>
+    <string name="indeks">Index: 202180</string>
+    <string name="copyright">Copyright © 2018</string>
+    <string name="all_rights">All Rights Reserved</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+
 </resources>
