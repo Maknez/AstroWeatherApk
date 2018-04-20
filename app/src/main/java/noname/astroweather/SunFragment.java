@@ -1,21 +1,21 @@
 package noname.astroweather;
 
-import android.os.Build;
+
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
 import com.astrocalculator.AstroCalculator;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 public class SunFragment extends Fragment {
 
     TextView mView;
+
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -24,6 +24,16 @@ public class SunFragment extends Fragment {
                 R.layout.fragment_sun, container, false);
 
         mView = (TextView) rootView.findViewById(R.id.sloneczko);
+
+        Configuration config = getResources().getConfiguration();
+        if (config.orientation == 2) {
+            mView.setBackgroundResource(R.drawable.sun_landscape);
+        } else if (config.orientation == 1) {
+            //pionowe
+            mView.setBackgroundResource(R.drawable.sun_portrait);
+        }
+
+
 
         mView.setText("Nowa randomowa wartość");
 
