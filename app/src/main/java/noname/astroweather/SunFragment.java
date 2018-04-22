@@ -35,7 +35,7 @@ public class SunFragment extends Fragment {
 
 
 
-        mView.setText("Nowa randomowa wartość");
+        mView.setText("Nowa randomowa wartość SUN");
 
 
         return rootView;

@@ -29,6 +29,7 @@ public class MoonFragment extends Fragment {
             mView.setBackgroundResource(R.drawable.moon_portrait);
         }
 
+        mView.setText("Nowa randomowa wartość MOON");
 
 
         return rootView;

@@ -142,31 +142,37 @@ public class Settings extends AppCompatActivity {
             }
         });
 
-        setDefaultLongitude.setOnClickListener(new View.OnClickListener()
-
-        {
+        setDefaultLongitude.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 editLongitude.setText(getResources().getString(R.string.Default_Longitude));
+                SharedPreferences sharedPref = getSharedPreferences("config.xml", 0);
+                SharedPreferences.Editor editor = sharedPref.edit();
+                editor.putString("Custom_Longitude", editLongitude.getText().toString());
+                editor.commit();
             }
         });
 
 
-        setDefaultLatitude.setOnClickListener(new View.OnClickListener()
-
-        {
+        setDefaultLatitude.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 editLatitude.setText(getResources().getString(R.string.Default_Latitude));
+                SharedPreferences sharedPref = getSharedPreferences("config.xml", 0);
+                SharedPreferences.Editor editor = sharedPref.edit();
+                editor.putString("Custom_Latitude", editLatitude.getText().toString());
+                editor.commit();
             }
         });
 
-        setDefaultRefresh.setOnClickListener(new View.OnClickListener()
-
-        {
+        setDefaultRefresh.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 editRefresh.setText(getResources().getString(R.string.Default_Refresh));
+                SharedPreferences sharedPref = getSharedPreferences("config.xml", 0);
+                SharedPreferences.Editor editor = sharedPref.edit();
+                editor.putString("Custom_Refresh", editRefresh.getText().toString());
+                editor.commit();
             }
         });
     }
@@ -222,6 +228,12 @@ public class Settings extends AppCompatActivity {
             }
         }
         return super.onOptionsItemSelected(item);
+    }
+
+
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(this, Application.class));
     }
 
 

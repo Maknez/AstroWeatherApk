@@ -12,6 +12,7 @@
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:text="SunFragment"
-        tools:text="#ffffff" />
+        android:textAlignment="textStart"
+        android:textColor="#ffffff" />
 
 </FrameLayout>
