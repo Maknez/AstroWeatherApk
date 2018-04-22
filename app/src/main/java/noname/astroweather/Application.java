@@ -126,10 +126,10 @@ public class Application extends AppCompatActivity {
     }
 
     private void refresh(int hour, int minute, int second) {
-        //System.out.print(hour + ":" + minute + ":" + second + "   =======>    ");
-        //System.out.println(nextRefreshTime.getHours() + ":" + nextRefreshTime.getMinutes() + ":" + nextRefreshTime.getSeconds());
+        System.out.print(hour + ":" + minute + ":" + second + "   =======>    ");
+        System.out.println(nextRefreshTime.getHours() + ":" + nextRefreshTime.getMinutes() + ":" + nextRefreshTime.getSeconds());
         if ((nextRefreshTime.getHours() == hour) && (nextRefreshTime.getMinutes() == minute) && (nextRefreshTime.getSeconds() == second)) {
-            //System.out.println("REFRESH TIME!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!11");
+            System.out.println("REFRESH TIME!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!11");
             finish();
             startActivity(getIntent());
         }
@@ -195,8 +195,9 @@ public class Application extends AppCompatActivity {
     }
 
     @Override
-    public void onDetachedFromWindow() {
+    public void onPause() {
+        super.onPause();
         myThread.interrupt();
-        super.onDetachedFromWindow();
     }
+
 }
