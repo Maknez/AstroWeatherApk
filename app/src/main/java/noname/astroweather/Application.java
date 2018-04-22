@@ -23,6 +23,7 @@ public class Application extends AppCompatActivity {
     ViewPager mPager;
     PagerAdapter mPagerAdapter;
     private Date nextRefreshTime;
+    private Thread myThread;
 
 
     public boolean checkSize(Configuration config) {
@@ -65,8 +66,6 @@ public class Application extends AppCompatActivity {
         showLongAndLati();
         setNewRefreshTime();
 
-
-        Thread myThread;
         Runnable myRunnableThread = new Clock();
         myThread = new Thread(myRunnableThread);
         myThread.start();
@@ -193,5 +192,11 @@ public class Application extends AppCompatActivity {
             }
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onDetachedFromWindow() {
+        myThread.interrupt();
+        super.onDetachedFromWindow();
     }
 }
