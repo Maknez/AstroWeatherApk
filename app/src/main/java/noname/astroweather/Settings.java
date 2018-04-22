@@ -69,23 +69,23 @@ public class Settings extends AppCompatActivity {
             public void onClick(View view) {
                 String longitude = String.valueOf(editLongitude.getText());
                 if (longitude.equals("")) {
-                    Toast.makeText(Settings.this, "You cannot save empty value!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(Settings.this, "You cannot save empty value!", Toast.LENGTH_SHORT).show();
                 } else if (longitude.endsWith(".")) {
                     longitude = longitude.substring(0, longitude.length() - 1);
                     editLongitude.setText(longitude);
                 } else if (isNumeric(longitude)) {
                     if ((Double.valueOf(longitude) <= 180) && (Double.valueOf(longitude) >= -180)) {
-                        Toast.makeText(Settings.this, "Your longitude is saved!", Toast.LENGTH_LONG).show();
                         SharedPreferences sharedPref = getSharedPreferences("config.xml", 0);
                         SharedPreferences.Editor editor = sharedPref.edit();
                         editor.putString("Custom_Longitude", longitude);
                         editor.commit();
+                        Toast.makeText(Settings.this, "Your longitude is saved!", Toast.LENGTH_SHORT).show();
                     } else {
-                        Toast.makeText(Settings.this, "Bad value (-180 : 180)!", Toast.LENGTH_LONG).show();
+                        Toast.makeText(Settings.this, "Bad value (-180 : 180)!", Toast.LENGTH_SHORT).show();
 
                     }
                 } else {
-                    Toast.makeText(Settings.this, "Bad value format (-180 : 180)!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(Settings.this, "Bad value format (-180 : 180)!", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -95,23 +95,23 @@ public class Settings extends AppCompatActivity {
             public void onClick(View view) {
                 String latitude = String.valueOf(editLatitude.getText());
                 if (latitude.equals("")) {
-                    Toast.makeText(Settings.this, "You cannot save empty value!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(Settings.this, "You cannot save empty value!", Toast.LENGTH_SHORT).show();
                 } else if (latitude.endsWith(".")) {
                     latitude = latitude.substring(0, latitude.length() - 1);
                     editLatitude.setText(latitude);
                 } else if (isNumeric(latitude)) {
                     if ((Double.valueOf(latitude) <= 90) && (Double.valueOf(latitude) >= -90)) {
-                        Toast.makeText(Settings.this, "Your latitude is saved!", Toast.LENGTH_LONG).show();
                         SharedPreferences sharedPref = getSharedPreferences("config.xml", 0);
                         SharedPreferences.Editor editor = sharedPref.edit();
                         editor.putString("Custom_Latitude", latitude);
                         editor.commit();
+                        Toast.makeText(Settings.this, "Your latitude is saved!", Toast.LENGTH_SHORT).show();
                     } else {
-                        Toast.makeText(Settings.this, "Bad value (-90 : 90)!", Toast.LENGTH_LONG).show();
+                        Toast.makeText(Settings.this, "Bad value (-90 : 90)!", Toast.LENGTH_SHORT).show();
 
                     }
                 } else {
-                    Toast.makeText(Settings.this, "Bad value format (-90 : 90)!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(Settings.this, "Bad value format (-90 : 90)!", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -121,23 +121,23 @@ public class Settings extends AppCompatActivity {
             public void onClick(View view) {
                 String refresh = String.valueOf(editRefresh.getText());
                 if (refresh.equals("")) {
-                    Toast.makeText(Settings.this, "You cannot save empty value!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(Settings.this, "You cannot save empty value!", Toast.LENGTH_SHORT).show();
                 } else if (refresh.endsWith(".")) {
                     refresh = refresh.substring(0, refresh.length() - 1);
                     editRefresh.setText(refresh);
                 } else if (isMinutes(refresh)) {
                     if ((Integer.valueOf(refresh) <= 60) && (Integer.valueOf(refresh) >= 1)) {
-                        Toast.makeText(Settings.this, "Your Refresh is saved!", Toast.LENGTH_LONG).show();
                         SharedPreferences sharedPref = getSharedPreferences("config.xml", 0);
                         SharedPreferences.Editor editor = sharedPref.edit();
                         editor.putString("Custom_Refresh", refresh);
                         editor.commit();
+                        Toast.makeText(Settings.this, "Your Refresh is saved!", Toast.LENGTH_SHORT).show();
                     } else {
-                        Toast.makeText(Settings.this, "Bad value in Minutes (1 : 60)!", Toast.LENGTH_LONG).show();
+                        Toast.makeText(Settings.this, "Bad value in Minutes (1 : 60)!", Toast.LENGTH_SHORT).show();
 
                     }
                 } else {
-                    Toast.makeText(Settings.this, "Bad value format in Minutes (1 : 60)!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(Settings.this, "Bad value format in Minutes (1 : 60)!", Toast.LENGTH_SHORT).show();
                 }
             }
         });

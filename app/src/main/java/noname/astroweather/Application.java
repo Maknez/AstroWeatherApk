@@ -1,6 +1,7 @@
 package noname.astroweather;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.PagerAdapter;
@@ -17,7 +18,7 @@ import java.util.Calendar;
 
 public class Application extends AppCompatActivity {
 
-    TextView clockView;
+    TextView clockView, longAndLatiView;
     ViewPager mPager;
     PagerAdapter mPagerAdapter;
 
@@ -57,6 +58,9 @@ public class Application extends AppCompatActivity {
             }
         }
         clockView = (TextView) findViewById(R.id.clockOnScreen);
+        longAndLatiView = (TextView) findViewById(R.id.longAndLati);
+
+        showLongAndLati();
 
         Thread myThread;
         Runnable myRunnableThread = new Clock();
@@ -68,6 +72,13 @@ public class Application extends AppCompatActivity {
 
     }
 
+
+    public void showLongAndLati() {
+        SharedPreferences sharedPref = getSharedPreferences("config.xml", 0);
+        longAndLatiView.setText(sharedPref.getString("Custom_Longitude", String.valueOf(getResources().getString(R.string.Default_Longitude))) +
+                " , " +
+                sharedPref.getString("Custom_Latitude", String.valueOf(getResources().getString(R.string.Default_Latitude))));
+    }
     public void getClock() {
 
         runOnUiThread(new Runnable() {
