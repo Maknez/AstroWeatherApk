@@ -11,9 +11,10 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
+
 import java.text.DateFormat;
 import java.util.Calendar;
-
+import java.util.Date;
 
 
 public class Application extends AppCompatActivity {
@@ -21,6 +22,7 @@ public class Application extends AppCompatActivity {
     TextView clockView, longAndLatiView;
     ViewPager mPager;
     PagerAdapter mPagerAdapter;
+    private Date nextRefreshTime;
 
 
     public boolean checkSize(Configuration config) {
@@ -61,6 +63,8 @@ public class Application extends AppCompatActivity {
         longAndLatiView = (TextView) findViewById(R.id.longAndLati);
 
         showLongAndLati();
+        setNewRefreshTime();
+
 
         Thread myThread;
         Runnable myRunnableThread = new Clock();
@@ -68,8 +72,12 @@ public class Application extends AppCompatActivity {
         myThread.start();
 
 
+    }
 
-
+    private void setNewRefreshTime() {
+        SharedPreferences sharedPref = getSharedPreferences("config.xml", 0);
+        nextRefreshTime = Calendar.getInstance().getTime();
+        nextRefreshTime.setMinutes(nextRefreshTime.getMinutes() + Integer.parseInt(sharedPref.getString("Custom_Refresh", String.valueOf(getResources().getString(R.string.Default_Refresh)))));
     }
 
 
@@ -79,6 +87,7 @@ public class Application extends AppCompatActivity {
                 " , " +
                 sharedPref.getString("Custom_Latitude", String.valueOf(getResources().getString(R.string.Default_Latitude))));
     }
+
     public void getClock() {
 
         runOnUiThread(new Runnable() {
@@ -109,11 +118,24 @@ public class Application extends AppCompatActivity {
                     }
 
                     clockView.setText(curTime);
+                    refresh(hour, minute, second);
 
                 } catch (Exception e) {
                 }
             }
         });
+    }
+
+    private void refresh(int hour, int minute, int second) {
+        //System.out.print(hour + ":" + minute + ":" + second + "   =======>    ");
+        //System.out.println(nextRefreshTime.getHours() + ":" + nextRefreshTime.getMinutes() + ":" + nextRefreshTime.getSeconds());
+        if ((nextRefreshTime.getHours() == hour) && (nextRefreshTime.getMinutes() == minute) && (nextRefreshTime.getSeconds() == second)) {
+            //System.out.println("REFRESH TIME!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!11");
+            finish();
+            startActivity(getIntent());
+        }
+
+
     }
 
     class Clock implements Runnable {
