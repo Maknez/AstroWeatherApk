@@ -20,7 +20,6 @@ public class MoonFragment extends Fragment {
                 R.layout.fragment_moon, container, false);
 
         mView = (TextView) rootView.findViewById(R.id.ksiezyczek);
-        //mView.setBackgroundResource(R.drawable.moon_landscape);
 
         Configuration config = getResources().getConfiguration();
         if (config.orientation == 2) {

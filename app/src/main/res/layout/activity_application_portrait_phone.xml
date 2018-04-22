@@ -22,10 +22,20 @@
                 android:id="@+id/clockOnScreen"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
+                android:layout_weight="0.6"
+                android:gravity="center"
                 android:text="CLOCK"
                 android:textAlignment="center"
                 android:textSize="36sp" />
+
+            <TextView
+                android:id="@+id/longAndLati"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="0.4"
+                android:gravity="center"
+                android:text="LONGITUDE, LATITUDE"
+                android:textSize="20sp" />
         </LinearLayout>
 
         <LinearLayout

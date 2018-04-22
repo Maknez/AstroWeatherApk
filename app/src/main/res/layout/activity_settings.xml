@@ -24,9 +24,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:autoSizeTextType="uniform"
                 android:gravity="center"
                 android:text="Settings"
-                android:textSize="60sp" />
+                android:textSize="36sp" />
         </LinearLayout>
 
         <LinearLayout
@@ -40,17 +41,20 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="0.3"
+                android:autoSizeTextType="uniform"
                 android:gravity="center"
                 android:text="Longitude:"
 
-                android:textSize="36sp" />
+                android:textSize="24sp" />
 
             <Button
                 android:id="@+id/setDefaultLongitude"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="0.7"
-                android:text="Default" />
+                android:autoSizeTextType="uniform"
+                android:text="Default"
+                android:textSize="12sp" />
         </LinearLayout>
 
         <LinearLayout
@@ -66,7 +70,7 @@
                 android:layout_weight="0.3"
                 android:ems="10"
                 android:gravity="center"
-                android:inputType="numberDecimal"
+                android:autoSizeTextType="uniform"
                 android:textSize="18sp" />
 
             <Button
@@ -74,7 +78,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="0.7"
-                android:text="Save" />
+                android:autoSizeTextType="uniform"
+                android:text="Save"
+                android:textSize="12sp" />
         </LinearLayout>
 
         <LinearLayout
@@ -88,16 +94,19 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="0.3"
+                android:autoSizeTextType="uniform"
                 android:gravity="center"
                 android:text="Latitude:"
-                android:textSize="36sp" />
+                android:textSize="24sp" />
 
             <Button
                 android:id="@+id/setDefaultLatitude"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="0.7"
-                android:text="Default" />
+                android:autoSizeTextType="uniform"
+                android:text="Default"
+                android:textSize="12sp" />
         </LinearLayout>
 
         <LinearLayout
@@ -113,8 +122,7 @@
                 android:layout_weight="0.3"
                 android:ems="10"
                 android:gravity="center"
-                android:inputType="numberDecimal"
-                android:textAlignment="center"
+                android:autoSizeTextType="uniform"
                 android:textSize="18sp" />
 
             <Button
@@ -122,7 +130,64 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="0.7"
-                android:text="Save" />
+                android:autoSizeTextType="uniform"
+                android:text="Save"
+                android:textSize="12sp" />
+
         </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="0.22"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/textView4"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="0.3"
+                android:autoSizeTextType="uniform"
+                android:gravity="center"
+                android:text="Refresh: "
+                android:textSize="24sp" />
+
+            <Button
+                android:id="@+id/setDefaultRefresh"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="0.7"
+                android:autoSizeTextType="uniform"
+                android:text="Default"
+                android:textSize="12sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="0.2"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/editRefresh"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="0.3"
+                android:ems="10"
+                android:autoSizeTextType="uniform"
+                android:gravity="center" />
+
+            <Button
+                android:id="@+id/saveRefresh"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="0.7"
+                android:autoSizeTextType="uniform"
+                android:text="Save"
+                android:textSize="12sp" />
+        </LinearLayout>
+
     </LinearLayout>
+
 </android.support.constraint.ConstraintLayout>

@@ -24,8 +24,7 @@ public class SunFragment extends Fragment {
                 R.layout.fragment_sun, container, false);
 
         mView = (TextView) rootView.findViewById(R.id.sloneczko);
-        //mView.setBackgroundResource(R.drawable.sun_landscape);
-        
+
         Configuration config = getResources().getConfiguration();
         if (config.orientation == 2) {
             mView.setBackgroundResource(R.drawable.sun_landscape);
