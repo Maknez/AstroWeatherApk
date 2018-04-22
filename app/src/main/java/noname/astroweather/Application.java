@@ -20,8 +20,6 @@ public class Application extends AppCompatActivity {
     TextView clockView;
     ViewPager mPager;
     PagerAdapter mPagerAdapter;
-    Fragment sunFragment, moonFragment;
-    private DateFormat simpleDateFormat;
 
 
     public boolean checkSize(Configuration config) {
