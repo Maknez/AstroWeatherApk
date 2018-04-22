@@ -229,12 +229,4 @@ public class Settings extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-
-
-    @Override
-    public void onBackPressed() {
-        startActivity(new Intent(this, Application.class));
-    }
-
-
 }
