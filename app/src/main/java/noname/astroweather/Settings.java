@@ -1,9 +1,7 @@
 package noname.astroweather;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.support.v4.widget.TextViewCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -13,18 +11,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.w3c.dom.Text;
-
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerConfigurationException;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.stream.StreamResult;
-
-import static noname.astroweather.R.string.Custom_Longitude;
-
 public class Settings extends AppCompatActivity {
-
 
     TextView editLongitude, editLatitude, editRefresh;
     Button saveLongitude, saveLatitude, saveRefresh, setDefaultLongitude, setDefaultLatitude, setDefaultRefresh;

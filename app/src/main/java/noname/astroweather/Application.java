@@ -66,11 +66,6 @@ public class Application extends AppCompatActivity {
         showLongAndLati();
         setNewRefreshTime();
 
-        Runnable myRunnableThread = new Clock();
-        myThread = new Thread(myRunnableThread);
-        myThread.start();
-
-
     }
 
     private void setNewRefreshTime() {
@@ -126,6 +121,8 @@ public class Application extends AppCompatActivity {
     }
 
     private void refresh(int hour, int minute, int second) {
+        //TODO: change this function reload date is better than reload activity.
+
         //System.out.print(hour + ":" + minute + ":" + second + "   =======>    ");
         //System.out.println(nextRefreshTime.getHours() + ":" + nextRefreshTime.getMinutes() + ":" + nextRefreshTime.getSeconds());
         if ((nextRefreshTime.getHours() == hour) && (nextRefreshTime.getMinutes() == minute) && (nextRefreshTime.getSeconds() == second)) {
@@ -195,9 +192,17 @@ public class Application extends AppCompatActivity {
     }
 
     @Override
-    public void onPause() {
-        super.onPause();
+    public void onStop() {
         myThread.interrupt();
+        super.onStop();
+    }
+
+    @Override
+    public void onStart() {
+        Runnable myRunnableThread = new Clock();
+        myThread = new Thread(myRunnableThread);
+        myThread.start();
+        super.onStart();
     }
 
 }
