@@ -1,14 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="Default_Latitude">51.5873166</string>
+    <string name="Default_Latitude">19.7543569</string>
 
-    <string name="Default_Longitude">19.7543569</string>
+    <string name="Default_Longitude">51.5873166</string>
 
     <string name="Default_Refresh">15</string>
 
-    <string name="Custom_Latitude"></string>
-
-    <string name="Custom_Longitude"></string>
-
-    <string name="Custom_Refresh"></string>
 </resources>

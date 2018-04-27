@@ -43,9 +43,9 @@
                 android:layout_weight="0.3"
                 android:autoSizeTextType="uniform"
                 android:gravity="center"
-                android:text="Longitude:"
+                android:text="Longitude (-180:180)"
 
-                android:textSize="18sp" />
+                android:textSize="24sp" />
 
             <Button
                 android:id="@+id/setDefaultLongitude"
@@ -96,7 +96,7 @@
                 android:layout_weight="0.3"
                 android:autoSizeTextType="uniform"
                 android:gravity="center"
-                android:text="Latitude:"
+                android:text="Latitude (-90:90)"
                 android:textSize="24sp" />
 
             <Button
@@ -149,7 +149,7 @@
                 android:layout_weight="0.3"
                 android:autoSizeTextType="uniform"
                 android:gravity="center"
-                android:text="Refresh: "
+                android:text="Refresh (1:60)"
                 android:textSize="24sp" />
 
             <Button

@@ -137,6 +137,7 @@ public class Settings extends AppCompatActivity {
                 SharedPreferences.Editor editor = sharedPref.edit();
                 editor.putString("Custom_Longitude", editLongitude.getText().toString());
                 editor.commit();
+                Toast.makeText(Settings.this, "Longitude set to default!", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -149,6 +150,7 @@ public class Settings extends AppCompatActivity {
                 SharedPreferences.Editor editor = sharedPref.edit();
                 editor.putString("Custom_Latitude", editLatitude.getText().toString());
                 editor.commit();
+                Toast.makeText(Settings.this, "Latitude set to default!", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -160,6 +162,7 @@ public class Settings extends AppCompatActivity {
                 SharedPreferences.Editor editor = sharedPref.edit();
                 editor.putString("Custom_Refresh", editRefresh.getText().toString());
                 editor.commit();
+                Toast.makeText(Settings.this, "Refresh set to default!", Toast.LENGTH_SHORT).show();
             }
         });
     }

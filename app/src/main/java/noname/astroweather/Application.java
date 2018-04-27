@@ -67,11 +67,6 @@ public class Application extends AppCompatActivity {
         showLongAndLati();
         setNewRefreshTime();
 
-        DateFormat df = new SimpleDateFormat("yyyy.MM.dd");
-        String date = df.format(Calendar.getInstance().getTime());
-        System.out.println(date + "     ---- TEEEEEEEEEEEEEEEEEEEEEEEEST");
-
-
     }
 
     private void setNewRefreshTime() {
@@ -215,6 +210,13 @@ public class Application extends AppCompatActivity {
         myThread = new Thread(myRunnableThread);
         myThread.start();
         super.onStart();
+    }
+
+    @Override
+    public void onRestart() {
+        showLongAndLati();
+        setNewRefreshTime();
+        super.onRestart();
     }
 
 }
