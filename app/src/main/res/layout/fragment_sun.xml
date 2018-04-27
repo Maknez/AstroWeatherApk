@@ -12,8 +12,13 @@
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:text="SunFragment"
-        android:textAlignment="textStart"
+        android:textAlignment="center"
         android:textColor="#ffffff"
-        android:textSize="18sp" />
+        android:textSize="18sp"
+        android:shadowColor="#000000"
+        android:shadowDx="4"
+        android:shadowDy="4"
+        android:shadowRadius="20"
+        />
 
 </FrameLayout>

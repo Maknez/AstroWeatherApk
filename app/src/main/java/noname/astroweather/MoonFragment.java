@@ -63,7 +63,12 @@ public class MoonFragment extends Fragment {
 
 
 
-        mView.setText("Moonrise: " + astroCalculator.getMoonInfo().getMoonrise() + "\nMoonset: " + astroCalculator.getMoonInfo().getMoonset() + "\n\nMoon age: "  + astroCalculator.getMoonInfo().getAge() + "\nIllumination: " + astroCalculator.getMoonInfo().getIllumination() + "\n\nNext full moon: " + astroCalculator.getMoonInfo().getNextFullMoon() + "\nNext new moon: " + astroCalculator.getMoonInfo().getNextNewMoon());
+        mView.setText("Moonrise:\n" + astroCalculator.getMoonInfo().getMoonrise() +
+                "\nMoonset:\n" + astroCalculator.getMoonInfo().getMoonset() +
+                "\nMoon age:\n"  + astroCalculator.getMoonInfo().getAge() +
+                "\nIllumination:\n" + astroCalculator.getMoonInfo().getIllumination() +
+                "\nNext full moon:\n" + astroCalculator.getMoonInfo().getNextFullMoon() +
+                "\nNext new moon:\n" + astroCalculator.getMoonInfo().getNextNewMoon());
 
 
         return rootView;

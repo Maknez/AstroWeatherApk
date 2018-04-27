@@ -64,7 +64,12 @@ public class SunFragment extends Fragment {
 
         AstroCalculator astroCalculator = new AstroCalculator(astroDateTime, location);
 
-        mView.setText("Sunrise: " + astroCalculator.getSunInfo().getSunrise() + "\nSunset: " + astroCalculator.getSunInfo().getSunset() + "\n\nAzimuth rise: " + astroCalculator.getSunInfo().getAzimuthRise() + "\nAzimuth set: " +  + astroCalculator.getSunInfo().getAzimuthSet() + "\n\nTwilight morning: " + astroCalculator.getSunInfo().getTwilightMorning() + "\nTwilight evening: " + astroCalculator.getSunInfo().getTwilightEvening());
+        mView.setText("Sunrise:\n" + astroCalculator.getSunInfo().getSunrise() +
+                "\nSunset:\n" + astroCalculator.getSunInfo().getSunset() +
+                "\nAzimuth rise:\n" + astroCalculator.getSunInfo().getAzimuthRise() +
+                "\nAzimuth set:\n" +  + astroCalculator.getSunInfo().getAzimuthSet() +
+                "\nTwilight morning:\n" + astroCalculator.getSunInfo().getTwilightMorning() +
+                "\nTwilight evening:\n" + astroCalculator.getSunInfo().getTwilightEvening());
 
         return rootView;
     }
