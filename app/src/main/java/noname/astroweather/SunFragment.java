@@ -13,8 +13,11 @@ import android.widget.TextView;
 import com.astrocalculator.AstroCalculator;
 import com.astrocalculator.AstroDateTime;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.TimeZone;
 
 public class SunFragment extends Fragment {
     private Date currentDate;
@@ -40,8 +43,20 @@ public class SunFragment extends Fragment {
         SharedPreferences sharedPref = getActivity().getSharedPreferences("config.xml", 0);
 
 
-        currentDate = Calendar.getInstance().getTime();
-        AstroDateTime astroDateTime = new AstroDateTime(currentDate.getYear(), currentDate.getMonth(), currentDate.getDay(), currentDate.getHours(), currentDate.getMinutes(), currentDate.getSeconds(), currentDate.getTimezoneOffset(), true);
+        DateFormat df = new SimpleDateFormat("yyyy.MM.dd HH:mm:ss");
+        String date = df.format(Calendar.getInstance().getTime());
+        TimeZone timeZone= TimeZone.getDefault();
+
+        AstroDateTime astroDateTime = new AstroDateTime(
+                Integer.valueOf(date.substring(0, date.indexOf("."))),
+                Integer.valueOf(date.substring(date.indexOf(".") + 1, date.lastIndexOf("."))),
+                Integer.valueOf(date.substring(date.lastIndexOf(".") + 1, date.indexOf(" "))),
+                Integer.valueOf(date.substring(date.indexOf(" ") + 1, date.indexOf(":"))),
+                Integer.valueOf(date.substring(date.indexOf(":") + 1, date.lastIndexOf(":"))),
+                Integer.valueOf(date.substring(date.lastIndexOf(":") + 1, date.length())),
+                (timeZone.getRawOffset() / 3600000),
+                true);
+
         AstroCalculator.Location location = new AstroCalculator.Location(
                 Double.valueOf(sharedPref.getString("Custom_Longitude", String.valueOf(getResources().getString(R.string.Default_Longitude)))),
                 Double.valueOf(sharedPref.getString("Custom_Latitude", String.valueOf(getResources().getString(R.string.Default_Latitude))))

@@ -42,7 +42,7 @@ public class About extends AppCompatActivity {
             }
 
             case R.id.about: {
-                startActivity(new Intent(this, About.class));
+         //       startActivity(new Intent(this, About.class));
                 return true;
             }
 

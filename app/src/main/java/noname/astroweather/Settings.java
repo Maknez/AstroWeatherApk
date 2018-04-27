@@ -198,7 +198,7 @@ public class Settings extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.settings: {
-                startActivity(new Intent(this, Settings.class));
+//                startActivity(new Intent(this, Settings.class));
                 return true;
             }
 
