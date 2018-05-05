@@ -22,7 +22,7 @@ public class SunFragment extends Fragment {
     String date;
     Thread myThread;
 
-    Clock clock = new ClockSunFragment(getActivity());
+    Clock clock; //= new ClockSunFragment(this.getActivity());
     DateFormat df = new SimpleDateFormat("yyyy.MM.dd HH:mm:ss");
 
     AstroCalculator astroCalculator;
@@ -37,21 +37,21 @@ public class SunFragment extends Fragment {
 
         @Override
         public void setNewValue() {
-            super.setNewValue();
             astroInit();
+            super.setNewValue();
         }
 
         @Override
         public void showText() {
-            super.showText();
             mView.setText(
                     "Sunrise:\n" + astroCalculator.getSunInfo().getSunrise() +
-                            "\nSunset:\n" + astroCalculator.getSunInfo().getSunset() +
-                            "\nAzimuth rise:\n" + astroCalculator.getSunInfo().getAzimuthRise() +
-                            "\nAzimuth set:\n" + +astroCalculator.getSunInfo().getAzimuthSet() +
-                            "\nTwilight morning:\n" + astroCalculator.getSunInfo().getTwilightMorning() +
-                            "\nTwilight evening:\n" + astroCalculator.getSunInfo().getTwilightEvening()
+                    "\nSunset:\n" + astroCalculator.getSunInfo().getSunset() +
+                    "\nAzimuth rise:\n" + astroCalculator.getSunInfo().getAzimuthRise() +
+                    "\nAzimuth set:\n" + +astroCalculator.getSunInfo().getAzimuthSet() +
+                    "\nTwilight morning:\n" + astroCalculator.getSunInfo().getTwilightMorning() +
+                    "\nTwilight evening:\n" + astroCalculator.getSunInfo().getTwilightEvening()
             );
+            super.showText();
         }
 
     }
@@ -68,9 +68,8 @@ public class SunFragment extends Fragment {
                 Integer.valueOf(date.substring(date.indexOf(" ") + 1, date.indexOf(":"))),
                 Integer.valueOf(date.substring(date.indexOf(":") + 1, date.lastIndexOf(":"))),
                 Integer.valueOf(date.substring(date.lastIndexOf(":") + 1, date.length())),
-                //TODO: add function with if(>-15  && < 15) to set TimeZone.
-                (int) (Double.valueOf(sharedPref.getString("Custom_Longitude", String.valueOf(getResources().getString(R.string.Default_Longitude)))) / 15),
-                true
+                clock.getTimeZone(),
+                false
         );
 
         location = new AstroCalculator.Location(
@@ -91,6 +90,7 @@ public class SunFragment extends Fragment {
         clock.setNewRefreshTime();
         myThread = new Thread(myRunnableThread);
         myThread.start();
+        astroInit();
         super.onStart();
     }
 
@@ -100,6 +100,7 @@ public class SunFragment extends Fragment {
         ViewGroup rootView = (ViewGroup) inflater.inflate(
                 R.layout.fragment_sun, container, false);
 
+        clock = new ClockSunFragment(getActivity());
         mView = rootView.findViewById(R.id.sloneczko);
 
         Configuration config = getResources().getConfiguration();

@@ -1,5 +1,6 @@
 package noname.astroweather;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
@@ -23,13 +24,118 @@ public class Application extends AppCompatActivity {
     TextView clockView, longAndLatiView;
     ViewPager mPager;
     PagerAdapter mPagerAdapter;
-    private Thread myThread;
+    Thread myThread;
 
+    Clock clock;
+
+    private class ClockActivity extends noname.astroweather.Clock {
+
+        private ClockActivity(Activity activity) {
+            super(activity);
+        }
+
+        @Override
+        public void getClock() {
+            runOnUiThread(new Runnable() {
+                public void run() {
+                    try {
+                        String curTime;
+                        long analogClockTime = Calendar.getInstance().getTimeInMillis();
+                        Calendar calendar = Calendar.getInstance();
+                        calendar.setTimeInMillis(analogClockTime);
+                        int hour = calendar.get(Calendar.HOUR_OF_DAY);
+                        int minute = calendar.get(Calendar.MINUTE);
+                        int second = calendar.get(Calendar.SECOND);
+
+                        if (hour < 10) {
+                            curTime = ("0" + hour) + ":";
+                        } else {
+                            curTime = hour + ":";
+                        }
+                        if (minute < 10) {
+                            curTime = curTime + ("0" + minute) + ":";
+                        } else {
+                            curTime = curTime + minute + ":";
+                        }
+                        if (second < 10) {
+                            curTime = curTime + ("0" + second);
+                        } else {
+                            curTime = curTime + second;
+                        }
+
+                        clockView.setText(curTime);
+
+                    } catch (Exception e) {
+                    }
+                }
+            });
+        }
+    }
 
     public boolean checkSize(Configuration config) {
         boolean xlarge = ((config.screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK) == Configuration.SCREENLAYOUT_SIZE_XLARGE);
         boolean large = ((config.screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK) == Configuration.SCREENLAYOUT_SIZE_LARGE);
         return (xlarge || large);
+    }
+
+    public void showLongAndLati() {
+        SharedPreferences sharedPref = getSharedPreferences("config.xml", 0);
+        longAndLatiView.setText(sharedPref.getString("Custom_Longitude", String.valueOf(getResources().getString(R.string.Default_Longitude))) +
+                " , " +
+                sharedPref.getString("Custom_Latitude", String.valueOf(getResources().getString(R.string.Default_Latitude))));
+    }
+
+    @Override
+    public void onBackPressed() {
+
+        Configuration config = getResources().getConfiguration();
+        if (checkSize(config) && config.orientation == 2) {
+            if (mPager.getCurrentItem() == 0) {
+                System.exit(1);
+            } else {
+                mPager.setCurrentItem(mPager.getCurrentItem() - 1);
+            }
+        } else {
+            super.onBackPressed();
+        }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.activity_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.settings: {
+                startActivity(new Intent(this, Settings.class));
+                return true;
+            }
+
+            case R.id.about: {
+                startActivity(new Intent(this, About.class));
+                return true;
+            }
+
+            case R.id.exit: {
+                moveTaskToBack(true);
+                android.os.Process.killProcess(android.os.Process.myPid());
+                System.exit(1);
+                return true;
+            }
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onStart() {
+        clock = new ClockActivity(this);
+        Runnable myRunnableThread = clock;
+        myThread = new Thread(myRunnableThread);
+        myThread.start();
+        super.onStart();
     }
 
     @Override
@@ -65,115 +171,6 @@ public class Application extends AppCompatActivity {
         showLongAndLati();
     }
 
-
-
-    public void showLongAndLati() {
-        SharedPreferences sharedPref = getSharedPreferences("config.xml", 0);
-        longAndLatiView.setText(sharedPref.getString("Custom_Longitude", String.valueOf(getResources().getString(R.string.Default_Longitude))) +
-                " , " +
-                sharedPref.getString("Custom_Latitude", String.valueOf(getResources().getString(R.string.Default_Latitude))));
-    }
-
-    public void getClock() {
-
-        runOnUiThread(new Runnable() {
-            public void run() {
-                try {
-                    String curTime;
-                    long analogClockTime = Calendar.getInstance().getTimeInMillis();
-                    Calendar calendar = Calendar.getInstance();
-                    calendar.setTimeInMillis(analogClockTime);
-                    int hour = calendar.get(Calendar.HOUR_OF_DAY);
-                    int minute = calendar.get(Calendar.MINUTE);
-                    int second = calendar.get(Calendar.SECOND);
-
-                    if (hour < 10) {
-                        curTime = ("0" + hour) + ":";
-                    } else {
-                        curTime = hour + ":";
-                    }
-                    if (minute < 10) {
-                        curTime = curTime + ("0" + minute) + ":";
-                    } else {
-                        curTime = curTime + minute + ":";
-                    }
-                    if (second < 10) {
-                        curTime = curTime + ("0" + second);
-                    } else {
-                        curTime = curTime + second;
-                    }
-
-                    clockView.setText(curTime);
-
-                } catch (Exception e) {
-                }
-            }
-        });
-    }
-
-    class Clock implements Runnable {
-        public void run() {
-            while (!Thread.currentThread().isInterrupted()) {
-                try {
-                    getClock();
-                    Thread.sleep(1000); // Pause of 1 Second
-                } catch (InterruptedException e) {
-                    Thread.currentThread().interrupt();
-                } catch (Exception e) {
-                }
-            }
-        }
-    }
-
-
-    @Override
-    public void onBackPressed() {
-
-        Configuration config = getResources().getConfiguration();
-        if (checkSize(config) && config.orientation == 2) {
-                if (mPager.getCurrentItem() == 0) {
-                    // If the user is currently looking at the first step, allow the system to handle the
-                    // Back button. This calls finish() on this activity and pops the back stack.
-                    System.exit(1);
-                } else {
-                    // Otherwise, select the previous step.
-                    mPager.setCurrentItem(mPager.getCurrentItem() - 1);
-                }
-            }
-        else {
-            super.onBackPressed();
-        }
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.activity_menu, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.settings: {
-                startActivity(new Intent(this, Settings.class));
-                return true;
-            }
-
-            case R.id.about: {
-                startActivity(new Intent(this, About.class));
-                return true;
-            }
-
-            case R.id.exit: {
-                moveTaskToBack(true);
-                android.os.Process.killProcess(android.os.Process.myPid());
-                System.exit(1);
-                return true;
-            }
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
     @Override
     public void onStop() {
         myThread.interrupt();
@@ -181,17 +178,8 @@ public class Application extends AppCompatActivity {
     }
 
     @Override
-    public void onStart() {
-        Runnable myRunnableThread = new Clock();
-        myThread = new Thread(myRunnableThread);
-        myThread.start();
-        super.onStart();
-    }
-
-    @Override
     public void onRestart() {
         showLongAndLati();
         super.onRestart();
     }
-
 }

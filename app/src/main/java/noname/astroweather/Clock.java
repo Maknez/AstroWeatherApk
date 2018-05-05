@@ -2,9 +2,6 @@ package noname.astroweather;
 
 import android.app.Activity;
 import android.content.SharedPreferences;
-
-import com.astrocalculator.AstroCalculator;
-
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -15,7 +12,6 @@ class Clock implements Runnable {
     Date nextRefreshTime;
     DateFormat df = new SimpleDateFormat("yyyy.MM.dd HH:mm:ss");
     String date;
-
 
     public Clock(Activity activity) {
         thisActivity = activity;
@@ -45,7 +41,6 @@ class Clock implements Runnable {
                     int hour = calendar.get(Calendar.HOUR_OF_DAY);
                     int minute = calendar.get(Calendar.MINUTE);
                     int second = calendar.get(Calendar.SECOND);
-
                     refresh(hour, minute, second);
 
                 } catch (Exception e) {
@@ -55,20 +50,28 @@ class Clock implements Runnable {
     }
 
     public void refresh(int hour, int minute, int second) {
-
         if ((nextRefreshTime.getHours() == hour) && (nextRefreshTime.getMinutes() == minute) && (nextRefreshTime.getSeconds() == second)) {
-            //System.out.println("REFRESH TIME!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!11");
-            //date = df.format(Calendar.getInstance().getTime());
             setNewValue();
             showText();
+            setNewRefreshTime();
         }
-        setNewRefreshTime();
     }
 
     public void setNewRefreshTime() {
         SharedPreferences sharedPref = thisActivity.getSharedPreferences("config.xml", 0);
         nextRefreshTime = Calendar.getInstance().getTime();
         nextRefreshTime.setMinutes(nextRefreshTime.getMinutes() + Integer.parseInt(sharedPref.getString("Custom_Refresh", String.valueOf(thisActivity.getResources().getString(R.string.Default_Refresh)))));
+    }
+
+    public int getTimeZone() {
+        SharedPreferences sharedPref = thisActivity.getSharedPreferences("config.xml", 0);
+        double longitude = Double.valueOf(sharedPref.getString("Custom_Longitude", String.valueOf(thisActivity.getString(R.string.Default_Longitude))));
+        if(longitude >= 15 || longitude <= -15) {
+            return (int)Math.floor((longitude + 15) / 30);
+        }
+        else {
+            return 0;
+        }
     }
 
     public void showText() {
