@@ -26,7 +26,8 @@ public class SunFragment extends Fragment {
     Thread myThread;
     Date nextRefreshTime;
     AstroCalculator astroCalculator;
-
+    AstroCalculator.Location location;
+    AstroDateTime astroDateTime;
 
     @Override
     public void onStart() {
@@ -87,7 +88,6 @@ public class SunFragment extends Fragment {
         nextRefreshTime.setMinutes(nextRefreshTime.getMinutes() + Integer.parseInt(sharedPref.getString("Custom_Refresh", String.valueOf(getResources().getString(R.string.Default_Refresh)))));
     }
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -104,29 +104,31 @@ public class SunFragment extends Fragment {
             mView.setBackgroundResource(R.drawable.sun_portrait);
         }
 
-
         SharedPreferences sharedPref = getActivity().getSharedPreferences("config.xml", 0);
 
-
         date = df.format(Calendar.getInstance().getTime());
-        TimeZone timeZone= TimeZone.getDefault();
 
-        AstroDateTime astroDateTime = new AstroDateTime(
+        astroDateTime = new AstroDateTime(
                 Integer.valueOf(date.substring(0, date.indexOf("."))),
                 Integer.valueOf(date.substring(date.indexOf(".") + 1, date.lastIndexOf("."))),
                 Integer.valueOf(date.substring(date.lastIndexOf(".") + 1, date.indexOf(" "))),
                 Integer.valueOf(date.substring(date.indexOf(" ") + 1, date.indexOf(":"))),
                 Integer.valueOf(date.substring(date.indexOf(":") + 1, date.lastIndexOf(":"))),
                 Integer.valueOf(date.substring(date.lastIndexOf(":") + 1, date.length())),
-                (timeZone.getRawOffset() / 3600000),
-                true);
+                //TODO: add function with if(>-15  && < 15) to set TimeZone.
+                (int)(Double.valueOf(sharedPref.getString("Custom_Longitude", String.valueOf(getResources().getString(R.string.Default_Longitude)))) / 15),
+                true
+        );
 
-        AstroCalculator.Location location = new AstroCalculator.Location(
+        location = new AstroCalculator.Location(
                 Double.valueOf(sharedPref.getString("Custom_Longitude", String.valueOf(getResources().getString(R.string.Default_Longitude)))),
                 Double.valueOf(sharedPref.getString("Custom_Latitude", String.valueOf(getResources().getString(R.string.Default_Latitude))))
         );
 
-        astroCalculator = new AstroCalculator(astroDateTime, location);
+        astroCalculator = new AstroCalculator(
+                astroDateTime,
+                location
+        );
 
         showText(astroCalculator);
 

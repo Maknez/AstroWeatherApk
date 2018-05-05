@@ -23,7 +23,6 @@ public class Application extends AppCompatActivity {
     TextView clockView, longAndLatiView;
     ViewPager mPager;
     PagerAdapter mPagerAdapter;
-    private Date nextRefreshTime;
     private Thread myThread;
 
 
@@ -64,16 +63,8 @@ public class Application extends AppCompatActivity {
         longAndLatiView = (TextView) findViewById(R.id.longAndLati);
 
         showLongAndLati();
-        setNewRefreshTime();
-
     }
 
-    private void setNewRefreshTime() {
-        SharedPreferences sharedPref = getSharedPreferences("config.xml", 0);
-        nextRefreshTime = Calendar.getInstance().getTime();
-        //nextRefreshTime.setMinutes(nextRefreshTime.getMinutes() + Integer.parseInt(sharedPref.getString("Custom_Refresh", String.valueOf(getResources().getString(R.string.Default_Refresh)))));
-        nextRefreshTime.setSeconds(nextRefreshTime.getSeconds() + Integer.parseInt(sharedPref.getString("Custom_Refresh", String.valueOf(getResources().getString(R.string.Default_Refresh)))));
-    }
 
 
     public void showLongAndLati() {
@@ -113,24 +104,11 @@ public class Application extends AppCompatActivity {
                     }
 
                     clockView.setText(curTime);
-                    refresh(hour, minute, second);
 
                 } catch (Exception e) {
                 }
             }
         });
-    }
-
-    private void refresh(int hour, int minute, int second) {
-        //TODO: change this function reload date is better than reload activity.
-        if ((nextRefreshTime.getHours() == hour) && (nextRefreshTime.getMinutes() == minute) && (nextRefreshTime.getSeconds() == second)) {
-            //System.out.println("REFRESH TIME!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!11");
-
-//            finish();
-//          startActivity(getIntent());
-        }
-
-
     }
 
     class Clock implements Runnable {
@@ -213,7 +191,6 @@ public class Application extends AppCompatActivity {
     @Override
     public void onRestart() {
         showLongAndLati();
-        setNewRefreshTime();
         super.onRestart();
     }
 
