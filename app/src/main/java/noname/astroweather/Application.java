@@ -33,7 +33,6 @@ public class Application extends AppCompatActivity {
         return (xlarge || large);
     }
 
-
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
@@ -72,7 +71,8 @@ public class Application extends AppCompatActivity {
     private void setNewRefreshTime() {
         SharedPreferences sharedPref = getSharedPreferences("config.xml", 0);
         nextRefreshTime = Calendar.getInstance().getTime();
-        nextRefreshTime.setMinutes(nextRefreshTime.getMinutes() + Integer.parseInt(sharedPref.getString("Custom_Refresh", String.valueOf(getResources().getString(R.string.Default_Refresh)))));
+        //nextRefreshTime.setMinutes(nextRefreshTime.getMinutes() + Integer.parseInt(sharedPref.getString("Custom_Refresh", String.valueOf(getResources().getString(R.string.Default_Refresh)))));
+        nextRefreshTime.setSeconds(nextRefreshTime.getSeconds() + Integer.parseInt(sharedPref.getString("Custom_Refresh", String.valueOf(getResources().getString(R.string.Default_Refresh)))));
     }
 
 
@@ -123,13 +123,11 @@ public class Application extends AppCompatActivity {
 
     private void refresh(int hour, int minute, int second) {
         //TODO: change this function reload date is better than reload activity.
-
-        //System.out.print(hour + ":" + minute + ":" + second + "   =======>    ");
-        //System.out.println(nextRefreshTime.getHours() + ":" + nextRefreshTime.getMinutes() + ":" + nextRefreshTime.getSeconds());
         if ((nextRefreshTime.getHours() == hour) && (nextRefreshTime.getMinutes() == minute) && (nextRefreshTime.getSeconds() == second)) {
             //System.out.println("REFRESH TIME!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!11");
-            finish();
-            startActivity(getIntent());
+
+//            finish();
+//          startActivity(getIntent());
         }
 
 

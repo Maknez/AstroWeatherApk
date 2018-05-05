@@ -20,8 +20,73 @@ import java.util.Date;
 import java.util.TimeZone;
 
 public class SunFragment extends Fragment {
-    private Date currentDate;
     TextView mView;
+    DateFormat df = new SimpleDateFormat("yyyy.MM.dd HH:mm:ss");
+    String date;
+    Thread myThread;
+    Date nextRefreshTime;
+    AstroCalculator astroCalculator;
+
+
+    @Override
+    public void onStart() {
+        setNewRefreshTime();
+        Runnable myRunnableThread = new SunFragment.Clock();
+        myThread = new Thread(myRunnableThread);
+        myThread.start();
+        super.onStart();
+    }
+
+    class Clock implements Runnable {
+        public void run() {
+            while (!Thread.currentThread().isInterrupted()) {
+                try {
+                    getClock();
+                    Thread.sleep(1000); // Pause of 1 Second
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                } catch (Exception e) {
+                }
+            }
+        }
+    }
+
+    public void getClock() {
+
+        getActivity().runOnUiThread(new Runnable() {
+            public void run() {
+                try {
+                    long analogClockTime = Calendar.getInstance().getTimeInMillis();
+                    Calendar calendar = Calendar.getInstance();
+                    calendar.setTimeInMillis(analogClockTime);
+                    int hour = calendar.get(Calendar.HOUR_OF_DAY);
+                    int minute = calendar.get(Calendar.MINUTE);
+                    int second = calendar.get(Calendar.SECOND);
+
+                    refresh(hour, minute, second);
+
+                } catch (Exception e) {
+                }
+            }
+        });
+    }
+
+    private void refresh(int hour, int minute, int second) {
+
+        if ((nextRefreshTime.getHours() == hour) && (nextRefreshTime.getMinutes() == minute) && (nextRefreshTime.getSeconds() == second)) {
+            //System.out.println("REFRESH TIME!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!11");
+            date = df.format(Calendar.getInstance().getTime());
+            showText(astroCalculator);
+        }
+        setNewRefreshTime();
+    }
+
+    private void setNewRefreshTime() {
+        SharedPreferences sharedPref = getActivity().getSharedPreferences("config.xml", 0);
+        nextRefreshTime = Calendar.getInstance().getTime();
+        nextRefreshTime.setMinutes(nextRefreshTime.getMinutes() + Integer.parseInt(sharedPref.getString("Custom_Refresh", String.valueOf(getResources().getString(R.string.Default_Refresh)))));
+    }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -43,8 +108,7 @@ public class SunFragment extends Fragment {
         SharedPreferences sharedPref = getActivity().getSharedPreferences("config.xml", 0);
 
 
-        DateFormat df = new SimpleDateFormat("yyyy.MM.dd HH:mm:ss");
-        String date = df.format(Calendar.getInstance().getTime());
+        date = df.format(Calendar.getInstance().getTime());
         TimeZone timeZone= TimeZone.getDefault();
 
         AstroDateTime astroDateTime = new AstroDateTime(
@@ -62,15 +126,28 @@ public class SunFragment extends Fragment {
                 Double.valueOf(sharedPref.getString("Custom_Latitude", String.valueOf(getResources().getString(R.string.Default_Latitude))))
         );
 
-        AstroCalculator astroCalculator = new AstroCalculator(astroDateTime, location);
+        astroCalculator = new AstroCalculator(astroDateTime, location);
 
+        showText(astroCalculator);
+
+        return rootView;
+    }
+
+
+    public void showText(AstroCalculator astroCalculator){
         mView.setText("Sunrise:\n" + astroCalculator.getSunInfo().getSunrise() +
                 "\nSunset:\n" + astroCalculator.getSunInfo().getSunset() +
                 "\nAzimuth rise:\n" + astroCalculator.getSunInfo().getAzimuthRise() +
                 "\nAzimuth set:\n" +  + astroCalculator.getSunInfo().getAzimuthSet() +
                 "\nTwilight morning:\n" + astroCalculator.getSunInfo().getTwilightMorning() +
                 "\nTwilight evening:\n" + astroCalculator.getSunInfo().getTwilightEvening());
-
-        return rootView;
     }
+    @Override
+    public void onStop() {
+        myThread.interrupt();
+        super.onStop();
+    }
+
 }
+
+
