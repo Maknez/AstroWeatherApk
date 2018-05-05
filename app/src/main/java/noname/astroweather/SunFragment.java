@@ -1,6 +1,6 @@
 package noname.astroweather;
 
-
+import android.app.Activity;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -16,94 +16,47 @@ import com.astrocalculator.AstroDateTime;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
-import java.util.TimeZone;
 
 public class SunFragment extends Fragment {
     TextView mView;
-    DateFormat df = new SimpleDateFormat("yyyy.MM.dd HH:mm:ss");
     String date;
     Thread myThread;
-    Date nextRefreshTime;
+
+    Clock clock = new ClockSunFragment(getActivity());
+    DateFormat df = new SimpleDateFormat("yyyy.MM.dd HH:mm:ss");
+
     AstroCalculator astroCalculator;
     AstroCalculator.Location location;
     AstroDateTime astroDateTime;
 
-    @Override
-    public void onStart() {
-        setNewRefreshTime();
-        Runnable myRunnableThread = new SunFragment.Clock();
-        myThread = new Thread(myRunnableThread);
-        myThread.start();
-        super.onStart();
-    }
+    private class ClockSunFragment extends Clock {
 
-    class Clock implements Runnable {
-        public void run() {
-            while (!Thread.currentThread().isInterrupted()) {
-                try {
-                    getClock();
-                    Thread.sleep(1000); // Pause of 1 Second
-                } catch (InterruptedException e) {
-                    Thread.currentThread().interrupt();
-                } catch (Exception e) {
-                }
-            }
-        }
-    }
-
-    public void getClock() {
-
-        getActivity().runOnUiThread(new Runnable() {
-            public void run() {
-                try {
-                    long analogClockTime = Calendar.getInstance().getTimeInMillis();
-                    Calendar calendar = Calendar.getInstance();
-                    calendar.setTimeInMillis(analogClockTime);
-                    int hour = calendar.get(Calendar.HOUR_OF_DAY);
-                    int minute = calendar.get(Calendar.MINUTE);
-                    int second = calendar.get(Calendar.SECOND);
-
-                    refresh(hour, minute, second);
-
-                } catch (Exception e) {
-                }
-            }
-        });
-    }
-
-    private void refresh(int hour, int minute, int second) {
-
-        if ((nextRefreshTime.getHours() == hour) && (nextRefreshTime.getMinutes() == minute) && (nextRefreshTime.getSeconds() == second)) {
-            //System.out.println("REFRESH TIME!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!11");
-            date = df.format(Calendar.getInstance().getTime());
-            showText(astroCalculator);
-        }
-        setNewRefreshTime();
-    }
-
-    private void setNewRefreshTime() {
-        SharedPreferences sharedPref = getActivity().getSharedPreferences("config.xml", 0);
-        nextRefreshTime = Calendar.getInstance().getTime();
-        nextRefreshTime.setMinutes(nextRefreshTime.getMinutes() + Integer.parseInt(sharedPref.getString("Custom_Refresh", String.valueOf(getResources().getString(R.string.Default_Refresh)))));
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        ViewGroup rootView = (ViewGroup) inflater.inflate(
-                R.layout.fragment_sun, container, false);
-
-        mView = (TextView) rootView.findViewById(R.id.sloneczko);
-
-        Configuration config = getResources().getConfiguration();
-        if (config.orientation == 2) {
-            mView.setBackgroundResource(R.drawable.sun_landscape);
-        } else if (config.orientation == 1) {
-            //pionowe
-            mView.setBackgroundResource(R.drawable.sun_portrait);
+        private ClockSunFragment(Activity activity) {
+            super(activity);
         }
 
+        @Override
+        public void setNewValue() {
+            super.setNewValue();
+            astroInit();
+        }
+
+        @Override
+        public void showText() {
+            super.showText();
+            mView.setText(
+                    "Sunrise:\n" + astroCalculator.getSunInfo().getSunrise() +
+                            "\nSunset:\n" + astroCalculator.getSunInfo().getSunset() +
+                            "\nAzimuth rise:\n" + astroCalculator.getSunInfo().getAzimuthRise() +
+                            "\nAzimuth set:\n" + +astroCalculator.getSunInfo().getAzimuthSet() +
+                            "\nTwilight morning:\n" + astroCalculator.getSunInfo().getTwilightMorning() +
+                            "\nTwilight evening:\n" + astroCalculator.getSunInfo().getTwilightEvening()
+            );
+        }
+
+    }
+
+    public void astroInit() {
         SharedPreferences sharedPref = getActivity().getSharedPreferences("config.xml", 0);
 
         date = df.format(Calendar.getInstance().getTime());
@@ -116,7 +69,7 @@ public class SunFragment extends Fragment {
                 Integer.valueOf(date.substring(date.indexOf(":") + 1, date.lastIndexOf(":"))),
                 Integer.valueOf(date.substring(date.lastIndexOf(":") + 1, date.length())),
                 //TODO: add function with if(>-15  && < 15) to set TimeZone.
-                (int)(Double.valueOf(sharedPref.getString("Custom_Longitude", String.valueOf(getResources().getString(R.string.Default_Longitude)))) / 15),
+                (int) (Double.valueOf(sharedPref.getString("Custom_Longitude", String.valueOf(getResources().getString(R.string.Default_Longitude)))) / 15),
                 true
         );
 
@@ -129,27 +82,45 @@ public class SunFragment extends Fragment {
                 astroDateTime,
                 location
         );
+    }
 
-        showText(astroCalculator);
+    @Override
+    public void onStart() {
+        clock = new ClockSunFragment(getActivity());
+        Runnable myRunnableThread = clock;
+        clock.setNewRefreshTime();
+        myThread = new Thread(myRunnableThread);
+        myThread.start();
+        super.onStart();
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        ViewGroup rootView = (ViewGroup) inflater.inflate(
+                R.layout.fragment_sun, container, false);
+
+        mView = rootView.findViewById(R.id.sloneczko);
+
+        Configuration config = getResources().getConfiguration();
+        if (config.orientation == 2) {
+            mView.setBackgroundResource(R.drawable.sun_landscape);
+        } else if (config.orientation == 1) {
+            //pionowe
+            mView.setBackgroundResource(R.drawable.sun_portrait);
+        }
+
+        astroInit();
+        clock.showText();
 
         return rootView;
     }
 
-
-    public void showText(AstroCalculator astroCalculator){
-        mView.setText("Sunrise:\n" + astroCalculator.getSunInfo().getSunrise() +
-                "\nSunset:\n" + astroCalculator.getSunInfo().getSunset() +
-                "\nAzimuth rise:\n" + astroCalculator.getSunInfo().getAzimuthRise() +
-                "\nAzimuth set:\n" +  + astroCalculator.getSunInfo().getAzimuthSet() +
-                "\nTwilight morning:\n" + astroCalculator.getSunInfo().getTwilightMorning() +
-                "\nTwilight evening:\n" + astroCalculator.getSunInfo().getTwilightEvening());
-    }
     @Override
     public void onStop() {
         myThread.interrupt();
         super.onStop();
     }
-
 }
 
 
