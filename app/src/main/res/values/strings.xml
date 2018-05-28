@@ -6,4 +6,7 @@
     <string name="copyright">Copyright © 2018</string>
     <string name="all_rights">All Rights Reserved</string>
 
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
 </resources>
