@@ -4,11 +4,11 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
-public class ScreenSlidePagerAdapter extends FragmentStatePagerAdapter {
+public class ScreenSlidePagerAdapterSunMoon extends FragmentStatePagerAdapter {
 
     public static final int NUM_PAGES = 2;
 
-    public ScreenSlidePagerAdapter(FragmentManager fm) {
+    public ScreenSlidePagerAdapterSunMoon(FragmentManager fm) {
         super(fm);
     }
 

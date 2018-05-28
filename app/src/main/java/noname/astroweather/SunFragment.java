@@ -44,12 +44,12 @@ public class SunFragment extends Fragment {
         @Override
         public void showText() {
             mView.setText(
-                    "Sunrise:\n" + astroCalculator.getSunInfo().getSunrise() +
-                    "\nSunset:\n" + astroCalculator.getSunInfo().getSunset() +
-                    "\nAzimuth rise:\n" + astroCalculator.getSunInfo().getAzimuthRise() +
-                    "\nAzimuth set:\n" + +astroCalculator.getSunInfo().getAzimuthSet() +
-                    "\nTwilight morning:\n" + astroCalculator.getSunInfo().getTwilightMorning() +
-                    "\nTwilight evening:\n" + astroCalculator.getSunInfo().getTwilightEvening()
+                    "Sunrise: " + astroCalculator.getSunInfo().getSunrise() +
+                    "\nSunset: " + astroCalculator.getSunInfo().getSunset() +
+                    "\nAzimuth rise: " + astroCalculator.getSunInfo().getAzimuthRise() +
+                    "\nAzimuth set: " +astroCalculator.getSunInfo().getAzimuthSet() +
+                    "\nTwilight morning: " + astroCalculator.getSunInfo().getTwilightMorning() +
+                    "\nTwilight evening: " + astroCalculator.getSunInfo().getTwilightEvening()
             );
             super.showText();
         }

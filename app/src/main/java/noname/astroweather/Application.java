@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
-import android.support.v4.app.Fragment;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -13,17 +12,17 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 
 
 public class Application extends AppCompatActivity {
 
-    TextView clockView, longAndLatiView;
-    ViewPager mPager;
-    PagerAdapter mPagerAdapter;
+    TextView clockView;
+    TextView longAndLatiView;
+    ViewPager mPagerSunMoon;
+    ViewPager mPagerWeather;
+    PagerAdapter mPagerAdapterSunMoon;
+    PagerAdapter mPagerAdapterWeather;
     Thread myThread;
 
     Clock clock;
@@ -80,7 +79,8 @@ public class Application extends AppCompatActivity {
 
     public void showLongAndLati() {
         SharedPreferences sharedPref = getSharedPreferences("config.xml", 0);
-        longAndLatiView.setText(sharedPref.getString("Custom_Longitude", String.valueOf(getResources().getString(R.string.Default_Longitude))) +
+        longAndLatiView.setText(
+                sharedPref.getString("Custom_Longitude", String.valueOf(getResources().getString(R.string.Default_Longitude))) +
                 " , " +
                 sharedPref.getString("Custom_Latitude", String.valueOf(getResources().getString(R.string.Default_Latitude))));
     }
@@ -90,10 +90,10 @@ public class Application extends AppCompatActivity {
 
         Configuration config = getResources().getConfiguration();
         if (checkSize(config) && config.orientation == 2) {
-            if (mPager.getCurrentItem() == 0) {
+            if (mPagerSunMoon.getCurrentItem() == 0) {
                 System.exit(1);
             } else {
-                mPager.setCurrentItem(mPager.getCurrentItem() - 1);
+                mPagerSunMoon.setCurrentItem(mPagerSunMoon.getCurrentItem() - 1);
             }
         } else {
             super.onBackPressed();
@@ -141,7 +141,7 @@ public class Application extends AppCompatActivity {
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        // outState.putInt("currentFragment", mPager.getCurrentItem());
+        // outState.putInt("currentFragment", mPagerSunMoon.getCurrentItem());
     }
 
     @Override
@@ -160,9 +160,12 @@ public class Application extends AppCompatActivity {
                 setContentView(R.layout.activity_application_landscape_phone);
             } else if (config.orientation == 1) {
                 setContentView(R.layout.activity_application_portrait_phone);
-                mPager = (ViewPager) findViewById(R.id.viewPager);
-                mPagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager());
-                mPager.setAdapter(mPagerAdapter);
+                mPagerSunMoon = (ViewPager) findViewById(R.id.viewPagerSunMoon);
+                mPagerAdapterSunMoon = new ScreenSlidePagerAdapterSunMoon(getSupportFragmentManager());
+                mPagerSunMoon.setAdapter(mPagerAdapterSunMoon);
+                mPagerWeather = (ViewPager) findViewById(R.id.viewPagerWeather);
+                mPagerAdapterWeather = new ScreenSlidePagerAdapterWeather(getSupportFragmentManager());
+                mPagerWeather.setAdapter(mPagerAdapterWeather);
             }
         }
         clockView = (TextView) findViewById(R.id.clockOnScreen);

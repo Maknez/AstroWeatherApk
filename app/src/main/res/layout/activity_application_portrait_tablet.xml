@@ -15,7 +15,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="0.9"
+            android:layout_weight="0.44"
             android:orientation="horizontal">
 
             <TextView
@@ -36,12 +36,34 @@
                 android:gravity="center"
                 android:text="LONGITUDE, LATITUDE"
                 android:textSize="20sp" />
+
         </LinearLayout>
+
+        <fragment
+            android:id="@+id/fragment"
+            android:name="noname.astroweather.BasicInfo"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="0.4" />
+
+        <fragment
+            android:id="@+id/fragment2"
+            android:name="noname.astroweather.WeatherForecast"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="0.4" />
+
+        <fragment
+            android:id="@+id/fragment3"
+            android:name="noname.astroweather.WindAndHumidity"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="0.4" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="0.1"
+            android:layout_weight="0.4"
             android:orientation="horizontal">
 
             <fragment
