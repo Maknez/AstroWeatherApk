@@ -158,20 +158,36 @@ public class Application extends AppCompatActivity {
         } else {
             if (config.orientation == 2) {
                 setContentView(R.layout.activity_application_landscape_phone);
+                initViewPagerWeather();
             } else if (config.orientation == 1) {
                 setContentView(R.layout.activity_application_portrait_phone);
-                mPagerSunMoon = (ViewPager) findViewById(R.id.viewPagerSunMoon);
-                mPagerAdapterSunMoon = new ScreenSlidePagerAdapterSunMoon(getSupportFragmentManager());
-                mPagerSunMoon.setAdapter(mPagerAdapterSunMoon);
-                mPagerWeather = (ViewPager) findViewById(R.id.viewPagerWeather);
-                mPagerAdapterWeather = new ScreenSlidePagerAdapterWeather(getSupportFragmentManager());
-                mPagerWeather.setAdapter(mPagerAdapterWeather);
+                initViewPagerSunMoon();
+                initViewPagerWeather();
             }
         }
-        clockView = (TextView) findViewById(R.id.clockOnScreen);
-        longAndLatiView = (TextView) findViewById(R.id.longAndLati);
-
+        initClockView();
+        initLongAndLatiView();
         showLongAndLati();
+    }
+
+    private void initLongAndLatiView() {
+        longAndLatiView = (TextView) findViewById(R.id.longAndLati);
+    }
+
+    private void initClockView() {
+        clockView = (TextView) findViewById(R.id.clockOnScreen);
+    }
+
+    private void initViewPagerSunMoon() {
+        mPagerSunMoon = (ViewPager) findViewById(R.id.viewPagerSunMoon);
+        mPagerAdapterSunMoon = new ScreenSlidePagerAdapterSunMoon(getSupportFragmentManager());
+        mPagerSunMoon.setAdapter(mPagerAdapterSunMoon);
+    }
+
+    private void initViewPagerWeather() {
+        mPagerWeather = (ViewPager) findViewById(R.id.viewPagerWeather);
+        mPagerAdapterWeather = new ScreenSlidePagerAdapterWeather(getSupportFragmentManager());
+        mPagerWeather.setAdapter(mPagerAdapterWeather);
     }
 
     @Override

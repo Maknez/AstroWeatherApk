@@ -15,7 +15,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="0.9"
+            android:layout_weight="0.6"
             android:orientation="horizontal">
 
             <TextView
@@ -38,10 +38,16 @@
                 android:textSize="20sp" />
         </LinearLayout>
 
+        <android.support.v4.view.ViewPager
+            android:id="@+id/viewPagerWeather"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="0.4" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="0.1"
+            android:layout_weight="0.4"
             android:orientation="horizontal">
 
             <fragment

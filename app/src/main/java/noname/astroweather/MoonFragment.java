@@ -43,13 +43,17 @@ public class MoonFragment extends Fragment {
 
         @Override
         public void showText() {
+            String moonRise = astroCalculator.getMoonInfo().getMoonrise().toString();
+            String moonSet = astroCalculator.getMoonInfo().getMoonset().toString();
+            String nextFullMoon = astroCalculator.getMoonInfo().getNextFullMoon().toString();
+            String NextNewMoon= astroCalculator.getMoonInfo().getNextNewMoon().toString();
             mView.setText(
-                    "Moonrise: " + astroCalculator.getMoonInfo().getMoonrise() +
-                    "\nMoonset: " + astroCalculator.getMoonInfo().getMoonset() +
+                    "Moonrise: " + moonRise.substring(0, moonRise.length() - 6) +
+                    "\nMoonset: " + moonSet.substring(0, moonSet.length() - 6) +
                     "\nMoon age: " + astroCalculator.getMoonInfo().getAge() +
                     "\nIllumination: " + astroCalculator.getMoonInfo().getIllumination() +
-                    "\nNext full moon: " + astroCalculator.getMoonInfo().getNextFullMoon() +
-                    "\nNext new moon: " + astroCalculator.getMoonInfo().getNextNewMoon()
+                    "\nNext full moon: " + nextFullMoon.substring(0, nextFullMoon.length() - 6) +
+                    "\nNext new moon: " + NextNewMoon.substring(0, NextNewMoon.length() - 6)
             );
             super.showText();
         }

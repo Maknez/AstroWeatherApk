@@ -43,13 +43,17 @@ public class SunFragment extends Fragment {
 
         @Override
         public void showText() {
+            String sunrise = astroCalculator.getSunInfo().getSunrise().toString();
+            String sunset = astroCalculator.getSunInfo().getSunset().toString();
+            String twilightMorning = astroCalculator.getSunInfo().getTwilightMorning().toString();
+            String twilightEvening = astroCalculator.getSunInfo().getTwilightMorning().toString();
             mView.setText(
-                    "Sunrise: " + astroCalculator.getSunInfo().getSunrise() +
-                    "\nSunset: " + astroCalculator.getSunInfo().getSunset() +
+                    "Sunrise: " + sunrise.substring(0, sunrise.length() - 6) +
+                    "\nSunset: " + sunset.substring(0, sunset.length() - 6) +
                     "\nAzimuth rise: " + astroCalculator.getSunInfo().getAzimuthRise() +
                     "\nAzimuth set: " +astroCalculator.getSunInfo().getAzimuthSet() +
-                    "\nTwilight morning: " + astroCalculator.getSunInfo().getTwilightMorning() +
-                    "\nTwilight evening: " + astroCalculator.getSunInfo().getTwilightEvening()
+                    "\nTwilight morning: " + twilightMorning.substring(0, twilightMorning.length() - 6) +
+                    "\nTwilight evening: " + twilightEvening.substring(0, twilightEvening.length() - 6)
             );
             super.showText();
         }
