@@ -8,186 +8,166 @@
     tools:layout_editor_absoluteY="81dp">
 
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_weight="0.3"
+        android:autoSizeTextType="uniform"
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="0.2"
-            android:orientation="horizontal">
+        android:gravity="center"
+        android:text="Longitude (-180:180)"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guideline12" />
 
-            <TextView
-                android:id="@+id/textView"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:autoSizeTextType="uniform"
-                android:gravity="center"
-                android:text="Settings"
-                android:textSize="36sp" />
-        </LinearLayout>
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_weight="0.3"
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="0.2"
-            android:orientation="horizontal">
+        android:autoSizeTextType="uniform"
+        android:gravity="center"
+        android:text="Units"
+        android:textSize="24sp"
+        app:layout_constraintStart_toStartOf="@+id/guideline14"
+        app:layout_constraintTop_toTopOf="@+id/guideline13" />
 
-            <TextView
-                android:id="@+id/textView2"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="0.3"
-                android:autoSizeTextType="uniform"
-                android:gravity="center"
-                android:text="Longitude (-180:180)"
+    <EditText
+        android:id="@+id/editLongitude"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_weight="0.3"
+        android:autoSizeTextType="uniform"
+        android:ems="10"
+        android:gravity="center"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
-                android:textSize="24sp" />
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_weight="0.3"
+        android:autoSizeTextType="uniform"
+        android:gravity="center"
+        android:text="Latitude (-90:90)"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editLongitude" />
 
-            <Button
-                android:id="@+id/setDefaultLongitude"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="0.7"
-                android:autoSizeTextType="uniform"
-                android:text="Default"
-                android:textSize="12sp" />
-        </LinearLayout>
+    <EditText
+        android:id="@+id/editLatitude"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_weight="0.3"
+        android:autoSizeTextType="uniform"
+        android:ems="10"
+        android:gravity="center"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="0.2"
-            android:orientation="horizontal">
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_weight="0.3"
+        android:autoSizeTextType="uniform"
+        android:gravity="center"
+        android:text="Refresh (1:60)"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editLatitude" />
 
-            <EditText
-                android:id="@+id/editLongitude"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="0.3"
-                android:ems="10"
-                android:gravity="center"
-                android:autoSizeTextType="uniform"
-                android:textSize="18sp" />
+    <EditText
+        android:id="@+id/editRefresh"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_weight="0.3"
+        android:autoSizeTextType="uniform"
+        android:ems="10"
+        android:gravity="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView4" />
 
-            <Button
-                android:id="@+id/saveLongitude"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="0.7"
-                android:autoSizeTextType="uniform"
-                android:text="Save"
-                android:textSize="12sp" />
-        </LinearLayout>
+    <Button
+        android:id="@+id/setDefaultValues"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_weight="0.7"
+        android:autoSizeTextType="uniform"
+        android:text="Default"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/saveValues"
+        app:layout_constraintTop_toBottomOf="@+id/editRefresh" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="0.2"
-            android:orientation="horizontal">
+    <Button
+        android:id="@+id/saveValues"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_weight="0.7"
+        android:autoSizeTextType="uniform"
+        android:text="Save"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toStartOf="@+id/setDefaultValues"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editRefresh" />
 
-            <TextView
-                android:id="@+id/textView3"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="0.3"
-                android:autoSizeTextType="uniform"
-                android:gravity="center"
-                android:text="Latitude (-90:90)"
-                android:textSize="24sp" />
+    <Spinner
+        android:id="@+id/unitsSpinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintStart_toEndOf="@+id/textView5"
+        app:layout_constraintTop_toTopOf="@+id/guideline13" />
 
-            <Button
-                android:id="@+id/setDefaultLatitude"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="0.7"
-                android:autoSizeTextType="uniform"
-                android:text="Default"
-                android:textSize="12sp" />
-        </LinearLayout>
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline12"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="138dp" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="0.2"
-            android:orientation="horizontal">
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline13"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="42dp" />
 
-            <EditText
-                android:id="@+id/editLatitude"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="0.3"
-                android:ems="10"
-                android:gravity="center"
-                android:autoSizeTextType="uniform"
-                android:textSize="18sp" />
-
-            <Button
-                android:id="@+id/saveLatitude"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="0.7"
-                android:autoSizeTextType="uniform"
-                android:text="Save"
-                android:textSize="12sp" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="0.2"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/textView4"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="0.3"
-                android:autoSizeTextType="uniform"
-                android:gravity="center"
-                android:text="Refresh (1:60)"
-                android:textSize="24sp" />
-
-            <Button
-                android:id="@+id/setDefaultRefresh"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="0.7"
-                android:autoSizeTextType="uniform"
-                android:text="Default"
-                android:textSize="12sp" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="0.2"
-            android:orientation="horizontal">
-
-            <EditText
-                android:id="@+id/editRefresh"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="0.3"
-                android:ems="10"
-                android:autoSizeTextType="uniform"
-                android:gravity="center" />
-
-            <Button
-                android:id="@+id/saveRefresh"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="0.7"
-                android:autoSizeTextType="uniform"
-                android:text="Save"
-                android:textSize="12sp" />
-        </LinearLayout>
-
-    </LinearLayout>
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline14"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="82dp" />
 
 </android.support.constraint.ConstraintLayout>
