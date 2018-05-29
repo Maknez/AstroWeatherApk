@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Application"
+    tools:context=".Application.Application"
     tools:layout_editor_absoluteY="25dp">
 
     <LinearLayout
@@ -52,14 +52,14 @@
 
             <fragment
                 android:id="@+id/list"
-                android:name="noname.astroweather.SunFragment"
+                android:name="noname.astroweather.SunAndMoonFragments.SunFragment"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1" />
 
             <fragment
                 android:id="@+id/viewer"
-                android:name="noname.astroweather.MoonFragment"
+                android:name="noname.astroweather.SunAndMoonFragments.MoonFragment"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1" />

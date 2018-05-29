@@ -1,4 +1,4 @@
-package noname.astroweather;
+package noname.astroweather.SunAndMoonFragments;
 
 import android.app.Activity;
 import android.content.SharedPreferences;
@@ -17,21 +17,24 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
-public class SunFragment extends Fragment {
+import noname.astroweather.Application.Clock;
+import noname.astroweather.R;
+
+public class MoonFragment extends Fragment {
     TextView mView;
     String date;
     Thread myThread;
 
-    Clock clock; //= new ClockSunFragment(this.getActivity());
+    Clock clock; //= new MoonFragment.ClockMoonFragment(getActivity());
     DateFormat df = new SimpleDateFormat("yyyy.MM.dd HH:mm:ss");
 
     AstroCalculator astroCalculator;
     AstroCalculator.Location location;
     AstroDateTime astroDateTime;
 
-    private class ClockSunFragment extends Clock {
+    class ClockMoonFragment extends Clock {
 
-        private ClockSunFragment(Activity activity) {
+        private ClockMoonFragment(Activity activity) {
             super(activity);
         }
 
@@ -43,21 +46,20 @@ public class SunFragment extends Fragment {
 
         @Override
         public void showText() {
-            String sunrise = astroCalculator.getSunInfo().getSunrise().toString();
-            String sunset = astroCalculator.getSunInfo().getSunset().toString();
-            String twilightMorning = astroCalculator.getSunInfo().getTwilightMorning().toString();
-            String twilightEvening = astroCalculator.getSunInfo().getTwilightMorning().toString();
+            String moonRise = astroCalculator.getMoonInfo().getMoonrise().toString();
+            String moonSet = astroCalculator.getMoonInfo().getMoonset().toString();
+            String nextFullMoon = astroCalculator.getMoonInfo().getNextFullMoon().toString();
+            String NextNewMoon= astroCalculator.getMoonInfo().getNextNewMoon().toString();
             mView.setText(
-                    "Sunrise: " + sunrise.substring(0, sunrise.length() - 6) +
-                    "\nSunset: " + sunset.substring(0, sunset.length() - 6) +
-                    "\nAzimuth rise: " + astroCalculator.getSunInfo().getAzimuthRise() +
-                    "\nAzimuth set: " +astroCalculator.getSunInfo().getAzimuthSet() +
-                    "\nTwilight morning: " + twilightMorning.substring(0, twilightMorning.length() - 6) +
-                    "\nTwilight evening: " + twilightEvening.substring(0, twilightEvening.length() - 6)
+                    "Moonrise: " + moonRise.substring(0, moonRise.length() - 6) +
+                    "\nMoonset: " + moonSet.substring(0, moonSet.length() - 6) +
+                    "\nMoon age: " + astroCalculator.getMoonInfo().getAge() +
+                    "\nIllumination: " + astroCalculator.getMoonInfo().getIllumination() +
+                    "\nNext full moon: " + nextFullMoon.substring(0, nextFullMoon.length() - 6) +
+                    "\nNext new moon: " + NextNewMoon.substring(0, NextNewMoon.length() - 6)
             );
             super.showText();
         }
-
     }
 
     public void astroInit() {
@@ -89,7 +91,7 @@ public class SunFragment extends Fragment {
 
     @Override
     public void onStart() {
-        clock = new ClockSunFragment(getActivity());
+        clock = new MoonFragment.ClockMoonFragment(getActivity());
         Runnable myRunnableThread = clock;
         clock.setNewRefreshTime();
         myThread = new Thread(myRunnableThread);
@@ -102,17 +104,17 @@ public class SunFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         ViewGroup rootView = (ViewGroup) inflater.inflate(
-                R.layout.fragment_sun, container, false);
+                R.layout.fragment_moon, container, false);
 
-        clock = new ClockSunFragment(getActivity());
-        mView = rootView.findViewById(R.id.sloneczko);
+        clock = new MoonFragment.ClockMoonFragment(getActivity());
+        mView = rootView.findViewById(R.id.ksiezyczek);
 
         Configuration config = getResources().getConfiguration();
         if (config.orientation == 2) {
-            mView.setBackgroundResource(R.drawable.sun_landscape);
+            mView.setBackgroundResource(R.drawable.moon_landscape);
         } else if (config.orientation == 1) {
             //pionowe
-            mView.setBackgroundResource(R.drawable.sun_portrait);
+            mView.setBackgroundResource(R.drawable.moon_portrait);
         }
 
         astroInit();
@@ -127,5 +129,3 @@ public class SunFragment extends Fragment {
         super.onStop();
     }
 }
-
-

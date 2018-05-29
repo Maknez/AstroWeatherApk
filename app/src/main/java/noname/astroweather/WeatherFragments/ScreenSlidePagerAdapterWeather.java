@@ -1,8 +1,12 @@
-package noname.astroweather;
+package noname.astroweather.WeatherFragments;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
+
+import noname.astroweather.WeatherFragments.BasicInfo;
+import noname.astroweather.WeatherFragments.WeatherForecast;
+import noname.astroweather.WeatherFragments.WindAndHumidity;
 
 public class ScreenSlidePagerAdapterWeather extends FragmentStatePagerAdapter {
 

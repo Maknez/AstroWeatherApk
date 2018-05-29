@@ -1,4 +1,4 @@
-package noname.astroweather;
+package noname.astroweather.Application;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -14,6 +14,10 @@ import android.widget.TextView;
 
 import java.util.Calendar;
 
+import noname.astroweather.R;
+import noname.astroweather.SunAndMoonFragments.ScreenSlidePagerAdapterSunMoon;
+import noname.astroweather.WeatherFragments.ScreenSlidePagerAdapterWeather;
+
 
 public class Application extends AppCompatActivity {
 
@@ -27,7 +31,7 @@ public class Application extends AppCompatActivity {
 
     Clock clock;
 
-    private class ClockActivity extends noname.astroweather.Clock {
+    private class ClockActivity extends Clock {
 
         private ClockActivity(Activity activity) {
             super(activity);

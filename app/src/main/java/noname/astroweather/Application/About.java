@@ -1,10 +1,12 @@
-package noname.astroweather;
+package noname.astroweather.Application;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import noname.astroweather.R;
 
 public class About extends AppCompatActivity {
 

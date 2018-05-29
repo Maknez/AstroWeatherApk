@@ -1,4 +1,4 @@
-package noname.astroweather;
+package noname.astroweather.SunAndMoonFragments;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;

@@ -1,4 +1,4 @@
-package noname.astroweather;
+package noname.astroweather.Application;
 
 import android.app.Activity;
 import android.content.SharedPreferences;
@@ -7,7 +7,9 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
-class Clock implements Runnable {
+import noname.astroweather.R;
+
+public class Clock implements Runnable {
     Activity thisActivity;
     Date nextRefreshTime;
     DateFormat df = new SimpleDateFormat("yyyy.MM.dd HH:mm:ss");

@@ -1,4 +1,4 @@
-package noname.astroweather;
+package noname.astroweather.WeatherFragments;
 
 
 import android.os.Bundle;
@@ -6,6 +6,8 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import noname.astroweather.R;
 
 public class WeatherForecast extends Fragment {
 

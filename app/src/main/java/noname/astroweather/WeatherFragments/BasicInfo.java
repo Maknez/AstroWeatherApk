@@ -1,4 +1,4 @@
-package noname.astroweather;
+package noname.astroweather.WeatherFragments;
 
 
 import android.os.Bundle;
@@ -7,12 +7,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import noname.astroweather.R;
+
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class BasicInfo extends Fragment {
-
 
     public BasicInfo() {
 
