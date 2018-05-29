@@ -61,10 +61,10 @@ public class AstroCore {
         String twilightMorning = astroCalculator.getSunInfo().getTwilightMorning().toString();
         String twilightEvening = astroCalculator.getSunInfo().getTwilightMorning().toString();
 
-        return  "Sunrise: " + sunrise.substring(0, sunrise.length() - 6) +
+        return "Sunrise: " + sunrise.substring(0, sunrise.length() - 6) +
                 "\nSunset: " + sunset.substring(0, sunset.length() - 6) +
                 "\nAzimuth rise: " + astroCalculator.getSunInfo().getAzimuthRise() +
-                "\nAzimuth set: " +astroCalculator.getSunInfo().getAzimuthSet() +
+                "\nAzimuth set: " + astroCalculator.getSunInfo().getAzimuthSet() +
                 "\nTwilight morning: " + twilightMorning.substring(0, twilightMorning.length() - 6) +
                 "\nTwilight evening: " + twilightEvening.substring(0, twilightEvening.length() - 6);
     }

@@ -60,10 +60,9 @@ public class Settings extends AppCompatActivity {
             public void onClick(View view) {
                 SharedPreferences sharedPref = getSharedPreferences("config.xml", 0);
                 SharedPreferences.Editor editor = sharedPref.edit();
-                if(saveLongitude(editor, sharedPref) && saveLatitude(editor, sharedPref) && saveRefresh(editor, sharedPref)) {
+                if (saveLongitude(editor, sharedPref) && saveLatitude(editor, sharedPref) && saveRefresh(editor, sharedPref)) {
                     Toast.makeText(Settings.this, "Values save properly!", Toast.LENGTH_SHORT).show();
-                }
-                else {
+                } else {
                     Toast.makeText(Settings.this, "Some values are not save!", Toast.LENGTH_SHORT).show();
                 }
 

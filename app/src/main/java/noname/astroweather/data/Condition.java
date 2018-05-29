@@ -24,6 +24,6 @@ public class Condition implements JSONPopulator {
     public void populate(JSONObject data) {
         code = data.optInt("code");
         temperature = data.optInt("temp");
-        description = data.optString( "text");
+        description = data.optString("text");
     }
 }

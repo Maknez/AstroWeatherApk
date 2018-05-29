@@ -104,8 +104,8 @@ public class Application extends AppCompatActivity {
         SharedPreferences sharedPref = getSharedPreferences("config.xml", 0);
         longAndLatiView.setText(
                 sharedPref.getString("Custom_Longitude", String.valueOf(getResources().getString(R.string.Default_Longitude))) +
-                " , " +
-                sharedPref.getString("Custom_Latitude", String.valueOf(getResources().getString(R.string.Default_Latitude))));
+                        " , " +
+                        sharedPref.getString("Custom_Latitude", String.valueOf(getResources().getString(R.string.Default_Latitude))));
     }
 
     @Override
@@ -183,7 +183,7 @@ public class Application extends AppCompatActivity {
         if (checkSize(config)) {
             if (isLandscape(config)) {
                 setContentView(R.layout.activity_application_landscape_tablet);
-            } else if(isPortrait(config)) {
+            } else if (isPortrait(config)) {
                 setContentView(R.layout.activity_application_portrait_tablet);
             }
         } else {

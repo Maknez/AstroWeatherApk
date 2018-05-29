@@ -39,7 +39,7 @@ public class UnitsSpinnerAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        View row =  inflater.inflate(R.layout.spinner_row, null);
+        View row = inflater.inflate(R.layout.spinner_row, null);
         TextView singleUnit = (TextView) row.findViewById(R.id.singleUnit);
         singleUnit.setText(units[position]);
         return row;
