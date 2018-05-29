@@ -109,16 +109,18 @@ public class Application extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+            case R.id.sync: {
+                //TODO: implement sync function
+                return true;
+            }
             case R.id.settings: {
                 startActivity(new Intent(this, Settings.class));
                 return true;
             }
-
             case R.id.about: {
                 startActivity(new Intent(this, About.class));
                 return true;
             }
-
             case R.id.exit: {
                 moveTaskToBack(true);
                 android.os.Process.killProcess(android.os.Process.myPid());
@@ -141,13 +143,19 @@ public class Application extends AppCompatActivity {
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        // outState.putInt("currentFragment", mPagerSunMoon.getCurrentItem());
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        setLayout();
+        initClockView();
+        initLongAndLatiView();
+        showLongAndLati();
+    }
+
+    private void setLayout() {
         Configuration config = getResources().getConfiguration();
         if (checkSize(config)) {
             if (config.orientation == 2) {
@@ -165,9 +173,6 @@ public class Application extends AppCompatActivity {
                 initViewPagerWeather();
             }
         }
-        initClockView();
-        initLongAndLatiView();
-        showLongAndLati();
     }
 
     private void initLongAndLatiView() {
