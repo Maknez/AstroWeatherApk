@@ -80,7 +80,7 @@ public class BasicInfo extends Fragment implements WeatherServiceCallback {
     public void serviceSuccess(Channel channel) {
         dialog.hide();
         Item item = channel.getItem();
-        
+
         int resourceID = getResources().getIdentifier("weather_icon_" + channel.getItem().getCondition().getCode(), "drawable", getContext().getPackageName());
 
         weatherImageView.setImageResource(resourceID);

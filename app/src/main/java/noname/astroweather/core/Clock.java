@@ -65,16 +65,7 @@ public class Clock implements Runnable {
         nextRefreshTime.setMinutes(nextRefreshTime.getMinutes() + Integer.parseInt(sharedPref.getString("Custom_Refresh", String.valueOf(thisActivity.getResources().getString(R.string.Default_Refresh)))));
     }
 
-    public int getTimeZone() {
-        SharedPreferences sharedPref = thisActivity.getSharedPreferences("config.xml", 0);
-        double longitude = Double.valueOf(sharedPref.getString("Custom_Longitude", String.valueOf(thisActivity.getString(R.string.Default_Longitude))));
-        if(longitude >= 15 || longitude <= -15) {
-            return (int)Math.floor((longitude + 15) / 30);
-        }
-        else {
-            return 0;
-        }
-    }
+
 
     public void showText() {
     }
