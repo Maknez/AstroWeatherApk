@@ -12,10 +12,9 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.w3c.dom.Text;
-
 import noname.astroweather.R;
-import noname.astroweather.adapters.UnitsSpinnerAdapter;
+import noname.astroweather.adapters.TemperatureUnitsSpinnerAdapter;
+import noname.astroweather.adapters.WindSpeedUnitsSpinnerAdapter;
 
 public class Settings extends AppCompatActivity {
 
@@ -26,7 +25,8 @@ public class Settings extends AppCompatActivity {
     Button saveValues;
     Button setDefaultValues;
 
-    Spinner spinner;
+    Spinner temperatureSpinner;
+    Spinner windSpeedSpinner;
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
@@ -43,7 +43,8 @@ public class Settings extends AppCompatActivity {
 
         initTextViews();
         initButtons();
-        initSpinner();
+        initTemperatureSpinner();
+        initWindSpeedSpinner();
 
         if (savedInstanceState != null) {
             editLongitude.setText(savedInstanceState.getString("savedLongitude"));
@@ -88,10 +89,16 @@ public class Settings extends AppCompatActivity {
         });
     }
 
-    private void initSpinner() {
-        spinner = (Spinner) findViewById(R.id.unitsSpinner);
-        UnitsSpinnerAdapter unitsSpinnerAdapter = new UnitsSpinnerAdapter(this);
-        spinner.setAdapter(unitsSpinnerAdapter);
+    private void initTemperatureSpinner() {
+        temperatureSpinner = (Spinner) findViewById(R.id.temperatureSpinner);
+        TemperatureUnitsSpinnerAdapter temperatureUnitsSpinnerAdapter = new TemperatureUnitsSpinnerAdapter(this);
+        temperatureSpinner.setAdapter(temperatureUnitsSpinnerAdapter);
+    }
+
+    private void initWindSpeedSpinner() {
+        windSpeedSpinner = (Spinner) findViewById(R.id.windSpeedSpinner);
+        WindSpeedUnitsSpinnerAdapter windSpeedUnitsSpinnerAdapter= new WindSpeedUnitsSpinnerAdapter(this);
+        windSpeedSpinner.setAdapter(windSpeedUnitsSpinnerAdapter);
     }
 
     private boolean saveRefresh(SharedPreferences.Editor editor, SharedPreferences sharedPref) {

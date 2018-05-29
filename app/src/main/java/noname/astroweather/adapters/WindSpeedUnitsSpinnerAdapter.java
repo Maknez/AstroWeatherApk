@@ -10,15 +10,14 @@ import android.widget.TextView;
 
 import noname.astroweather.R;
 
-public class UnitsSpinnerAdapter extends BaseAdapter {
+public class WindSpeedUnitsSpinnerAdapter extends BaseAdapter {
     Activity activity;
     String[] units;
     LayoutInflater inflater;
 
-
-    public UnitsSpinnerAdapter(Activity activity) {
+    public WindSpeedUnitsSpinnerAdapter(Activity activity) {
         this.activity = activity;
-        this.units = new String[]{"°C", "°F"};
+        this.units = new String[]{"mph", "kmph"};
         this.inflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
@@ -40,8 +39,8 @@ public class UnitsSpinnerAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         View row = inflater.inflate(R.layout.spinner_row, null);
-        TextView singleUnit = (TextView) row.findViewById(R.id.singleUnit);
-        singleUnit.setText(units[position]);
+        TextView singleWindSpeedUnit = (TextView) row.findViewById(R.id.singleUnit);
+        singleWindSpeedUnit.setText(units[position]);
         return row;
     }
 }

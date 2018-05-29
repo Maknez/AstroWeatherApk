@@ -33,10 +33,25 @@
 
         android:autoSizeTextType="uniform"
         android:gravity="center"
-        android:text="Units"
+        android:text="Temperature"
         android:textSize="24sp"
         app:layout_constraintStart_toStartOf="@+id/guideline14"
         app:layout_constraintTop_toTopOf="@+id/guideline13" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="8dp"
+
+        android:layout_weight="0.3"
+        android:autoSizeTextType="uniform"
+        android:gravity="center"
+        android:text="Wind Speed"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline12"
+        app:layout_constraintStart_toStartOf="@+id/guideline14" />
 
     <EditText
         android:id="@+id/editLongitude"
@@ -141,7 +156,14 @@
         app:layout_constraintTop_toBottomOf="@+id/editRefresh" />
 
     <Spinner
-        android:id="@+id/unitsSpinner"
+        android:id="@+id/windSpeedSpinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="@+id/temperatureSpinner"
+        app:layout_constraintTop_toTopOf="@+id/textView" />
+
+    <Spinner
+        android:id="@+id/temperatureSpinner"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
