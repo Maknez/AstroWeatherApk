@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Application.Application"
+    tools:context=".core.Application"
     tools:layout_editor_absoluteY="25dp">
 
     <LinearLayout
@@ -41,21 +41,21 @@
 
         <fragment
             android:id="@+id/fragment"
-            android:name="noname.astroweather.WeatherFragments.BasicInfo"
+            android:name="noname.astroweather.weather.BasicInfo"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="0.4" />
 
         <fragment
             android:id="@+id/fragment2"
-            android:name="noname.astroweather.WeatherFragments.WeatherForecast"
+            android:name="noname.astroweather.weather.WeatherForecast"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="0.4" />
 
         <fragment
             android:id="@+id/fragment3"
-            android:name="noname.astroweather.WeatherFragments.WindAndHumidity"
+            android:name="noname.astroweather.weather.WindAndHumidity"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="0.4" />
@@ -68,14 +68,14 @@
 
             <fragment
                 android:id="@+id/list"
-                android:name="noname.astroweather.SunAndMoonFragments.SunFragment"
+                android:name="noname.astroweather.astro.SunFragment"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1" />
 
             <fragment
                 android:id="@+id/viewer"
-                android:name="noname.astroweather.SunAndMoonFragments.MoonFragment"
+                android:name="noname.astroweather.astro.MoonFragment"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1" />

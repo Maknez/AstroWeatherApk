@@ -1,4 +1,4 @@
-package noname.astroweather.Application;
+package noname.astroweather.core;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -15,21 +15,25 @@ import android.widget.TextView;
 import java.util.Calendar;
 
 import noname.astroweather.R;
-import noname.astroweather.SunAndMoonFragments.ScreenSlidePagerAdapterSunMoon;
-import noname.astroweather.WeatherFragments.ScreenSlidePagerAdapterWeather;
+import noname.astroweather.adapters.ScreenSlidePagerAdapterAllFragments;
+import noname.astroweather.adapters.ScreenSlidePagerAdapterSunMoon;
+import noname.astroweather.adapters.ScreenSlidePagerAdapterWeather;
 
 
 public class Application extends AppCompatActivity {
 
-    TextView clockView;
-    TextView longAndLatiView;
-    ViewPager mPagerSunMoon;
-    ViewPager mPagerWeather;
-    PagerAdapter mPagerAdapterSunMoon;
-    PagerAdapter mPagerAdapterWeather;
-    Thread myThread;
+    private TextView clockView;
+    private TextView longAndLatiView;
+    private ViewPager mPagerSunMoon;
+    private ViewPager mPagerWeather;
+    private ViewPager mPagerAllFragments;
+    private PagerAdapter mPagerAdapterSunMoon;
+    private PagerAdapter mPagerAdapterWeather;
+    private PagerAdapter mPagerAdapterAllFragments;
+    private Thread myThread;
+    private Clock clock;
 
-    Clock clock;
+
 
     private class ClockActivity extends Clock {
 
@@ -170,7 +174,7 @@ public class Application extends AppCompatActivity {
         } else {
             if (config.orientation == 2) {
                 setContentView(R.layout.activity_application_landscape_phone);
-                initViewPagerWeather();
+                initViewPagerAllFragments();
             } else if (config.orientation == 1) {
                 setContentView(R.layout.activity_application_portrait_phone);
                 initViewPagerSunMoon();
@@ -191,6 +195,12 @@ public class Application extends AppCompatActivity {
         mPagerSunMoon = (ViewPager) findViewById(R.id.viewPagerSunMoon);
         mPagerAdapterSunMoon = new ScreenSlidePagerAdapterSunMoon(getSupportFragmentManager());
         mPagerSunMoon.setAdapter(mPagerAdapterSunMoon);
+    }
+
+    private void initViewPagerAllFragments() {
+        mPagerAllFragments = (ViewPager) findViewById(R.id.viewPagerAllFragments);
+        mPagerAdapterAllFragments = new ScreenSlidePagerAdapterAllFragments(getSupportFragmentManager());
+        mPagerAllFragments.setAdapter(mPagerAdapterAllFragments);
     }
 
     private void initViewPagerWeather() {

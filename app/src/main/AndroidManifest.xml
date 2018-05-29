@@ -11,22 +11,22 @@
         android:roundIcon="@drawable/ic_wb_sunny"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Application.Application">
+        <activity android:name=".core.Application">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Application.Settings">
+        <activity android:name=".core.Settings">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".Application.Application" />
+                android:value=".core.Application" />
         </activity>
-        <activity android:name=".Application.About">
+        <activity android:name=".core.About">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".Application.Application" />
+                android:value=".core.Application" />
         </activity>
     </application>
 

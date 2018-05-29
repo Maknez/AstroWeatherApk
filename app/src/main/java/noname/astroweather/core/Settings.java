@@ -1,4 +1,4 @@
-package noname.astroweather.Application;
+package noname.astroweather.core;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -31,17 +31,9 @@ public class Settings extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
 
-        editLongitude = (TextView) findViewById(R.id.editLongitude);
-        editLatitude = (TextView) findViewById(R.id.editLatitude);
-        editRefresh = (TextView) findViewById(R.id.editRefresh);
+        initTextViews();
 
-        saveLongitude = (Button) findViewById(R.id.saveLongitude);
-        saveLatitude = (Button) findViewById(R.id.saveLatitude);
-        saveRefresh = (Button) findViewById(R.id.saveRefresh);
-
-        setDefaultLongitude = (Button) findViewById(R.id.setDefaultLongitude);
-        setDefaultLatitude = (Button) findViewById(R.id.setDefaultLatitude);
-        setDefaultRefresh = (Button) findViewById(R.id.setDefaultRefresh);
+        initButtons();
 
         if (savedInstanceState != null) {
             editLongitude.setText(savedInstanceState.getString("savedLongitude"));
@@ -167,6 +159,22 @@ public class Settings extends AppCompatActivity {
                 Toast.makeText(Settings.this, "Refresh set to default!", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private void initTextViews() {
+        editLongitude = (TextView) findViewById(R.id.editLongitude);
+        editLatitude = (TextView) findViewById(R.id.editLatitude);
+        editRefresh = (TextView) findViewById(R.id.editRefresh);
+    }
+
+    private void initButtons() {
+        saveLongitude = (Button) findViewById(R.id.saveLongitude);
+        saveLatitude = (Button) findViewById(R.id.saveLatitude);
+        saveRefresh = (Button) findViewById(R.id.saveRefresh);
+
+        setDefaultLongitude = (Button) findViewById(R.id.setDefaultLongitude);
+        setDefaultLatitude = (Button) findViewById(R.id.setDefaultLatitude);
+        setDefaultRefresh = (Button) findViewById(R.id.setDefaultRefresh);
     }
 
     public static boolean isNumeric(String string) {

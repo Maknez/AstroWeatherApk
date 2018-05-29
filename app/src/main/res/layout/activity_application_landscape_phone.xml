@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Application.Application"
+    tools:context=".core.Application"
     tools:layout_editor_absoluteY="25dp">
 
     <LinearLayout
@@ -15,7 +15,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="0.6"
+            android:layout_weight="0.8"
             android:orientation="horizontal">
 
             <TextView
@@ -39,31 +39,11 @@
         </LinearLayout>
 
         <android.support.v4.view.ViewPager
-            android:id="@+id/viewPagerWeather"
+            android:id="@+id/viewPagerAllFragments"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="0.4" />
+            android:layout_weight="0.2" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="0.4"
-            android:orientation="horizontal">
-
-            <fragment
-                android:id="@+id/list"
-                android:name="noname.astroweather.SunAndMoonFragments.SunFragment"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1" />
-
-            <fragment
-                android:id="@+id/viewer"
-                android:name="noname.astroweather.SunAndMoonFragments.MoonFragment"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1" />
-        </LinearLayout>
     </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>

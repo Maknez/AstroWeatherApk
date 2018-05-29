@@ -1,4 +1,4 @@
-package noname.astroweather.WeatherFragments;
+package noname.astroweather.weather;
 
 
 import android.os.Bundle;

@@ -1,4 +1,4 @@
-package noname.astroweather.WeatherFragments;
+package noname.astroweather.weather;
 
 
 import android.os.Bundle;
@@ -9,14 +9,11 @@ import android.view.ViewGroup;
 
 import noname.astroweather.R;
 
+public class WeatherForecast extends Fragment {
 
-/**
- * A simple {@link Fragment} subclass.
- */
-public class BasicInfo extends Fragment {
 
-    public BasicInfo() {
-
+    public WeatherForecast() {
+        // Required empty public constructor
     }
 
 
@@ -24,7 +21,7 @@ public class BasicInfo extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         ViewGroup rootView = (ViewGroup) inflater.inflate(
-                R.layout.fragment_basic_info, container, false);
+                R.layout.fragment_weather_forecast, container, false);
         return rootView;
     }
 

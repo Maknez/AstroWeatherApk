@@ -1,4 +1,4 @@
-package noname.astroweather.SunAndMoonFragments;
+package noname.astroweather.astro;
 
 import android.app.Activity;
 import android.content.SharedPreferences;
@@ -17,7 +17,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
-import noname.astroweather.Application.Clock;
+import noname.astroweather.core.Clock;
 import noname.astroweather.R;
 
 public class SunFragment extends Fragment {

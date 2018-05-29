@@ -1,8 +1,11 @@
-package noname.astroweather.SunAndMoonFragments;
+package noname.astroweather.adapters;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
+
+import noname.astroweather.astro.MoonFragment;
+import noname.astroweather.astro.SunFragment;
 
 public class ScreenSlidePagerAdapterSunMoon extends FragmentStatePagerAdapter {
 
