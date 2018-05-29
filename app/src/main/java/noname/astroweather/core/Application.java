@@ -34,7 +34,6 @@ public class Application extends AppCompatActivity {
     private Clock clock;
 
 
-
     private class ClockActivity extends Clock {
 
         private ClockActivity(Activity activity) {
@@ -83,6 +82,22 @@ public class Application extends AppCompatActivity {
         boolean xlarge = ((config.screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK) == Configuration.SCREENLAYOUT_SIZE_XLARGE);
         boolean large = ((config.screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK) == Configuration.SCREENLAYOUT_SIZE_LARGE);
         return (xlarge || large);
+    }
+
+    public boolean isPortrait(Configuration config) {
+        if (config.orientation == 1) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public boolean isLandscape(Configuration config) {
+        if (config.orientation == 2) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public void showLongAndLati() {
@@ -166,16 +181,16 @@ public class Application extends AppCompatActivity {
     private void setLayout() {
         Configuration config = getResources().getConfiguration();
         if (checkSize(config)) {
-            if (config.orientation == 2) {
+            if (isLandscape(config)) {
                 setContentView(R.layout.activity_application_landscape_tablet);
-            } else if (config.orientation == 1) {
+            } else if(isPortrait(config)) {
                 setContentView(R.layout.activity_application_portrait_tablet);
             }
         } else {
-            if (config.orientation == 2) {
+            if (isLandscape(config)) {
                 setContentView(R.layout.activity_application_landscape_phone);
                 initViewPagerAllFragments();
-            } else if (config.orientation == 1) {
+            } else if (isPortrait(config)) {
                 setContentView(R.layout.activity_application_portrait_phone);
                 initViewPagerSunMoon();
                 initViewPagerWeather();
