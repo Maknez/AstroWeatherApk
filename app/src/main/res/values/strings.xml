@@ -6,10 +6,8 @@
     <string name="copyright">Copyright © 2018</string>
     <string name="all_rights">All Rights Reserved</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="clock">CLOCK</string>
-    <string name="longitude_latitude">LONGITUDE, LATITUDE</string>
-    <string name="temperature_unit_farenheit">°F</string>
-    <string name="temperature_unit_celsius">°C</string>
+    <string name="clock">Clock</string>
+    <string name="longitude_latitude">Longitude, Latitude</string>
+    <string name="temperature_unit_farenheit"> °F</string>
+    <string name="temperature_unit_celsius"> °C</string>
 </resources>

@@ -2,6 +2,7 @@ package noname.astroweather.weather;
 
 
 import android.app.ProgressDialog;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -66,10 +67,22 @@ public class WeatherForecast extends Fragment implements WeatherServiceCallback 
     @Override
     public void serviceSuccess(Channel channel) {
         //dialog.hide();
+        UnitsChanger unitsChanger = new UnitsChanger();
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("config.xml", 0);
+        int temperatureUnit = sharedPreferences.getInt("Temperature_Unit", (getResources().getInteger(R.integer.Default_Temperature_Unit)));
         for (int i = 0; i < FORECAST_DAY_NUMBER; i++) {
             weatherImageView[i].setImageResource(getResourceID(channel, i + 1));
-            temperatureHighTextView[i].setText(channel.getItem().getForecast(i + 1).getTemperatureHigh() + " " + channel.getUnits().getTemperature());
-            temperatureLowTextView[i].setText(channel.getItem().getForecast(i + 1).getTemperatureLow() + " " + channel.getUnits().getTemperature());
+            int temperatureHighInFarenheit = channel.getItem().getForecast(i + 1).getTemperatureHigh();
+            int temperatureLowInFarenheit = channel.getItem().getForecast(i + 1).getTemperatureLow();
+            int temperatureHighInCelsius = unitsChanger.fahrenheitToCelsius(temperatureHighInFarenheit);
+            int temperatureLowInCelsius = unitsChanger.fahrenheitToCelsius(temperatureLowInFarenheit);
+            if (temperatureUnit == 0) {
+                temperatureHighTextView[i].setText(temperatureHighInCelsius + getResources().getString(R.string.temperature_unit_celsius));
+                temperatureLowTextView[i].setText(temperatureLowInCelsius + getResources().getString(R.string.temperature_unit_celsius));
+            } else if (temperatureUnit == 1) {
+                temperatureHighTextView[i].setText(temperatureHighInFarenheit + getResources().getString(R.string.temperature_unit_farenheit));
+                temperatureLowTextView[i].setText(temperatureLowInFarenheit + getResources().getString(R.string.temperature_unit_farenheit));
+            }
             weatherTextView[i].setText(channel.getItem().getForecast(i + 1).getDay());
         }
     }
