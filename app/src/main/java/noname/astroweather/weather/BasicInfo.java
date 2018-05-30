@@ -2,6 +2,7 @@ package noname.astroweather.weather;
 
 
 import android.app.ProgressDialog;
+import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -74,19 +75,27 @@ public class BasicInfo extends Fragment implements WeatherServiceCallback {
         descriptionTextView = (TextView) rootView.findViewById(R.id.descriptionText);
     }
 
-
-
     @Override
     public void serviceSuccess(Channel channel) {
         //dialog.hide();
         Item item = channel.getItem();
+
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("config.xml", 0);
 
         int resourceID = getResources().getIdentifier("weather_icon_" + channel.getItem().getCondition().getCode(), "drawable", getContext().getPackageName());
 
         weatherImageView.setImageResource(resourceID);
         cityTextView.setText(channel.getLocation().getCity());
         countryTextView.setText(channel.getLocation().getCountry());
-        temperatureTextView.setText(item.getCondition().getTemperature() + " " + channel.getUnits().getTemperature());
+        UnitsChanger unitsChanger = new UnitsChanger();
+        int temperatureInFarenheit = item.getCondition().getTemperature();
+        int temperatureInCelsius = unitsChanger.fahrenheitToCelsius(temperatureInFarenheit);
+        int temperatureUnit = sharedPreferences.getInt("Temperature_Unit", (getResources().getInteger(R.integer.Default_Temperature_Unit)));
+        if (temperatureUnit == 0) {
+            temperatureTextView.setText(temperatureInCelsius + getResources().getString(R.string.temperature_unit_celsius));
+        } else if (temperatureUnit == 1) {
+            temperatureTextView.setText(temperatureInFarenheit + getResources().getString(R.string.temperature_unit_farenheit));
+        }
         descriptionTextView.setText(item.getCondition().getDescription());
         airPressureTextView.setText(channel.getAtmosphere().getPressure().toString() + " hPa");
     }

@@ -16,6 +16,7 @@ public class TemperatureUnitsSpinnerAdapter extends BaseAdapter {
     LayoutInflater inflater;
 
 
+
     public TemperatureUnitsSpinnerAdapter(Activity activity) {
         this.activity = activity;
         this.units = new String[]{"°C", "°F"};
@@ -29,7 +30,15 @@ public class TemperatureUnitsSpinnerAdapter extends BaseAdapter {
 
     @Override
     public Object getItem(int position) {
-        return null;
+        switch (position){
+            case 0: {
+                return units[0];
+            }
+            case 1: {
+                return units[1];
+            }
+        }
+        return 0;
     }
 
     @Override

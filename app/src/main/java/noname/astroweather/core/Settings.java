@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -27,6 +28,11 @@ public class Settings extends AppCompatActivity {
 
     Spinner temperatureSpinner;
     Spinner windSpeedSpinner;
+    private int temperatureUnit;
+    private int windUnit;
+
+    SharedPreferences sharedPref;
+    SharedPreferences.Editor editor;
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
@@ -41,10 +47,13 @@ public class Settings extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
 
+
+        initSharedPreferences();
         initTextViews();
         initButtons();
         initTemperatureSpinner();
         initWindSpeedSpinner();
+
 
         if (savedInstanceState != null) {
             editLongitude.setText(savedInstanceState.getString("savedLongitude"));
@@ -56,12 +65,11 @@ public class Settings extends AppCompatActivity {
         getEditLatitude();
         getEditRefresh();
 
+
         saveValues.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                SharedPreferences sharedPref = getSharedPreferences("config.xml", 0);
-                SharedPreferences.Editor editor = sharedPref.edit();
-                if (saveLongitude(editor, sharedPref) && saveLatitude(editor, sharedPref) && saveRefresh(editor, sharedPref)) {
+                if (saveLongitude() && saveLatitude() && saveRefresh()) {
                     Toast.makeText(Settings.this, "Values save properly!", Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(Settings.this, "Some values are not save!", Toast.LENGTH_SHORT).show();
@@ -77,9 +85,6 @@ public class Settings extends AppCompatActivity {
                 editLatitude.setText(getResources().getString(R.string.Default_Latitude));
                 editRefresh.setText(getResources().getString(R.string.Default_Refresh));
 
-                SharedPreferences sharedPref = getSharedPreferences("config.xml", 0);
-                SharedPreferences.Editor editor = sharedPref.edit();
-
                 editor.putString("Custom_Longitude", editLongitude.getText().toString());
                 editor.putString("Custom_Latitude", editLatitude.getText().toString());
                 editor.putString("Custom_Refresh", editRefresh.getText().toString());
@@ -89,19 +94,67 @@ public class Settings extends AppCompatActivity {
         });
     }
 
+    private void initSharedPreferences() {
+        sharedPref = getSharedPreferences("config.xml", 0);
+        editor = sharedPref.edit();
+    }
+
     private void initTemperatureSpinner() {
         temperatureSpinner = (Spinner) findViewById(R.id.temperatureSpinner);
         TemperatureUnitsSpinnerAdapter temperatureUnitsSpinnerAdapter = new TemperatureUnitsSpinnerAdapter(this);
         temperatureSpinner.setAdapter(temperatureUnitsSpinnerAdapter);
+        temperatureSpinner.setSelection(sharedPref.getInt("Temperature_Unit", (getResources().getInteger(R.integer.Default_Temperature_Unit))));
+        temperatureSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                switch (position) {
+                    case 0:
+                        temperatureUnit = 0;
+                        break;
+                    case 1:
+                        temperatureUnit = 1;
+                        break;
+                }
+                editor.putInt("Temperature_Unit", temperatureUnit);
+                editor.commit();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
     }
+
 
     private void initWindSpeedSpinner() {
         windSpeedSpinner = (Spinner) findViewById(R.id.windSpeedSpinner);
-        WindSpeedUnitsSpinnerAdapter windSpeedUnitsSpinnerAdapter= new WindSpeedUnitsSpinnerAdapter(this);
+        WindSpeedUnitsSpinnerAdapter windSpeedUnitsSpinnerAdapter = new WindSpeedUnitsSpinnerAdapter(this);
         windSpeedSpinner.setAdapter(windSpeedUnitsSpinnerAdapter);
+        windSpeedSpinner.setSelection(sharedPref.getInt("Wind_Speed_Unit", (getResources().getInteger(R.integer.Default_Wind_Speed_Unit))));
+        windSpeedSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                switch (position) {
+                    case 0:
+                        windUnit = 0;
+                        break;
+                    case 1:
+                        windUnit = 1;
+                        break;
+                }
+                editor.putInt("Wind_Speed_Unit", windUnit);
+                editor.commit();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
     }
 
-    private boolean saveRefresh(SharedPreferences.Editor editor, SharedPreferences sharedPref) {
+    private boolean saveRefresh() {
         String refresh = String.valueOf(editRefresh.getText());
         if (refresh.equals("")) {
             Toast.makeText(Settings.this, "You cannot save empty value!", Toast.LENGTH_SHORT).show();
@@ -123,7 +176,7 @@ public class Settings extends AppCompatActivity {
         return false;
     }
 
-    private boolean saveLatitude(SharedPreferences.Editor editor, SharedPreferences sharedPref) {
+    private boolean saveLatitude() {
         String latitude = String.valueOf(editLatitude.getText());
         if (latitude.equals("")) {
             Toast.makeText(Settings.this, "You cannot save empty value!", Toast.LENGTH_SHORT).show();
@@ -145,7 +198,7 @@ public class Settings extends AppCompatActivity {
         return false;
     }
 
-    private boolean saveLongitude(SharedPreferences.Editor editor, SharedPreferences sharedPref) {
+    private boolean saveLongitude() {
         String longitude = String.valueOf(editLongitude.getText());
         if (longitude.equals("")) {
             Toast.makeText(Settings.this, "You cannot save empty value!", Toast.LENGTH_SHORT).show();
@@ -189,17 +242,17 @@ public class Settings extends AppCompatActivity {
     }
 
     public void getEditLongitude() {
-        SharedPreferences sharedPref = getSharedPreferences("config.xml", 0);
+
         editLongitude.setText(sharedPref.getString("Custom_Longitude", String.valueOf(getResources().getString(R.string.Default_Longitude))));
     }
 
     public void getEditLatitude() {
-        SharedPreferences sharedPref = getSharedPreferences("config.xml", 0);
+
         editLatitude.setText(sharedPref.getString("Custom_Latitude", String.valueOf(getResources().getString(R.string.Default_Latitude))));
     }
 
     public void getEditRefresh() {
-        SharedPreferences sharedPref = getSharedPreferences("config.xml", 0);
+
         editRefresh.setText(sharedPref.getString("Custom_Refresh", String.valueOf(getResources().getString(R.string.Default_Refresh))));
     }
 
@@ -232,4 +285,6 @@ public class Settings extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
+
 }

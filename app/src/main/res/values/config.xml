@@ -6,4 +6,8 @@
 
     <string name="Default_Refresh">15</string>
 
+    <integer name="Default_Temperature_Unit">0</integer>
+
+    <integer name="Default_Wind_Speed_Unit">1</integer>
+
 </resources>
