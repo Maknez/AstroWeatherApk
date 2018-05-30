@@ -10,4 +10,6 @@
     <string name="longitude_latitude">Longitude, Latitude</string>
     <string name="temperature_unit_farenheit"> °F</string>
     <string name="temperature_unit_celsius"> °C</string>
+    <string name="wind_power_unit_mph"> mph</string>
+    <string name="wind_power_unit_kmph"> km/h</string>
 </resources>

@@ -77,11 +77,11 @@ public class WeatherForecast extends Fragment implements WeatherServiceCallback 
             int temperatureHighInCelsius = unitsChanger.fahrenheitToCelsius(temperatureHighInFarenheit);
             int temperatureLowInCelsius = unitsChanger.fahrenheitToCelsius(temperatureLowInFarenheit);
             if (temperatureUnit == 0) {
-                temperatureHighTextView[i].setText(temperatureHighInCelsius + getResources().getString(R.string.temperature_unit_celsius));
-                temperatureLowTextView[i].setText(temperatureLowInCelsius + getResources().getString(R.string.temperature_unit_celsius));
+                temperatureHighTextView[i].setText(temperatureHighInCelsius + " " + getResources().getString(R.string.temperature_unit_celsius));
+                temperatureLowTextView[i].setText(temperatureLowInCelsius + " " + getResources().getString(R.string.temperature_unit_celsius));
             } else if (temperatureUnit == 1) {
-                temperatureHighTextView[i].setText(temperatureHighInFarenheit + getResources().getString(R.string.temperature_unit_farenheit));
-                temperatureLowTextView[i].setText(temperatureLowInFarenheit + getResources().getString(R.string.temperature_unit_farenheit));
+                temperatureHighTextView[i].setText(temperatureHighInFarenheit + " " + getResources().getString(R.string.temperature_unit_farenheit));
+                temperatureLowTextView[i].setText(temperatureLowInFarenheit + " " + getResources().getString(R.string.temperature_unit_farenheit));
             }
             weatherTextView[i].setText(channel.getItem().getForecast(i + 1).getDay());
         }

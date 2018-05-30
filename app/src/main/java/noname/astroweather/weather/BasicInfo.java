@@ -80,6 +80,7 @@ public class BasicInfo extends Fragment implements WeatherServiceCallback {
         //dialog.hide();
         Item item = channel.getItem();
 
+        UnitsChanger unitsChanger = new UnitsChanger();
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences("config.xml", 0);
 
         int resourceID = getResources().getIdentifier("weather_icon_" + channel.getItem().getCondition().getCode(), "drawable", getContext().getPackageName());
@@ -87,14 +88,14 @@ public class BasicInfo extends Fragment implements WeatherServiceCallback {
         weatherImageView.setImageResource(resourceID);
         cityTextView.setText(channel.getLocation().getCity());
         countryTextView.setText(channel.getLocation().getCountry());
-        UnitsChanger unitsChanger = new UnitsChanger();
+
         int temperatureInFarenheit = item.getCondition().getTemperature();
         int temperatureInCelsius = unitsChanger.fahrenheitToCelsius(temperatureInFarenheit);
         int temperatureUnit = sharedPreferences.getInt("Temperature_Unit", (getResources().getInteger(R.integer.Default_Temperature_Unit)));
         if (temperatureUnit == 0) {
-            temperatureTextView.setText(temperatureInCelsius + getResources().getString(R.string.temperature_unit_celsius));
+            temperatureTextView.setText(temperatureInCelsius + " " + getResources().getString(R.string.temperature_unit_celsius));
         } else if (temperatureUnit == 1) {
-            temperatureTextView.setText(temperatureInFarenheit + getResources().getString(R.string.temperature_unit_farenheit));
+            temperatureTextView.setText(temperatureInFarenheit + " " + getResources().getString(R.string.temperature_unit_farenheit));
         }
         descriptionTextView.setText(item.getCondition().getDescription());
         airPressureTextView.setText(channel.getAtmosphere().getPressure().toString() + " hPa");

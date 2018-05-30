@@ -84,7 +84,11 @@ public class Settings extends AppCompatActivity {
                 editLongitude.setText(getResources().getString(R.string.Default_Longitude));
                 editLatitude.setText(getResources().getString(R.string.Default_Latitude));
                 editRefresh.setText(getResources().getString(R.string.Default_Refresh));
-
+                temperatureSpinner.setSelection(getResources().getInteger(R.integer.Default_Temperature_Unit));
+                windSpeedSpinner.setSelection(getResources().getInteger(R.integer.Default_Wind_Speed_Unit));
+                
+                editor.putInt("Temperature_Unit", temperatureSpinner.getSelectedItemPosition());
+                editor.putInt("Wind_Speed_Unit", windSpeedSpinner.getSelectedItemPosition());
                 editor.putString("Custom_Longitude", editLongitude.getText().toString());
                 editor.putString("Custom_Latitude", editLatitude.getText().toString());
                 editor.putString("Custom_Refresh", editRefresh.getText().toString());

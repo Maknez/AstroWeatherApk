@@ -2,6 +2,7 @@ package noname.astroweather.weather;
 
 
 import android.app.ProgressDialog;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -59,7 +60,17 @@ public class WindAndHumidity extends Fragment implements WeatherServiceCallback 
     public void serviceSuccess(Channel channel) {
         //dialog.hide();
 
-        windPowerTextView.setText(channel.getWind().getSpeed());
+        UnitsChanger unitsChanger = new UnitsChanger();
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("config.xml", 0);
+
+        int windPowerUnit = sharedPreferences.getInt("Wind_Speed_Unit", (getResources().getInteger(R.integer.Default_Wind_Speed_Unit)));
+        double windPowerInMPH = channel.getWind().getSpeed();
+        double windPowerInKMPH = unitsChanger.milesPerHourTokilometersPerHour(windPowerInMPH);
+        if(windPowerUnit == 0) {
+            windPowerTextView.setText(windPowerInMPH + " " + getResources().getString(R.string.wind_power_unit_mph));
+        } else if(windPowerUnit == 1) {
+            windPowerTextView.setText(windPowerInKMPH + " " + getResources().getString(R.string.wind_power_unit_kmph));
+        }
         windWayTextView.setText(channel.getWind().getDirection());
         humidityTextView.setText(channel.getAtmosphere().getHumidity());
         visibilityTextView.setText(channel.getAtmosphere().getVisibility());

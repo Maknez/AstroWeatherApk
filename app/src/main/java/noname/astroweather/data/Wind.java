@@ -5,7 +5,7 @@ import org.json.JSONObject;
 public class Wind {
     private String chill;
     private String direction;
-    private String speed;
+    private double speed;
 
     public String getChill() {
         return chill;
@@ -15,13 +15,13 @@ public class Wind {
         return direction;
     }
 
-    public String getSpeed() {
+    public double getSpeed() {
         return speed;
     }
 
     public void populate(JSONObject data) {
         chill = data.optString("chill");
         direction = data.optString("direction");
-        speed = data.optString("speed");
+        speed = data.optDouble("speed");
     }
 }
