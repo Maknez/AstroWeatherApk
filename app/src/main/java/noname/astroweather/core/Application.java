@@ -181,17 +181,12 @@ public class Application extends AppCompatActivity {
     private void setLayout() {
         Configuration config = getResources().getConfiguration();
         if (checkSize(config)) {
-            if (isLandscape(config)) {
-                setContentView(R.layout.activity_application_landscape_tablet);
-            } else if (isPortrait(config)) {
-                setContentView(R.layout.activity_application_portrait_tablet);
-            }
+            setContentView(R.layout.activity_application_tablet);
         } else {
+            setContentView(R.layout.activity_application_phone);
             if (isLandscape(config)) {
-                setContentView(R.layout.activity_application_landscape_phone);
                 initViewPagerAllFragments();
             } else if (isPortrait(config)) {
-                setContentView(R.layout.activity_application_portrait_phone);
                 initViewPagerSunMoon();
                 initViewPagerWeather();
             }
