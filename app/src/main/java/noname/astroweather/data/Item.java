@@ -1,10 +1,12 @@
 package noname.astroweather.data;
 
+import org.json.JSONException;
 import org.json.JSONObject;
+import org.json.JSONArray;
 
 public class Item implements JSONPopulator {
 
-    private Forecast forecast;
+    private Forecast[] forecast = new Forecast[6];
     private Condition condition;
     private Double latitude;
     private Double longitude;
@@ -21,8 +23,8 @@ public class Item implements JSONPopulator {
         return longitude;
     }
 
-    public Forecast getForecast() {
-        return forecast;
+    public Forecast getForecast(int currentDay) {
+        return forecast[currentDay];
     }
 
     @Override
@@ -33,7 +35,16 @@ public class Item implements JSONPopulator {
         latitude = data.optDouble("latitude");
         longitude = data.optDouble("longitude");
 
-        forecast = new Forecast();
-        forecast.populate(data.optJSONObject("forecast"));
+
+        JSONArray jsonArray = data.optJSONArray("forecast");
+        for(int i = 0; i < 6; i++) {
+            try {
+                forecast[i] = new Forecast();
+                forecast[i].populate(jsonArray.getJSONObject(i));
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }
+

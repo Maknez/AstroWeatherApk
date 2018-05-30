@@ -2,7 +2,7 @@ package noname.astroweather.data;
 
 import org.json.JSONObject;
 
-public class Location {
+public class Location implements JSONPopulator {
 
     private String city;
     private String region;

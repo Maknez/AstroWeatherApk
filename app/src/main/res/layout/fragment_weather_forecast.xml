@@ -7,6 +7,7 @@
     tools:context=".weather.WeatherForecast">
 
     <!-- TODO: Update blank fragment layout -->
+
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -15,173 +16,306 @@
             android:id="@+id/weatherImage1"
             android:layout_width="60dp"
             android:layout_height="60dp"
+            android:layout_marginBottom="8dp"
             android:layout_marginStart="8dp"
-            android:src="@color/colorAccent"
+            android:src="@drawable/weather_icon_44"
+            app:layout_constraintBottom_toTopOf="@+id/guideline21"
             app:layout_constraintEnd_toStartOf="@+id/weatherImage2"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/guideline8" />
+            app:layout_constraintStart_toStartOf="parent" />
 
         <ImageView
             android:id="@+id/weatherImage2"
             android:layout_width="61dp"
             android:layout_height="60dp"
+            android:layout_marginBottom="8dp"
             android:layout_marginStart="8dp"
-            android:src="@color/colorAccent"
+            android:src="@drawable/weather_icon_44"
+            app:layout_constraintBottom_toTopOf="@+id/guideline21"
             app:layout_constraintEnd_toStartOf="@+id/weatherImage3"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/weatherImage1"
-            app:layout_constraintTop_toTopOf="@+id/guideline8" />
+            app:layout_constraintStart_toEndOf="@+id/weatherImage1" />
 
         <ImageView
             android:id="@+id/weatherImage3"
             android:layout_width="60dp"
             android:layout_height="60dp"
+            android:layout_marginBottom="8dp"
             android:layout_marginStart="8dp"
-            android:src="@color/colorAccent"
+            android:src="@drawable/weather_icon_44"
+            app:layout_constraintBottom_toTopOf="@+id/guideline21"
             app:layout_constraintEnd_toStartOf="@+id/weatherImage4"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/weatherImage2"
-            app:layout_constraintTop_toTopOf="@+id/guideline8" />
+            app:layout_constraintStart_toEndOf="@+id/weatherImage2" />
 
         <ImageView
             android:id="@+id/weatherImage4"
             android:layout_width="60dp"
             android:layout_height="60dp"
+            android:layout_marginBottom="8dp"
             android:layout_marginStart="8dp"
-            android:src="@color/colorAccent"
+            android:src="@drawable/weather_icon_44"
+            app:layout_constraintBottom_toTopOf="@+id/guideline21"
             app:layout_constraintEnd_toStartOf="@+id/weatherImage5"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/weatherImage3"
-            app:layout_constraintTop_toTopOf="@+id/guideline8" />
+            app:layout_constraintStart_toEndOf="@+id/weatherImage3" />
 
         <ImageView
             android:id="@+id/weatherImage5"
             android:layout_width="60dp"
             android:layout_height="60dp"
+            android:layout_marginBottom="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
-            android:src="@color/colorAccent"
+            android:src="@drawable/weather_icon_44"
+            app:layout_constraintBottom_toTopOf="@+id/guideline21"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/weatherImage4"
-            app:layout_constraintTop_toTopOf="@+id/guideline8" />
-
-        <android.support.constraint.Guideline
-            android:id="@+id/guideline8"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintGuide_begin="54dp" />
-
-        <TextView
-            android:id="@+id/temperatureText1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Temper"
-            android:textAlignment="center"
-            android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="@+id/weatherImage1"
-            app:layout_constraintTop_toTopOf="@+id/guideline9" />
-
-        <TextView
-            android:id="@+id/temperatureText2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Temper"
-            android:textAlignment="center"
-            android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="@+id/weatherImage2"
-            app:layout_constraintTop_toTopOf="@+id/guideline9" />
-
-        <TextView
-            android:id="@+id/temperatureText3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Temper"
-            android:textAlignment="center"
-            android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="@+id/weatherImage3"
-            app:layout_constraintTop_toTopOf="@+id/guideline9" />
-
-        <TextView
-            android:id="@+id/temperatureText4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Temper"
-            android:textAlignment="center"
-            android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="@+id/weatherImage4"
-            app:layout_constraintTop_toTopOf="@+id/guideline9" />
-
-        <TextView
-            android:id="@+id/temperatureText5"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Temper"
-            android:textAlignment="center"
-            android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="@+id/weatherImage5"
-            app:layout_constraintTop_toTopOf="@+id/guideline9" />
-
-        <android.support.constraint.Guideline
-            android:id="@+id/guideline9"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintGuide_begin="114dp" />
-
-        <android.support.constraint.Guideline
-            android:id="@+id/guideline10"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintGuide_begin="35dp" />
+            app:layout_constraintStart_toEndOf="@+id/weatherImage4" />
 
         <TextView
             android:id="@+id/weatherText1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
             android:text="Weather"
             android:textAlignment="center"
+            app:layout_constraintBottom_toTopOf="@+id/weatherImage1"
+            app:layout_constraintEnd_toEndOf="@+id/weatherImage1"
             app:layout_constraintStart_toStartOf="@+id/weatherImage1"
-            app:layout_constraintTop_toTopOf="@+id/guideline10" />
+            app:layout_constraintTop_toTopOf="@+id/guideline22" />
 
         <TextView
             android:id="@+id/weatherText2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
             android:text="Weather"
             android:textAlignment="center"
+            app:layout_constraintBottom_toTopOf="@+id/weatherImage2"
+            app:layout_constraintEnd_toEndOf="@+id/weatherImage2"
             app:layout_constraintStart_toStartOf="@+id/weatherImage2"
-            app:layout_constraintTop_toTopOf="@+id/guideline10" />
-
-        <TextView
-            android:id="@+id/weatherText4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Weather"
-            android:textAlignment="center"
-            app:layout_constraintStart_toStartOf="@+id/weatherImage4"
-            app:layout_constraintTop_toTopOf="@+id/guideline10" />
+            app:layout_constraintTop_toTopOf="@+id/guideline22" />
 
         <TextView
             android:id="@+id/weatherText3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
             android:text="Weather"
             android:textAlignment="center"
+            app:layout_constraintBottom_toTopOf="@+id/weatherImage3"
+            app:layout_constraintEnd_toEndOf="@+id/weatherImage3"
             app:layout_constraintStart_toStartOf="@+id/weatherImage3"
-            app:layout_constraintTop_toTopOf="@+id/guideline10" />
+            app:layout_constraintTop_toTopOf="@+id/guideline22" />
+
+        <TextView
+            android:id="@+id/weatherText4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:text="Weather"
+            android:textAlignment="center"
+            app:layout_constraintBottom_toTopOf="@+id/weatherImage4"
+            app:layout_constraintEnd_toEndOf="@+id/weatherImage4"
+            app:layout_constraintStart_toStartOf="@+id/weatherImage4"
+            app:layout_constraintTop_toTopOf="@+id/guideline22" />
 
         <TextView
             android:id="@+id/weatherText5"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
             android:text="Weather"
             android:textAlignment="center"
+            app:layout_constraintBottom_toTopOf="@+id/weatherImage5"
+            app:layout_constraintEnd_toEndOf="@+id/weatherImage5"
             app:layout_constraintStart_toStartOf="@+id/weatherImage5"
-            app:layout_constraintTop_toTopOf="@+id/guideline10" />
+            app:layout_constraintTop_toTopOf="@+id/guideline22" />
+
+        <TextView
+            android:id="@+id/temperatureHighText2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:text="Temper"
+            android:textAlignment="center"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="@+id/weatherImage2"
+            app:layout_constraintHorizontal_bias="0.55"
+            app:layout_constraintStart_toStartOf="@+id/weatherImage2"
+            app:layout_constraintTop_toTopOf="@+id/guideline21" />
+
+        <TextView
+            android:id="@+id/temperatureHighText4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:text="Temper"
+            android:textAlignment="center"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="@+id/weatherImage4"
+            app:layout_constraintHorizontal_bias="0.536"
+            app:layout_constraintStart_toStartOf="@+id/weatherImage4"
+            app:layout_constraintTop_toTopOf="@+id/guideline21" />
+
+        <TextView
+            android:id="@+id/temperatureHighText5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:text="Temper"
+            android:textAlignment="center"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="@+id/weatherImage5"
+            app:layout_constraintHorizontal_bias="0.195"
+            app:layout_constraintStart_toStartOf="@+id/weatherImage5"
+            app:layout_constraintTop_toTopOf="@+id/guideline21" />
+
+        <TextView
+            android:id="@+id/temperatureHighText1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:text="Temper"
+            android:textAlignment="center"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="@+id/weatherImage1"
+            app:layout_constraintHorizontal_bias="0.804"
+            app:layout_constraintStart_toStartOf="@+id/weatherImage1"
+            app:layout_constraintTop_toTopOf="@+id/guideline21" />
+
+        <TextView
+            android:id="@+id/temperatureHighText3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:text="Temper"
+            android:textAlignment="center"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="@+id/weatherImage3"
+            app:layout_constraintHorizontal_bias="0.512"
+            app:layout_constraintStart_toStartOf="@+id/weatherImage3"
+            app:layout_constraintTop_toTopOf="@+id/guideline21" />
+
+        <TextView
+            android:id="@+id/temperatureLowText1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:text="Temper"
+            android:textAlignment="center"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="@+id/temperatureHighText1"
+            app:layout_constraintStart_toStartOf="@+id/temperatureHighText1"
+            app:layout_constraintTop_toBottomOf="@+id/temperatureHighText1" />
+
+        <TextView
+            android:id="@+id/temperatureLowText5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:text="Temper"
+            android:textAlignment="center"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="@+id/temperatureHighText5"
+            app:layout_constraintStart_toStartOf="@+id/temperatureHighText5"
+            app:layout_constraintTop_toBottomOf="@+id/temperatureHighText5" />
+
+        <TextView
+            android:id="@+id/temperatureLowText4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:text="Temper"
+            android:textAlignment="center"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="@+id/temperatureHighText4"
+            app:layout_constraintStart_toStartOf="@+id/temperatureHighText4"
+            app:layout_constraintTop_toBottomOf="@+id/temperatureHighText4" />
+
+        <TextView
+            android:id="@+id/temperatureLowText3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:text="Temper"
+            android:textAlignment="center"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="@+id/temperatureHighText3"
+            app:layout_constraintStart_toStartOf="@+id/temperatureHighText3"
+            app:layout_constraintTop_toBottomOf="@+id/temperatureHighText3" />
+
+        <TextView
+            android:id="@+id/temperatureLowText2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:text="Temper"
+            android:textAlignment="center"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="@+id/temperatureHighText2"
+            app:layout_constraintStart_toStartOf="@+id/temperatureHighText2"
+            app:layout_constraintTop_toBottomOf="@+id/temperatureHighText2" />
+
+        <android.support.constraint.Guideline
+            android:id="@+id/guideline21"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_begin="127dp" />
+
+        <android.support.constraint.Guideline
+            android:id="@+id/guideline22"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_begin="20dp" />
 
     </android.support.constraint.ConstraintLayout>
 

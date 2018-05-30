@@ -2,26 +2,26 @@ package noname.astroweather.data;
 
 import org.json.JSONObject;
 
-class Wind {
-    private int chill;
-    private int direction;
-    private int speed;
+public class Wind {
+    private String chill;
+    private String direction;
+    private String speed;
 
-    public int getChill() {
+    public String getChill() {
         return chill;
     }
 
-    public int getDirection() {
+    public String getDirection() {
         return direction;
     }
 
-    public int getSpeed() {
+    public String getSpeed() {
         return speed;
     }
 
     public void populate(JSONObject data) {
-        chill = data.optInt("chill");
-        direction = data.optInt("direction");
-        speed = data.optInt("speed");
+        chill = data.optString("chill");
+        direction = data.optString("direction");
+        speed = data.optString("speed");
     }
 }

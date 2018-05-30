@@ -2,25 +2,25 @@ package noname.astroweather.data;
 
 import org.json.JSONObject;
 
-class Atmosphere implements JSONPopulator {
+public class Atmosphere implements JSONPopulator {
 
-    private int humidity;
-    private Double pressure;
-    private Double visibility;
+    private String humidity;
+    private String pressure;
+    private String visibility;
 
-    public int getHumidity() {
+    public String getHumidity() {
         return humidity;
     }
-    public Double getPressure() {
+    public String getPressure() {
         return pressure;
     }
-    public Double getVisibility() {
+    public String getVisibility() {
         return visibility;
     }
 
     public void populate(JSONObject data) {
-        humidity = data.optInt("humidity");
-        pressure = data.optDouble("pressure");
-        visibility = data.optDouble("visibility");
+        humidity = data.optString("humidity");
+        pressure = data.optString("pressure");
+        visibility = data.optString("visibility");
     }
 }

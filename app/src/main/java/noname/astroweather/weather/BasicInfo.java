@@ -55,9 +55,9 @@ public class BasicInfo extends Fragment implements WeatherServiceCallback {
 
         service = new YahooWeatherService(this);
         service.refreshWeather("Łódź, PL");
-        dialog = new ProgressDialog(getActivity());
+        /*dialog = new ProgressDialog(getActivity());
         dialog.setMessage("Loading...");
-        dialog.show();
+        dialog.show();*/
 
         return rootView;
     }
@@ -78,15 +78,17 @@ public class BasicInfo extends Fragment implements WeatherServiceCallback {
 
     @Override
     public void serviceSuccess(Channel channel) {
-        dialog.hide();
+        //dialog.hide();
         Item item = channel.getItem();
 
         int resourceID = getResources().getIdentifier("weather_icon_" + channel.getItem().getCondition().getCode(), "drawable", getContext().getPackageName());
 
         weatherImageView.setImageResource(resourceID);
-        cityTextView.setText(service.getLocation());
-        temperatureTextView.setText(item.getCondition().getTemperature() + "  " + channel.getUnits().getTemperature());
+        cityTextView.setText(channel.getLocation().getCity());
+        countryTextView.setText(channel.getLocation().getCountry());
+        temperatureTextView.setText(item.getCondition().getTemperature() + " " + channel.getUnits().getTemperature());
         descriptionTextView.setText(item.getCondition().getDescription());
+        airPressureTextView.setText(channel.getAtmosphere().getPressure().toString() + " hPa");
     }
 
     @Override
