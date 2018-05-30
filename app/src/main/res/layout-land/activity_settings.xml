@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".core.Settings"
+    tools:layout_editor_absoluteY="73dp">
+
+
+    <ScrollView
+        android:id="@+id/scrollView2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clipToPadding="false"
+        android:fillViewport="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/textView5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:layout_marginEnd="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_weight="0.3"
+                android:autoSizeTextType="uniform"
+                android:gravity="center"
+                android:text="Temperature:"
+                android:textSize="24sp"
+                app:layout_constraintEnd_toStartOf="@+id/temperatureSpinner"
+                app:layout_constraintHorizontal_chainStyle="packed"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <Spinner
+                android:id="@+id/temperatureSpinner"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                app:layout_constraintBottom_toBottomOf="@+id/textView5"
+                app:layout_constraintEnd_toStartOf="@+id/guideline18"
+                app:layout_constraintTop_toTopOf="@+id/textView5" />
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:layout_marginEnd="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_weight="0.3"
+                android:autoSizeTextType="uniform"
+                android:gravity="center"
+                android:text="Wind Speed:"
+                android:textSize="24sp"
+                app:layout_constraintEnd_toStartOf="@+id/windSpeedSpinner"
+                app:layout_constraintHorizontal_chainStyle="packed"
+                app:layout_constraintTop_toBottomOf="@+id/textView5" />
+
+            <Spinner
+                android:id="@+id/windSpeedSpinner"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                app:layout_constraintBottom_toBottomOf="@+id/textView"
+                app:layout_constraintEnd_toStartOf="@+id/guideline18"
+                app:layout_constraintTop_toTopOf="@+id/textView" />
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:layout_marginBottom="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_weight="0.3"
+                android:autoSizeTextType="uniform"
+                android:gravity="center"
+                android:text="Longitude (-180:180):"
+                android:textSize="24sp"
+                app:layout_constraintBottom_toBottomOf="@+id/editLongitude"
+                app:layout_constraintEnd_toStartOf="@+id/editLongitude"
+                app:layout_constraintHorizontal_chainStyle="packed"
+                app:layout_constraintTop_toTopOf="@+id/editLongitude" />
+
+            <EditText
+                android:id="@+id/editLongitude"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_weight="0.3"
+                android:autoSizeTextType="uniform"
+                android:ems="10"
+                android:gravity="center"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toStartOf="@+id/guideline18"
+                app:layout_constraintTop_toBottomOf="@+id/editCityCountry" />
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_weight="0.3"
+                android:autoSizeTextType="uniform"
+                android:gravity="center"
+                android:text="Latitude (-90:90):"
+                android:textSize="24sp"
+                app:layout_constraintBottom_toBottomOf="@+id/editLatitude"
+                app:layout_constraintEnd_toStartOf="@+id/editLatitude"
+                app:layout_constraintTop_toTopOf="@+id/editLatitude" />
+
+            <EditText
+                android:id="@+id/editLatitude"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_weight="0.3"
+                android:autoSizeTextType="uniform"
+                android:ems="10"
+                android:gravity="center"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toStartOf="@+id/guideline18"
+                app:layout_constraintTop_toBottomOf="@+id/editLongitude" />
+
+            <TextView
+                android:id="@+id/textView4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_weight="0.3"
+                android:autoSizeTextType="uniform"
+                android:gravity="center"
+                android:text="Refresh (1:60):"
+                android:textSize="24sp"
+                app:layout_constraintBottom_toBottomOf="@+id/editRefresh"
+                app:layout_constraintEnd_toStartOf="@+id/editRefresh"
+                app:layout_constraintTop_toTopOf="@+id/editRefresh" />
+
+            <EditText
+                android:id="@+id/editRefresh"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_weight="0.3"
+                android:autoSizeTextType="uniform"
+                android:ems="10"
+                android:gravity="center"
+                app:layout_constraintEnd_toStartOf="@+id/guideline18"
+                app:layout_constraintTop_toBottomOf="@+id/editLatitude" />
+
+            <Button
+                android:id="@+id/setDefaultValues"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_weight="0.7"
+                android:autoSizeTextType="uniform"
+                android:text="Default"
+                android:textSize="12sp"
+                app:layout_constraintEnd_toStartOf="@+id/guideline18"
+                app:layout_constraintTop_toBottomOf="@+id/editRefresh" />
+
+            <Button
+                android:id="@+id/saveValues"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_weight="0.7"
+                android:autoSizeTextType="uniform"
+                android:text="Save"
+                android:textSize="12sp"
+                app:layout_constraintEnd_toStartOf="@+id/setDefaultValues"
+                app:layout_constraintHorizontal_chainStyle="packed"
+                app:layout_constraintTop_toBottomOf="@+id/editRefresh" />
+
+            <TextView
+                android:id="@+id/textView14"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginTop="8dp"
+                android:text="City, Country:"
+                android:textSize="24sp"
+                app:layout_constraintBottom_toBottomOf="@+id/editCityCountry"
+                app:layout_constraintEnd_toStartOf="@+id/editCityCountry"
+                app:layout_constraintHorizontal_chainStyle="packed"
+                app:layout_constraintTop_toTopOf="@+id/editCityCountry" />
+
+            <EditText
+                android:id="@+id/editCityCountry"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginTop="8dp"
+                android:ems="10"
+                android:inputType="textPersonName"
+                app:layout_constraintEnd_toStartOf="@+id/guideline18"
+                app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+            <android.support.constraint.Guideline
+                android:id="@+id/guideline18"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_begin="559dp" />
+        </android.support.constraint.ConstraintLayout>
+    </ScrollView>
+
+</android.support.constraint.ConstraintLayout>
