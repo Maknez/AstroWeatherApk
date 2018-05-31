@@ -104,7 +104,7 @@
                 android:gravity="center"
                 android:textSize="18sp"
                 app:layout_constraintEnd_toStartOf="@+id/guideline18"
-                app:layout_constraintTop_toBottomOf="@+id/editCityCountry" />
+                app:layout_constraintTop_toBottomOf="@+id/editCountry" />
 
             <TextView
                 android:id="@+id/textView3"
@@ -199,15 +199,15 @@
                 android:layout_marginBottom="8dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginTop="8dp"
-                android:text="City, Country:"
+                android:text="City:"
                 android:textSize="24sp"
-                app:layout_constraintBottom_toBottomOf="@+id/editCityCountry"
-                app:layout_constraintEnd_toStartOf="@+id/editCityCountry"
+                app:layout_constraintBottom_toBottomOf="@+id/editCity"
+                app:layout_constraintEnd_toStartOf="@+id/editCity"
                 app:layout_constraintHorizontal_chainStyle="packed"
-                app:layout_constraintTop_toTopOf="@+id/editCityCountry" />
+                app:layout_constraintTop_toTopOf="@+id/editCity" />
 
             <EditText
-                android:id="@+id/editCityCountry"
+                android:id="@+id/editCity"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
@@ -223,6 +223,29 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 app:layout_constraintGuide_begin="559dp" />
+
+            <TextView
+                android:id="@+id/textView20"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginTop="8dp"
+                android:text="Country:"
+                android:textSize="24sp"
+                app:layout_constraintBottom_toBottomOf="@+id/editCountry"
+                app:layout_constraintEnd_toStartOf="@+id/editCountry"
+                app:layout_constraintTop_toTopOf="@+id/editCountry" />
+
+            <EditText
+                android:id="@+id/editCountry"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:ems="10"
+                android:inputType="textPersonName"
+                app:layout_constraintEnd_toStartOf="@+id/guideline18"
+                app:layout_constraintTop_toBottomOf="@+id/editCity" />
         </android.support.constraint.ConstraintLayout>
     </ScrollView>
 

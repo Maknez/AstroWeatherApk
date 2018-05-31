@@ -22,6 +22,8 @@ public class Settings extends AppCompatActivity {
     TextView editLongitude;
     TextView editLatitude;
     TextView editRefresh;
+    TextView editCity;
+    TextView editCountry;
 
     Button saveValues;
     Button setDefaultValues;
@@ -47,13 +49,7 @@ public class Settings extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
 
-
-        initSharedPreferences();
-        initTextViews();
-        initButtons();
-        initTemperatureSpinner();
-        initWindSpeedSpinner();
-
+        initializeSettingsObjects();
 
         if (savedInstanceState != null) {
             editLongitude.setText(savedInstanceState.getString("savedLongitude"));
@@ -61,15 +57,13 @@ public class Settings extends AppCompatActivity {
             editRefresh.setText(savedInstanceState.getString("savedRefresh"));
         }
 
-        getEditLongitude();
-        getEditLatitude();
-        getEditRefresh();
-
+        getSettingsValues();
 
         saveValues.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (saveLongitude() && saveLatitude() && saveRefresh()) {
+
+                if ((saveCity() && saveCountry()) ||  (saveLongitude() && saveLatitude()) && saveRefresh()) {
                     Toast.makeText(Settings.this, "Values save properly!", Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(Settings.this, "Some values are not save!", Toast.LENGTH_SHORT).show();
@@ -86,16 +80,59 @@ public class Settings extends AppCompatActivity {
                 editRefresh.setText(getResources().getString(R.string.Default_Refresh));
                 temperatureSpinner.setSelection(getResources().getInteger(R.integer.Default_Temperature_Unit));
                 windSpeedSpinner.setSelection(getResources().getInteger(R.integer.Default_Wind_Speed_Unit));
-                
-                editor.putInt("Temperature_Unit", temperatureSpinner.getSelectedItemPosition());
-                editor.putInt("Wind_Speed_Unit", windSpeedSpinner.getSelectedItemPosition());
-                editor.putString("Custom_Longitude", editLongitude.getText().toString());
-                editor.putString("Custom_Latitude", editLatitude.getText().toString());
-                editor.putString("Custom_Refresh", editRefresh.getText().toString());
-                editor.commit();
+                editCity.setText(getResources().getString(R.string.Default_City));
+                editCountry.setText(getResources().getString(R.string.Default_Country));
+
+                saveDefaultValues();
+
                 Toast.makeText(Settings.this, "Values set to default!", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private void saveDefaultValues() {
+        editor.putInt("Temperature_Unit", temperatureSpinner.getSelectedItemPosition());
+        editor.putInt("Wind_Speed_Unit", windSpeedSpinner.getSelectedItemPosition());
+        editor.putString("Custom_City", editCity.getText().toString());
+        editor.putString("Custom_Country", editCountry.getText().toString());
+        editor.putString("Custom_Longitude", editLongitude.getText().toString());
+        editor.putString("Custom_Latitude", editLatitude.getText().toString());
+        editor.putString("Custom_Refresh", editRefresh.getText().toString());
+        editor.commit();
+    }
+
+    private void getSettingsValues() {
+        getEditLongitude();
+        getEditLatitude();
+        getEditRefresh();
+        getEditCity();
+        getEditCountry();
+        getTemperatureUnit();
+        getWindSpeedUnit();
+    }
+
+    private void initializeSettingsObjects() {
+        initSharedPreferences();
+        initTextViews();
+        initButtons();
+        initTemperatureSpinner();
+        initWindSpeedSpinner();
+    }
+
+    private void getWindSpeedUnit() {
+        windSpeedSpinner.setSelection(getResources().getInteger(R.integer.Default_Wind_Speed_Unit));
+    }
+
+    private void getTemperatureUnit() {
+        temperatureSpinner.setSelection(getResources().getInteger(R.integer.Default_Temperature_Unit));
+    }
+
+    private void getEditCity() {
+        editCity.setText(sharedPref.getString("Custom_City", getResources().getString(R.string.Default_City)));
+    }
+
+    private void getEditCountry() {
+        editCountry.setText(sharedPref.getString("Custom_Country", getResources().getString(R.string.Default_Country)));
     }
 
     private void initSharedPreferences() {
@@ -225,10 +262,38 @@ public class Settings extends AppCompatActivity {
         return false;
     }
 
+    private boolean saveCity() {
+        String city = String.valueOf(editCity.getText());
+        if (city.equals("")) {
+            Toast.makeText(Settings.this, "You cannot save empty value!", Toast.LENGTH_SHORT).show();
+        } else {
+            editor.putString("Custom_City", city);
+            editor.commit();
+            return true;
+        }
+        editCity.setText(sharedPref.getString("Custom_City", String.valueOf(getResources().getString(R.string.Default_City))));
+        return false;
+    }
+
+    private boolean saveCountry() {
+        String country = String.valueOf(editCountry.getText());
+        if (country.equals("")) {
+            Toast.makeText(Settings.this, "You cannot save empty value!", Toast.LENGTH_SHORT).show();
+        } else {
+            editor.putString("Custom_Country", country);
+            editor.commit();
+            return true;
+        }
+        editCountry.setText(sharedPref.getString("Custom_Country", String.valueOf(getResources().getString(R.string.Default_Country))));
+        return false;
+    }
+
     private void initTextViews() {
         editLongitude = (TextView) findViewById(R.id.editLongitude);
         editLatitude = (TextView) findViewById(R.id.editLatitude);
         editRefresh = (TextView) findViewById(R.id.editRefresh);
+        editCity = (TextView) findViewById(R.id.editCity);
+        editCountry = (TextView) findViewById(R.id.editCountry);
     }
 
     private void initButtons() {

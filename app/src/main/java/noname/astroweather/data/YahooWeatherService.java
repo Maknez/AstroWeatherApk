@@ -1,6 +1,7 @@
 package noname.astroweather.data;
 
 import android.annotation.SuppressLint;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.AsyncTask;
 
@@ -16,6 +17,7 @@ import java.net.URL;
 import java.net.URLConnection;
 
 import noname.astroweather.Exception.LocationWeatherException;
+import noname.astroweather.R;
 
 public class YahooWeatherService {
     private WeatherServiceCallback callback;
@@ -27,9 +29,11 @@ public class YahooWeatherService {
         return location;
     }
 
+        SharedPreferences sharedPreferences;
 
-    public YahooWeatherService(WeatherServiceCallback callback) {
+    public YahooWeatherService(WeatherServiceCallback callback, SharedPreferences sharedPreferences) {
         this.callback = callback;
+        this.sharedPreferences = sharedPreferences;
     }
 
     @SuppressLint("StaticFieldLeak")
@@ -38,8 +42,11 @@ public class YahooWeatherService {
         new AsyncTask<String, Void, String>() {
             @Override
             protected String doInBackground(String... strings) {
+                String cityCountryToFind = sharedPreferences.getString("Custom_City", "Będków") + ", " + sharedPreferences.getString("Custom_Country", "Poland");
+                String YQL = String.format("select * from weather.forecast where woeid in (select woeid from geo.places(1) where text=\"%s\")", cityCountryToFind);
+                String YQLLL = String.format("select * from weather.forecast where woeid in (SELECT woeid FROM geo.places WHERE text=\"(%s,%s)\")", sharedPreferences.getString("Custom_Latitude", String.valueOf(19.7543569)), sharedPreferences.getString("Custom_Longitude", String.valueOf(51.5873166)));
 
-                String YQL = String.format("select * from weather.forecast where woeid in (select woeid from geo.places(1) where text=\"%s\")", strings[0]);
+
                 String endpoint = String.format("https://query.yahooapis.com/v1/public/yql?q=%s&format=json", Uri.encode(YQL));
 
                 try {

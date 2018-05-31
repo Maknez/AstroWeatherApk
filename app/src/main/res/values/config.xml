@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="Default_City">Będków</string>
+
+    <string name="Default_Country">Poland</string>
+
     <string name="Default_Latitude">19.7543569</string>
 
     <string name="Default_Longitude">51.5873166</string>

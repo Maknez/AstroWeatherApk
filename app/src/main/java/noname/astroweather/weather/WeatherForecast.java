@@ -26,6 +26,7 @@ public class WeatherForecast extends Fragment implements WeatherServiceCallback 
     private ImageView[] weatherImageView = new ImageView[5];
     private YahooWeatherService service;
     private ProgressDialog dialog;
+    SharedPreferences sharedPreferences;
 
     public WeatherForecast() {
     }
@@ -39,8 +40,8 @@ public class WeatherForecast extends Fragment implements WeatherServiceCallback 
 
         initImageViews(rootView);
         initTextViews(rootView);
-
-        service = new YahooWeatherService(this);
+        initSharedPreferences();
+        service = new YahooWeatherService(this, sharedPreferences);
         service.refreshWeather("Łódź, PL");
   /*      dialog = new ProgressDialog(getActivity());
         dialog.setMessage("Loading...");
@@ -48,6 +49,10 @@ public class WeatherForecast extends Fragment implements WeatherServiceCallback 
 */
 
         return rootView;
+    }
+
+    private void initSharedPreferences() {
+    sharedPreferences = getActivity().getSharedPreferences("config.xml", 0);
     }
 
     private void initTextViews(ViewGroup rootView) {
@@ -68,7 +73,6 @@ public class WeatherForecast extends Fragment implements WeatherServiceCallback 
     public void serviceSuccess(Channel channel) {
         //dialog.hide();
         UnitsChanger unitsChanger = new UnitsChanger();
-        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("config.xml", 0);
         int temperatureUnit = sharedPreferences.getInt("Temperature_Unit", (getResources().getInteger(R.integer.Default_Temperature_Unit)));
         for (int i = 0; i < FORECAST_DAY_NUMBER; i++) {
             weatherImageView[i].setImageResource(getResourceID(channel, i + 1));
@@ -93,6 +97,7 @@ public class WeatherForecast extends Fragment implements WeatherServiceCallback 
 
     @Override
     public void serviceFailure(Exception ex) {
+        //TODO: Restore values from sharedPreferences file;
         Toast.makeText(getActivity(), ex.getMessage(), Toast.LENGTH_SHORT).show();
     }
 }

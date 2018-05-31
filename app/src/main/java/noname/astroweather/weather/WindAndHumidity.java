@@ -27,6 +27,7 @@ public class WindAndHumidity extends Fragment implements WeatherServiceCallback 
     private TextView visibilityTextView;
     private YahooWeatherService service;
     private ProgressDialog dialog;
+    private SharedPreferences sharedPreferences;
 
     public WindAndHumidity() {
     }
@@ -39,14 +40,18 @@ public class WindAndHumidity extends Fragment implements WeatherServiceCallback 
                 R.layout.fragment_wind_and_humidity, container, false);
 
         initTextViews(rootView);
-
-        service = new YahooWeatherService(this);
+        initSharedPreferences();
+        service = new YahooWeatherService(this, sharedPreferences);
         service.refreshWeather("Łódź, PL");
         /*dialog = new ProgressDialog(getActivity());
         dialog.setMessage("Loading...");
         dialog.show();
 */
         return rootView;
+    }
+
+    private void initSharedPreferences() {
+    sharedPreferences = getActivity().getSharedPreferences("config.xml", 0);
     }
 
     private void initTextViews(ViewGroup rootView) {
@@ -61,7 +66,6 @@ public class WindAndHumidity extends Fragment implements WeatherServiceCallback 
         //dialog.hide();
 
         UnitsChanger unitsChanger = new UnitsChanger();
-        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("config.xml", 0);
 
         int windPowerUnit = sharedPreferences.getInt("Wind_Speed_Unit", (getResources().getInteger(R.integer.Default_Wind_Speed_Unit)));
         double windPowerInMPH = channel.getWind().getSpeed();
