@@ -54,13 +54,22 @@ public class BasicInfo extends Fragment implements WeatherServiceCallback {
         initTextViews(rootView);
         initImageView(rootView);
         initSharedPreferences();
-        service = new YahooWeatherService(this, sharedPreferences);
-        service.refreshWeather("Łódź, PL");
+        initYahooWeatherService(sharedPreferences.getInt("Custom_Option_To_Refresh_Weather", getResources().getInteger(R.integer.Default_Option_To_Refresh_Weather)));
+        refreshWeather();
+
         /*dialog = new ProgressDialog(getActivity());
         dialog.setMessage("Loading...");
         dialog.show();*/
 
         return rootView;
+    }
+
+    private void refreshWeather() {
+        service.refreshWeather();
+    }
+
+    private void initYahooWeatherService(int option) {
+        service = new YahooWeatherService(this, sharedPreferences, option);
     }
 
     private void initSharedPreferences() {
@@ -85,7 +94,6 @@ public class BasicInfo extends Fragment implements WeatherServiceCallback {
         Item item = channel.getItem();
 
         UnitsChanger unitsChanger = new UnitsChanger();
-
 
         int resourceID = getResources().getIdentifier("weather_icon_" + channel.getItem().getCondition().getCode(), "drawable", getContext().getPackageName());
 

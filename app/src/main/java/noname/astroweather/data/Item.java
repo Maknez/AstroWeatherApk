@@ -32,8 +32,8 @@ public class Item implements JSONPopulator {
         condition = new Condition();
         condition.populate(data.optJSONObject("condition"));
 
-        latitude = data.optDouble("latitude");
-        longitude = data.optDouble("longitude");
+        latitude = data.optDouble("long");
+        longitude = data.optDouble("lat");
 
 
         JSONArray jsonArray = data.optJSONArray("forecast");

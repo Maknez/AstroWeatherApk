@@ -41,8 +41,8 @@ public class WindAndHumidity extends Fragment implements WeatherServiceCallback 
 
         initTextViews(rootView);
         initSharedPreferences();
-        service = new YahooWeatherService(this, sharedPreferences);
-        service.refreshWeather("Łódź, PL");
+        service = new YahooWeatherService(this, sharedPreferences, sharedPreferences.getInt("Custom_Option_To_Refresh_Weather", getResources().getInteger(R.integer.Default_Option_To_Refresh_Weather)));
+        service.refreshWeather();
         /*dialog = new ProgressDialog(getActivity());
         dialog.setMessage("Loading...");
         dialog.show();

@@ -4,6 +4,8 @@
 
     <string name="Default_Country">Poland</string>
 
+    <integer name="Default_Option_To_Refresh_Weather">0</integer>
+
     <string name="Default_Latitude">19.7543569</string>
 
     <string name="Default_Longitude">51.5873166</string>

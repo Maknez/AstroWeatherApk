@@ -9,14 +9,23 @@ public class Location implements JSONPopulator {
     private String country;
 
     public String getCity() {
+        if(city.equals("")) {
+            return "";
+        }
         return city;
     }
 
     public String getRegion() {
+        if(region.equals("")) {
+            return "";
+        }
         return region;
     }
 
     public String getCountry() {
+        if(country.equals("")) {
+            return "";
+        }
         return country;
     }
 
