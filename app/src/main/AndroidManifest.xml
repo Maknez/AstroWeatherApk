@@ -18,7 +18,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".application.Settings"
+        <activity
+            android:name=".application.Settings"
             android:label="Settings">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -29,6 +30,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".application.Application" />
         </activity>
+        <activity android:name=".weather.database.CityList"></activity>
     </application>
 
 </manifest>

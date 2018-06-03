@@ -20,6 +20,7 @@ import noname.astroweather.weather.data.Channel;
 import noname.astroweather.weather.data.Item;
 import noname.astroweather.weather.data.WeatherServiceCallback;
 import noname.astroweather.weather.data.YahooWeatherService;
+import noname.astroweather.weather.database.DatabaseOperation;
 
 public class Settings extends AppCompatActivity implements WeatherServiceCallback {
 
@@ -29,6 +30,7 @@ public class Settings extends AppCompatActivity implements WeatherServiceCallbac
     TextView editCity;
     TextView editCountry;
 
+    Button addToDatabase;
     Button saveValues;
     Button setDefaultValues;
 
@@ -110,6 +112,23 @@ public class Settings extends AppCompatActivity implements WeatherServiceCallbac
                 Toast.makeText(Settings.this, "Values set to default!", Toast.LENGTH_SHORT).show();
             }
         });
+
+        addToDatabase.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String cityName = editCity.getText().toString();
+                String countryName = editCountry.getText().toString();
+                if(cityName.isEmpty() || countryName.isEmpty()) {
+                    Toast.makeText(Settings.this, "Localization cannot be added to Database!", Toast.LENGTH_SHORT).show();
+                } else {
+                    DatabaseOperation dboperation = new DatabaseOperation(Settings.this);
+                    dboperation.putInformation(dboperation, editCity.getText().toString(), editCountry.getText().toString());
+
+                    Toast.makeText(Settings.this, "Localization added to Database!", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
     }
 
     private void setLocalizationFromYahooWeatherService() {
@@ -218,6 +237,7 @@ public class Settings extends AppCompatActivity implements WeatherServiceCallbac
     private void initButtons() {
         saveValues = (Button) findViewById(R.id.saveValues);
         setDefaultValues = (Button) findViewById(R.id.setDefaultValues);
+        addToDatabase = (Button) findViewById(R.id.addToDatabase);
     }
 
     private void initSharedPreferences() {

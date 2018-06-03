@@ -259,4 +259,13 @@
         app:layout_constraintEnd_toStartOf="@+id/editCountry"
         app:layout_constraintTop_toTopOf="@+id/editCountry" />
 
+    <Button
+        android:id="@+id/addToDatabase"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:text="Add"
+        app:layout_constraintEnd_toStartOf="@+id/textView18"
+        app:layout_constraintTop_toTopOf="@+id/textView" />
+
 </android.support.constraint.ConstraintLayout>
