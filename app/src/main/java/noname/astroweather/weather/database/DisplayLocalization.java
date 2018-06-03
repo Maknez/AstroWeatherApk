@@ -1,5 +1,6 @@
 package noname.astroweather.weather.database;
 
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -15,11 +16,23 @@ import noname.astroweather.R;
 public class DisplayLocalization extends AppCompatActivity {
 
     ListView cityCountrylistView;
+    int currentItem;
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        outState.putInt("savedCurrentItem", currentItem);
+        super.onSaveInstanceState(outState);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_display_localization);
+
+        if (savedInstanceState != null) {
+            currentItem = (savedInstanceState.getInt("savedCurrentItem"));
+        }
+
 
         initListView();
         LocalizationAdapter localizationAdapter = new LocalizationAdapter(DisplayLocalization.this, R.layout.display_localization_row);
@@ -43,6 +56,8 @@ public class DisplayLocalization extends AppCompatActivity {
         cityCountrylistView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                currentItem = position;
+
                 return false;
             }
         });
@@ -58,7 +73,6 @@ public class DisplayLocalization extends AppCompatActivity {
 
     @Override
     public boolean onContextItemSelected(MenuItem item) {
-        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
         switch (item.getItemId()) {
             case R.id.setAsDefault:
                 setAsDefault();
@@ -76,7 +90,18 @@ public class DisplayLocalization extends AppCompatActivity {
     }
 
     private void setAsDefault() {
-        //TODO: implement method
+
+        System.out.println("TESSSTTTT:    " + currentItem);
+        DatabaseOperation dboperation = new DatabaseOperation(DisplayLocalization.this);
+        Cursor cursor = dboperation.getInformation(dboperation);
+        cursor.moveToPosition(currentItem + 1);
+        SharedPreferences sharedPreferences = getSharedPreferences("config.xml", 0);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("Custom_City", cursor.getString(0));
+        editor.putString("Custom_Country", cursor.getString(1));
+        editor.putString("Custom_Latitude", cursor.getString(2));
+        editor.putString("Custom_Longitude", cursor.getString(3));
+        editor.commit();
     }
 
 

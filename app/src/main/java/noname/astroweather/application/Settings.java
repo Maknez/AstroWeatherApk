@@ -51,7 +51,11 @@ public class Settings extends AppCompatActivity implements WeatherServiceCallbac
         outState.putString("savedRefresh", String.valueOf(editRefresh.getText()));
         super.onSaveInstanceState(outState);
     }
-
+    @Override
+    public void onRestart() {
+        getSettingsValues();
+        super.onRestart();
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
