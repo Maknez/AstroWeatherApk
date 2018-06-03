@@ -20,6 +20,7 @@ import noname.astroweather.weather.data.Channel;
 import noname.astroweather.weather.data.Item;
 import noname.astroweather.weather.data.WeatherServiceCallback;
 import noname.astroweather.weather.data.YahooWeatherService;
+import noname.astroweather.weather.database.CityList;
 import noname.astroweather.weather.database.DatabaseOperation;
 
 public class Settings extends AppCompatActivity implements WeatherServiceCallback {
@@ -31,6 +32,7 @@ public class Settings extends AppCompatActivity implements WeatherServiceCallbac
     TextView editCountry;
 
     Button addToDatabase;
+    Button getFromDatabase;
     Button saveValues;
     Button setDefaultValues;
 
@@ -118,14 +120,23 @@ public class Settings extends AppCompatActivity implements WeatherServiceCallbac
             public void onClick(View view) {
                 String cityName = editCity.getText().toString();
                 String countryName = editCountry.getText().toString();
-                if(cityName.isEmpty() || countryName.isEmpty()) {
+                String latitude = editLatitude.getText().toString();
+                String longitude = editLongitude.getText().toString();
+                if (cityName.isEmpty() || countryName.isEmpty() || latitude.isEmpty() || longitude.isEmpty()) {
                     Toast.makeText(Settings.this, "Localization cannot be added to Database!", Toast.LENGTH_SHORT).show();
                 } else {
                     DatabaseOperation dboperation = new DatabaseOperation(Settings.this);
-                    dboperation.putInformation(dboperation, editCity.getText().toString(), editCountry.getText().toString());
+                    dboperation.putInformation(dboperation, cityName, countryName, latitude, longitude);
 
                     Toast.makeText(Settings.this, "Localization added to Database!", Toast.LENGTH_SHORT).show();
                 }
+            }
+        });
+
+        getFromDatabase.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(Settings.this, CityList.class));
             }
         });
 
@@ -238,6 +249,7 @@ public class Settings extends AppCompatActivity implements WeatherServiceCallbac
         saveValues = (Button) findViewById(R.id.saveValues);
         setDefaultValues = (Button) findViewById(R.id.setDefaultValues);
         addToDatabase = (Button) findViewById(R.id.addToDatabase);
+        getFromDatabase = (Button) findViewById(R.id.getFromDatabase);
     }
 
     private void initSharedPreferences() {

@@ -9,13 +9,12 @@ import android.util.Log;
 
 public class DatabaseOperation extends SQLiteOpenHelper {
     public static final int DATABASE_VERSION = 1;
-    public String CREATE_QUERY = "CREATE TABLE " +
-            LocalizationDatabase.TableInfo.TABLE_NAME +
-            "(" +
-            LocalizationDatabase.TableInfo.CITY_NAME +
-            " TEXT," +
-            LocalizationDatabase.TableInfo.COUNTRY_NAME +
-            " TEXT );";
+    public String CREATE_QUERY = new StringBuilder().append("CREATE TABLE ")
+            .append(LocalizationDatabase.TableInfo.TABLE_NAME).append("(")
+            .append(LocalizationDatabase.TableInfo.CITY_NAME).append(" TEXT,")
+            .append(LocalizationDatabase.TableInfo.COUNTRY_NAME).append(" TEXT,")
+            .append(LocalizationDatabase.TableInfo.LATITUDE_VALUE).append(" TEXT,")
+            .append(LocalizationDatabase.TableInfo.LONGITUDE_VALUE).append(" TEXT );").toString();
 
     public DatabaseOperation(Context context) {
         super(context, LocalizationDatabase.TableInfo.DATABASE_NAME, null, DATABASE_VERSION);
@@ -33,11 +32,13 @@ public class DatabaseOperation extends SQLiteOpenHelper {
 
     }
 
-    public void putInformation(DatabaseOperation dboperation, String cityName, String countryName) {
+    public void putInformation(DatabaseOperation dboperation, String cityName, String countryName, String latitude, String longitude) {
         SQLiteDatabase SQ = dboperation.getWritableDatabase();
         ContentValues cv = new ContentValues();
         cv.put(LocalizationDatabase.TableInfo.CITY_NAME, cityName);
         cv.put(LocalizationDatabase.TableInfo.COUNTRY_NAME, countryName);
+        cv.put(LocalizationDatabase.TableInfo.LATITUDE_VALUE, latitude);
+        cv.put(LocalizationDatabase.TableInfo.LONGITUDE_VALUE, longitude);
         long k = SQ.insert(LocalizationDatabase.TableInfo.TABLE_NAME, null, cv);
         Log.d("Database operation", "One raw inserted");
     }
