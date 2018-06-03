@@ -126,9 +126,9 @@ public class Settings extends AppCompatActivity implements WeatherServiceCallbac
                     Toast.makeText(Settings.this, "Localization cannot be added to Database!", Toast.LENGTH_SHORT).show();
                 } else {
                     DatabaseOperation dboperation = new DatabaseOperation(Settings.this);
-                    dboperation.putInformation(dboperation, cityName, countryName, latitude, longitude);
+                    String message = dboperation.putInformation(dboperation, cityName, countryName, latitude, longitude);
 
-                    Toast.makeText(Settings.this, "Localization added to Database!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Settings.this, message, Toast.LENGTH_SHORT).show();
                 }
             }
         });

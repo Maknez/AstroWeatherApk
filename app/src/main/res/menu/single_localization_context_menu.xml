@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/setAsDefault"
+        android:title="@string/set_as_default" />
+    <item
+        android:id="@+id/removeFromDatabase"
+        android:title="@string/remove_from_database" />
+</menu>

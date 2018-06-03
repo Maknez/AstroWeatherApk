@@ -18,13 +18,13 @@ public class DatabaseOperation extends SQLiteOpenHelper {
 
     public DatabaseOperation(Context context) {
         super(context, LocalizationDatabase.TableInfo.DATABASE_NAME, null, DATABASE_VERSION);
-        Log.d("Database operation", "Database created");
+        //Log.d("Database operation", "Database created");
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(CREATE_QUERY);
-        Log.d("Database operation", "Table created");
+        //Log.d("Database operation", "Table created");
     }
 
     @Override
@@ -32,15 +32,30 @@ public class DatabaseOperation extends SQLiteOpenHelper {
 
     }
 
-    public void putInformation(DatabaseOperation dboperation, String cityName, String countryName, String latitude, String longitude) {
+    public String putInformation(DatabaseOperation dboperation, String cityName, String countryName, String latitude, String longitude) {
+
         SQLiteDatabase SQ = dboperation.getWritableDatabase();
-        ContentValues cv = new ContentValues();
-        cv.put(LocalizationDatabase.TableInfo.CITY_NAME, cityName);
-        cv.put(LocalizationDatabase.TableInfo.COUNTRY_NAME, countryName);
-        cv.put(LocalizationDatabase.TableInfo.LATITUDE_VALUE, latitude);
-        cv.put(LocalizationDatabase.TableInfo.LONGITUDE_VALUE, longitude);
-        long k = SQ.insert(LocalizationDatabase.TableInfo.TABLE_NAME, null, cv);
-        Log.d("Database operation", "One raw inserted");
+        boolean isRepeated = false;
+        Cursor cursor = getInformation(this);
+        cursor.moveToFirst();
+        while (cursor.moveToNext()) {
+            if(cityName.equals(cursor.getString(0)) && countryName.equals(cursor.getString(1))) {
+                isRepeated = true;
+            }
+        }
+        if(isRepeated != true) {
+            ContentValues cv = new ContentValues();
+            cv.put(LocalizationDatabase.TableInfo.CITY_NAME, cityName);
+            cv.put(LocalizationDatabase.TableInfo.COUNTRY_NAME, countryName);
+            cv.put(LocalizationDatabase.TableInfo.LATITUDE_VALUE, latitude);
+            cv.put(LocalizationDatabase.TableInfo.LONGITUDE_VALUE, longitude);
+            //long k =
+            SQ.insert(LocalizationDatabase.TableInfo.TABLE_NAME, null, cv);
+            //Log.d("Database operation", "One raw inserted");
+            return "Localization successfully added to Database!";
+        } else {
+            return "Localization already in Database!";
+        }
     }
 
     public Cursor getInformation(DatabaseOperation dboperation) {

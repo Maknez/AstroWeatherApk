@@ -29,4 +29,6 @@
     <string name="humidity1">Humidity:</string>
     <string name="wind_way">Wind Way:</string>
     <string name="wind_power">Wind Power:</string>
+    <string name="set_as_default">SET AS DEFAULT</string>
+    <string name="remove_from_database">REMOVE FROM DATABASE</string>
 </resources>
