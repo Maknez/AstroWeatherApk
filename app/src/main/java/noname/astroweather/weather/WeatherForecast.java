@@ -1,7 +1,5 @@
 package noname.astroweather.weather;
 
-
-import android.app.ProgressDialog;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -26,7 +24,6 @@ public class WeatherForecast extends Fragment implements WeatherServiceCallback 
     private TextView[] temperatureLowTextView = new TextView[5];
     private ImageView[] weatherImageView = new ImageView[5];
     private YahooWeatherService service;
-    private ProgressDialog dialog;
     SharedPreferences sharedPreferences;
     private ProgressBar progressBar;
 
@@ -48,10 +45,6 @@ public class WeatherForecast extends Fragment implements WeatherServiceCallback 
         setProgressBarVisibility(View.VISIBLE);
 
         refreshWeather();
-  /*      dialog = new ProgressDialog(getActivity());
-        dialog.setMessage("Loading...");
-        dialog.show();
-*/
 
         return rootView;
     }
@@ -73,7 +66,7 @@ public class WeatherForecast extends Fragment implements WeatherServiceCallback 
     }
 
     private void initSharedPreferences() {
-    sharedPreferences = getActivity().getSharedPreferences("config.xml", 0);
+        sharedPreferences = getActivity().getSharedPreferences("config.xml", 0);
     }
 
     private void initTextViews(ViewGroup rootView) {
@@ -92,7 +85,6 @@ public class WeatherForecast extends Fragment implements WeatherServiceCallback 
 
     @Override
     public void serviceSuccess(Channel channel) {
-        //dialog.hide();
         UnitsChanger unitsChanger = new UnitsChanger();
         int temperatureUnit = sharedPreferences.getInt("Temperature_Unit", (getResources().getInteger(R.integer.Default_Temperature_Unit)));
         for (int i = 0; i < FORECAST_DAY_NUMBER; i++) {

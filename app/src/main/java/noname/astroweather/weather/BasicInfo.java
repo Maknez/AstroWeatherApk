@@ -1,9 +1,6 @@
 package noname.astroweather.weather;
 
-
-import android.app.ProgressDialog;
 import android.content.SharedPreferences;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -13,8 +10,6 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import org.w3c.dom.Text;
 
 import noname.astroweather.R;
 import noname.astroweather.data.Channel;
@@ -38,7 +33,6 @@ public class BasicInfo extends Fragment implements WeatherServiceCallback {
 
     private YahooWeatherService service;
     private ProgressBar progressBar;
-    private ProgressDialog dialog;
     SharedPreferences sharedPreferences;
 
     public BasicInfo() {
@@ -98,7 +92,6 @@ public class BasicInfo extends Fragment implements WeatherServiceCallback {
 
     @Override
     public void serviceSuccess(Channel channel) {
-        //dialog.hide();
         Item item = channel.getItem();
 
         UnitsChanger unitsChanger = new UnitsChanger();
