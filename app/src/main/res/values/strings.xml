@@ -12,4 +12,21 @@
     <string name="temperature_unit_celsius"> °C</string>
     <string name="wind_power_unit_mph"> mph</string>
     <string name="wind_power_unit_kmph"> km/h</string>
+    <string name="weather">Weather</string>
+    <string name="temper">Temper</string>
+    <string name="weatherimage">WeatherImage</string>
+    <string name="city">City</string>
+    <string name="air">air</string>
+    <string name="description">Description</string>
+    <string name="country">Country</string>
+    <string name="temperature">Temperature:</string>
+    <string name="air_pressure">Air Pressure:</string>
+    <string name="windpower">WindPower</string>
+    <string name="windway">WindWay</string>
+    <string name="humidity">Humidity</string>
+    <string name="visibility">Visibility</string>
+    <string name="visibility1">Visibility:</string>
+    <string name="humidity1">Humidity:</string>
+    <string name="wind_way">Wind Way:</string>
+    <string name="wind_power">Wind Power:</string>
 </resources>

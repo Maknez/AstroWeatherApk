@@ -6,8 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".weather.WeatherForecast">
 
-    <!-- TODO: Update blank fragment layout -->
-
     <android.support.constraint.ConstraintLayout
         android:id="@+id/weather_forecast"
         android:layout_width="match_parent"
@@ -23,7 +21,8 @@
             app:layout_constraintBottom_toTopOf="@+id/guideline21"
             app:layout_constraintEnd_toStartOf="@+id/weatherImage2"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            android:contentDescription="@string/weatherimage"/>
 
         <ImageView
             android:id="@+id/weatherImage2"
@@ -35,7 +34,8 @@
             app:layout_constraintBottom_toTopOf="@+id/guideline21"
             app:layout_constraintEnd_toStartOf="@+id/weatherImage3"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/weatherImage1" />
+            app:layout_constraintStart_toEndOf="@+id/weatherImage1"
+            android:contentDescription="@string/weatherimage"/>
 
         <ImageView
             android:id="@+id/weatherImage3"
@@ -47,7 +47,8 @@
             app:layout_constraintBottom_toTopOf="@+id/guideline21"
             app:layout_constraintEnd_toStartOf="@+id/weatherImage4"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/weatherImage2" />
+            app:layout_constraintStart_toEndOf="@+id/weatherImage2"
+            android:contentDescription="@string/weatherimage"/>
 
         <ImageView
             android:id="@+id/weatherImage4"
@@ -59,7 +60,8 @@
             app:layout_constraintBottom_toTopOf="@+id/guideline21"
             app:layout_constraintEnd_toStartOf="@+id/weatherImage5"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/weatherImage3" />
+            app:layout_constraintStart_toEndOf="@+id/weatherImage3"
+            android:contentDescription="@string/weatherimage"/>
 
         <ImageView
             android:id="@+id/weatherImage5"
@@ -72,7 +74,8 @@
             app:layout_constraintBottom_toTopOf="@+id/guideline21"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/weatherImage4" />
+            app:layout_constraintStart_toEndOf="@+id/weatherImage4"
+            android:contentDescription="@string/weatherimage" />
 
         <TextView
             android:id="@+id/weatherText1"
@@ -82,7 +85,7 @@
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
-            android:text="Weather"
+            android:text="@string/weather"
             android:textAlignment="center"
             app:layout_constraintBottom_toTopOf="@+id/weatherImage1"
             app:layout_constraintEnd_toEndOf="@+id/weatherImage1"
@@ -97,7 +100,7 @@
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
-            android:text="Weather"
+            android:text="@string/weather"
             android:textAlignment="center"
             app:layout_constraintBottom_toTopOf="@+id/weatherImage2"
             app:layout_constraintEnd_toEndOf="@+id/weatherImage2"
@@ -112,7 +115,7 @@
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
-            android:text="Weather"
+            android:text="@string/weather"
             android:textAlignment="center"
             app:layout_constraintBottom_toTopOf="@+id/weatherImage3"
             app:layout_constraintEnd_toEndOf="@+id/weatherImage3"
@@ -127,7 +130,7 @@
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
-            android:text="Weather"
+            android:text="@string/weather"
             android:textAlignment="center"
             app:layout_constraintBottom_toTopOf="@+id/weatherImage4"
             app:layout_constraintEnd_toEndOf="@+id/weatherImage4"
@@ -142,7 +145,7 @@
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
-            android:text="Weather"
+            android:text="@string/weather"
             android:textAlignment="center"
             app:layout_constraintBottom_toTopOf="@+id/weatherImage5"
             app:layout_constraintEnd_toEndOf="@+id/weatherImage5"
@@ -156,7 +159,7 @@
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
-            android:text="Temper"
+            android:text="@string/temper"
             android:textAlignment="center"
             android:textSize="14sp"
             android:textStyle="bold"
@@ -172,7 +175,7 @@
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
-            android:text="Temper"
+            android:text="@string/temper"
             android:textAlignment="center"
             android:textSize="14sp"
             android:textStyle="bold"
@@ -188,7 +191,7 @@
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
-            android:text="Temper"
+            android:text="@string/temper"
             android:textAlignment="center"
             android:textSize="14sp"
             android:textStyle="bold"
@@ -204,7 +207,7 @@
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
-            android:text="Temper"
+            android:text="@string/temper"
             android:textAlignment="center"
             android:textSize="14sp"
             android:textStyle="bold"
@@ -220,7 +223,7 @@
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
-            android:text="Temper"
+            android:text="@string/temper"
             android:textAlignment="center"
             android:textSize="14sp"
             android:textStyle="bold"
@@ -236,7 +239,7 @@
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
-            android:text="Temper"
+            android:text="@string/temper"
             android:textAlignment="center"
             android:textSize="14sp"
             android:textStyle="bold"
@@ -251,7 +254,7 @@
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
-            android:text="Temper"
+            android:text="@string/temper"
             android:textAlignment="center"
             android:textSize="14sp"
             android:textStyle="bold"
@@ -266,7 +269,7 @@
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
-            android:text="Temper"
+            android:text="@string/temper"
             android:textAlignment="center"
             android:textSize="14sp"
             android:textStyle="bold"
@@ -281,7 +284,7 @@
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
-            android:text="Temper"
+            android:text="@string/temper"
             android:textAlignment="center"
             android:textSize="14sp"
             android:textStyle="bold"
@@ -296,7 +299,7 @@
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
-            android:text="Temper"
+            android:text="@string/temper"
             android:textAlignment="center"
             android:textSize="14sp"
             android:textStyle="bold"

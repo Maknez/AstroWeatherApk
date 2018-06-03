@@ -15,7 +15,7 @@
             android:id="@+id/cityText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="City"
+            android:text="@string/city"
             android:textSize="30sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="@+id/guideline4"
@@ -26,7 +26,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:text="temp"
+            android:text="@string/temper"
             app:layout_constraintStart_toEndOf="@+id/textView12"
             app:layout_constraintTop_toTopOf="@+id/textView12" />
 
@@ -35,7 +35,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:text="air"
+            android:text="@string/air"
             app:layout_constraintStart_toEndOf="@+id/textView13"
             app:layout_constraintTop_toTopOf="@+id/textView13" />
 
@@ -46,7 +46,7 @@
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="12dp"
-            android:text="Description"
+            android:text="@string/description"
             app:layout_constraintEnd_toEndOf="@+id/weatherImage"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="@+id/weatherImage"
@@ -60,13 +60,14 @@
             android:layout_marginTop="28dp"
             android:src="@drawable/weather_icon_44"
             app:layout_constraintEnd_toStartOf="@+id/guideline3"
-            app:layout_constraintTop_toTopOf="@+id/guideline2" />
+            app:layout_constraintTop_toTopOf="@+id/guideline2"
+            android:contentDescription="@string/weatherimage"/>
 
         <TextView
             android:id="@+id/countryText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Country"
+            android:text="@string/country"
             app:layout_constraintStart_toStartOf="@+id/guideline5"
             app:layout_constraintTop_toBottomOf="@+id/cityText" />
 
@@ -113,7 +114,8 @@
             android:layout_marginTop="8dp"
             android:src="@drawable/yahoo"
             app:layout_constraintStart_toStartOf="@+id/guideline4"
-            app:layout_constraintTop_toBottomOf="@+id/weatherImage" />
+            app:layout_constraintTop_toBottomOf="@+id/weatherImage"
+            android:contentDescription="@string/weatherimage"/>
 
         <TextView
             android:id="@+id/textView12"
@@ -121,7 +123,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
-            android:text="Temperature: "
+            android:text="@string/temperature"
             app:layout_constraintStart_toStartOf="@+id/guideline"
             app:layout_constraintTop_toTopOf="@+id/guideline6" />
 
@@ -131,7 +133,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
-            android:text="Air Pressure: "
+            android:text="@string/air_pressure"
             app:layout_constraintStart_toStartOf="@+id/guideline"
             app:layout_constraintTop_toBottomOf="@+id/textView12" />
 
