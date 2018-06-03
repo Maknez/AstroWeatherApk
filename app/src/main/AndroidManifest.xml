@@ -30,7 +30,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".application.Application" />
         </activity>
-        <activity android:name=".weather.database.CityList"></activity>
+        <activity android:name=".weather.database.DisplayLocalization"></activity>
     </application>
 
 </manifest>

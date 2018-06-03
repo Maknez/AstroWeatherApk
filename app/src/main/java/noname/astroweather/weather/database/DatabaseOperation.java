@@ -45,7 +45,7 @@ public class DatabaseOperation extends SQLiteOpenHelper {
 
     public Cursor getInformation(DatabaseOperation dboperation) {
         SQLiteDatabase SQ = dboperation.getReadableDatabase();
-        String[] columns = {LocalizationDatabase.TableInfo.CITY_NAME, LocalizationDatabase.TableInfo.COUNTRY_NAME};
+        String[] columns = {LocalizationDatabase.TableInfo.CITY_NAME, LocalizationDatabase.TableInfo.COUNTRY_NAME, LocalizationDatabase.TableInfo.LATITUDE_VALUE, LocalizationDatabase.TableInfo.LONGITUDE_VALUE};
         Cursor cursor = SQ.query(LocalizationDatabase.TableInfo.TABLE_NAME, columns, null, null, null, null, null);
         return cursor;
     }
