@@ -1,7 +1,6 @@
 package noname.astroweather.astro;
 
 import android.app.Activity;
-import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -10,14 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.astrocalculator.AstroCalculator;
-import com.astrocalculator.AstroDateTime;
-
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-
-import noname.astroweather.core.Clock;
+import noname.astroweather.application.Clock;
 import noname.astroweather.R;
 
 public class MoonFragment extends Fragment {

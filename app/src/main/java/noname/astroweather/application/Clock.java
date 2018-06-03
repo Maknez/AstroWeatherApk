@@ -1,4 +1,4 @@
-package noname.astroweather.core;
+package noname.astroweather.application;
 
 import android.app.Activity;
 import android.content.SharedPreferences;

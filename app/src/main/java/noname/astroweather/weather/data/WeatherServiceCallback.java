@@ -1,6 +1,4 @@
-package noname.astroweather.data;
-
-import noname.astroweather.data.Channel;
+package noname.astroweather.weather.data;
 
 public interface WeatherServiceCallback {
     void serviceSuccess(Channel channel);

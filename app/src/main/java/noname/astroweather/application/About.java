@@ -1,4 +1,4 @@
-package noname.astroweather.core;
+package noname.astroweather.application;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;

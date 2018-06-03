@@ -1,18 +1,20 @@
-package noname.astroweather.adapters;
+package noname.astroweather.adapters.viewpageradapters;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
+import noname.astroweather.astro.MoonFragment;
+import noname.astroweather.astro.SunFragment;
 import noname.astroweather.weather.BasicInfo;
 import noname.astroweather.weather.WeatherForecast;
 import noname.astroweather.weather.WindAndHumidity;
 
-public class ScreenSlidePagerAdapterWeather extends FragmentStatePagerAdapter {
+public class ScreenSlidePagerAdapterAllFragments extends FragmentStatePagerAdapter {
 
-    public static final int NUM_PAGES = 3;
+    public static final int NUM_PAGES = 5;
 
-    public ScreenSlidePagerAdapterWeather(FragmentManager fm) {
+    public ScreenSlidePagerAdapterAllFragments(FragmentManager fm) {
         super(fm);
     }
 
@@ -27,6 +29,12 @@ public class ScreenSlidePagerAdapterWeather extends FragmentStatePagerAdapter {
             }
             case 2: {
                 return new WindAndHumidity();
+            }
+            case 3: {
+                return new SunFragment();
+            }
+            case 4: {
+                return new MoonFragment();
             }
         }
         return null;

@@ -1,4 +1,4 @@
-package noname.astroweather.core;
+package noname.astroweather.application;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -14,12 +14,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import noname.astroweather.R;
-import noname.astroweather.adapters.TemperatureUnitsSpinnerAdapter;
-import noname.astroweather.adapters.WindSpeedUnitsSpinnerAdapter;
-import noname.astroweather.data.Channel;
-import noname.astroweather.data.Item;
-import noname.astroweather.data.WeatherServiceCallback;
-import noname.astroweather.data.YahooWeatherService;
+import noname.astroweather.adapters.spinneradapters.TemperatureUnitsSpinnerAdapter;
+import noname.astroweather.adapters.spinneradapters.WindSpeedUnitsSpinnerAdapter;
+import noname.astroweather.weather.data.Channel;
+import noname.astroweather.weather.data.Item;
+import noname.astroweather.weather.data.WeatherServiceCallback;
+import noname.astroweather.weather.data.YahooWeatherService;
 
 public class Settings extends AppCompatActivity implements WeatherServiceCallback {
 

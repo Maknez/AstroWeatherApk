@@ -1,4 +1,4 @@
-package noname.astroweather.adapters;
+package noname.astroweather.adapters.spinneradapters;
 
 import android.app.Activity;
 import android.content.Context;
@@ -10,16 +10,14 @@ import android.widget.TextView;
 
 import noname.astroweather.R;
 
-public class TemperatureUnitsSpinnerAdapter extends BaseAdapter {
+public class WindSpeedUnitsSpinnerAdapter extends BaseAdapter {
     Activity activity;
     String[] units;
     LayoutInflater inflater;
 
-
-
-    public TemperatureUnitsSpinnerAdapter(Activity activity) {
+    public WindSpeedUnitsSpinnerAdapter(Activity activity) {
         this.activity = activity;
-        this.units = new String[]{"°C", "°F"};
+        this.units = new String[]{"mph", "kmph"};
         this.inflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
@@ -30,15 +28,7 @@ public class TemperatureUnitsSpinnerAdapter extends BaseAdapter {
 
     @Override
     public Object getItem(int position) {
-        switch (position){
-            case 0: {
-                return units[0];
-            }
-            case 1: {
-                return units[1];
-            }
-        }
-        return 0;
+        return null;
     }
 
     @Override
@@ -49,8 +39,8 @@ public class TemperatureUnitsSpinnerAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         View row = inflater.inflate(R.layout.spinner_row, null);
-        TextView singleTemperatureUnit = (TextView) row.findViewById(R.id.singleUnit);
-        singleTemperatureUnit.setText(units[position]);
+        TextView singleWindSpeedUnit = (TextView) row.findViewById(R.id.singleUnit);
+        singleWindSpeedUnit.setText(units[position]);
         return row;
     }
 }

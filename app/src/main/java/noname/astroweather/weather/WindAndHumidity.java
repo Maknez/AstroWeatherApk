@@ -11,9 +11,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import noname.astroweather.R;
-import noname.astroweather.data.YahooWeatherService;
-import noname.astroweather.data.Channel;
-import noname.astroweather.data.WeatherServiceCallback;
+import noname.astroweather.weather.data.YahooWeatherService;
+import noname.astroweather.weather.data.Channel;
+import noname.astroweather.weather.data.WeatherServiceCallback;
 
 public class WindAndHumidity extends Fragment implements WeatherServiceCallback {
 

@@ -1,4 +1,4 @@
-package noname.astroweather.data;
+package noname.astroweather.weather.data;
 
 import org.json.JSONArray;
 

@@ -1,4 +1,4 @@
-package noname.astroweather.data;
+package noname.astroweather.weather.data;
 
 import android.annotation.SuppressLint;
 import android.content.SharedPreferences;

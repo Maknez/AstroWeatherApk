@@ -1,4 +1,4 @@
-package noname.astroweather.core;
+package noname.astroweather.application;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -15,9 +15,9 @@ import android.widget.TextView;
 import java.util.Calendar;
 
 import noname.astroweather.R;
-import noname.astroweather.adapters.ScreenSlidePagerAdapterAllFragments;
-import noname.astroweather.adapters.ScreenSlidePagerAdapterSunMoon;
-import noname.astroweather.adapters.ScreenSlidePagerAdapterWeather;
+import noname.astroweather.adapters.viewpageradapters.ScreenSlidePagerAdapterAllFragments;
+import noname.astroweather.adapters.viewpageradapters.ScreenSlidePagerAdapterSunMoon;
+import noname.astroweather.adapters.viewpageradapters.ScreenSlidePagerAdapterWeather;
 
 
 public class Application extends AppCompatActivity {
