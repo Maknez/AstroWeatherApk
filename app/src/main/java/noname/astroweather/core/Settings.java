@@ -349,7 +349,7 @@ public class Settings extends AppCompatActivity implements WeatherServiceCallbac
         editor.commit();
     }
 
-    private void saveCustomValues(){
+    private void saveCustomValues() {
         saveLongitude();
         saveLatitude();
         saveCity();
@@ -410,23 +410,22 @@ public class Settings extends AppCompatActivity implements WeatherServiceCallbac
     @Override
     public void serviceSuccess(Channel channel) {
         Item item = channel.getItem();
-
         if (option == 0) {
             editLatitude.setText(String.valueOf(item.getLatitude()));
             editLongitude.setText(String.valueOf(item.getLongitude()));
-            if(isLatitudePossibleToSave()) {
+            if (isLatitudePossibleToSave()) {
                 saveLatitude();
             }
-            if(isLongitudePossibleToSave()) {
+            if (isLongitudePossibleToSave()) {
                 saveLongitude();
             }
         } else if (option == 1) {
             editCity.setText(channel.getLocation().getCity());
             editCountry.setText(channel.getLocation().getCountry());
-            if(isCityPossibleToSave()){
+            if (isCityPossibleToSave()) {
                 saveCity();
             }
-            if(isCountryPossibleToSave()) {
+            if (isCountryPossibleToSave()) {
                 saveCountry();
             }
         }
@@ -434,6 +433,6 @@ public class Settings extends AppCompatActivity implements WeatherServiceCallbac
 
     @Override
     public void serviceFailure(Exception ex) {
-
+        Toast.makeText(Settings.this, ex.getMessage(), Toast.LENGTH_SHORT).show();
     }
 }

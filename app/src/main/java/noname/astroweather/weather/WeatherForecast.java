@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,6 +28,7 @@ public class WeatherForecast extends Fragment implements WeatherServiceCallback 
     private YahooWeatherService service;
     private ProgressDialog dialog;
     SharedPreferences sharedPreferences;
+    private ProgressBar progressBar;
 
     public WeatherForecast() {
     }
@@ -41,14 +43,33 @@ public class WeatherForecast extends Fragment implements WeatherServiceCallback 
         initImageViews(rootView);
         initTextViews(rootView);
         initSharedPreferences();
-        service = new YahooWeatherService(this, sharedPreferences, sharedPreferences.getInt("Custom_Option_To_Refresh_Weather", getResources().getInteger(R.integer.Default_Option_To_Refresh_Weather)));
-        service.refreshWeather();
+        initProgressBar(rootView);
+        initYahooWeatherService();
+        setProgressBarVisibility(View.VISIBLE);
+
+        refreshWeather();
   /*      dialog = new ProgressDialog(getActivity());
         dialog.setMessage("Loading...");
         dialog.show();
 */
 
         return rootView;
+    }
+
+    private void setProgressBarVisibility(int visible) {
+        progressBar.setVisibility(visible);
+    }
+
+    private void initProgressBar(ViewGroup rootView) {
+        progressBar = (ProgressBar) rootView.findViewById(R.id.progressBar);
+    }
+
+    private void refreshWeather() {
+        service.refreshWeather();
+    }
+
+    private void initYahooWeatherService() {
+        service = new YahooWeatherService(this, sharedPreferences, sharedPreferences.getInt("Custom_Option_To_Refresh_Weather", getResources().getInteger(R.integer.Default_Option_To_Refresh_Weather)));
     }
 
     private void initSharedPreferences() {
@@ -89,6 +110,7 @@ public class WeatherForecast extends Fragment implements WeatherServiceCallback 
             }
             weatherTextView[i].setText(channel.getItem().getForecast(i + 1).getDay());
         }
+        setProgressBarVisibility(View.INVISIBLE);
     }
 
     private int getResourceID(Channel channel, int currentDay) {
@@ -97,7 +119,8 @@ public class WeatherForecast extends Fragment implements WeatherServiceCallback 
 
     @Override
     public void serviceFailure(Exception ex) {
-        //TODO: Restore values from sharedPreferences file;
+
         Toast.makeText(getActivity(), ex.getMessage(), Toast.LENGTH_SHORT).show();
+        setProgressBarVisibility(View.INVISIBLE);
     }
 }

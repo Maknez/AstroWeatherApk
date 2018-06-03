@@ -8,7 +8,9 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import noname.astroweather.R;
 import noname.astroweather.data.YahooWeatherService;
@@ -28,6 +30,7 @@ public class WindAndHumidity extends Fragment implements WeatherServiceCallback 
     private YahooWeatherService service;
     private ProgressDialog dialog;
     private SharedPreferences sharedPreferences;
+    private ProgressBar progressBar;
 
     public WindAndHumidity() {
     }
@@ -41,13 +44,32 @@ public class WindAndHumidity extends Fragment implements WeatherServiceCallback 
 
         initTextViews(rootView);
         initSharedPreferences();
-        service = new YahooWeatherService(this, sharedPreferences, sharedPreferences.getInt("Custom_Option_To_Refresh_Weather", getResources().getInteger(R.integer.Default_Option_To_Refresh_Weather)));
-        service.refreshWeather();
+        initYahooWeatherService();
+        initProgressBar(rootView);
+        setProgressBarVisibility(View.VISIBLE);
+        refreshWeather();
         /*dialog = new ProgressDialog(getActivity());
         dialog.setMessage("Loading...");
         dialog.show();
 */
         return rootView;
+    }
+
+    private void setProgressBarVisibility(int visible) {
+        progressBar.setVisibility(visible);
+    }
+
+    private void initProgressBar(ViewGroup rootView) {
+        progressBar = (ProgressBar) rootView.findViewById(R.id.progressBar);
+    }
+
+
+    private void refreshWeather() {
+        service.refreshWeather();
+    }
+
+    private void initYahooWeatherService() {
+        service = new YahooWeatherService(this, sharedPreferences, sharedPreferences.getInt("Custom_Option_To_Refresh_Weather", getResources().getInteger(R.integer.Default_Option_To_Refresh_Weather)));
     }
 
     private void initSharedPreferences() {
@@ -78,10 +100,12 @@ public class WindAndHumidity extends Fragment implements WeatherServiceCallback 
         windWayTextView.setText(channel.getWind().getDirection());
         humidityTextView.setText(channel.getAtmosphere().getHumidity());
         visibilityTextView.setText(channel.getAtmosphere().getVisibility());
+        setProgressBarVisibility(View.INVISIBLE);
     }
 
     @Override
     public void serviceFailure(Exception ex) {
-
+        Toast.makeText(getActivity(), ex.getMessage(), Toast.LENGTH_SHORT).show();
+        setProgressBarVisibility(View.INVISIBLE);
     }
 }

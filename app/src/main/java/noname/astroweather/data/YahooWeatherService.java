@@ -33,35 +33,24 @@ public class YahooWeatherService {
     }
 
 
-
-
-
-
-
-
     @SuppressLint("StaticFieldLeak")
     public void refreshWeather() {
 
         new AsyncTask<String, Void, String>() {
             @Override
             protected String doInBackground(String... strings) {
-
-                System.out.println("TEST1");
-                if(option == 0){
+                if (option == 0) {
                     String cityCountryToFind = sharedPreferences.getString("Custom_City", "Będków") + ", " + sharedPreferences.getString("Custom_Country", "Poland");
                     YQL = String.format("select * from weather.forecast where woeid in (select woeid from geo.places(1) where text=\"%s\")", cityCountryToFind);
-                }
-                else if(option == 1) {
+                } else if (option == 1) {
 
                     String longLangToFind = sharedPreferences.getString("Custom_Longitude", String.valueOf(51.5873166)) + "," + sharedPreferences.getString("Custom_Latitude", String.valueOf(19.7543569));
-                            System.out.println(longLangToFind);
+                    System.out.println(longLangToFind);
                     YQL = String.format("select * from weather.forecast where woeid in (SELECT woeid FROM geo.places WHERE text=\"(%s)\")", longLangToFind);
                 }
 
 
-
-
-                    String endpoint = String.format("https://query.yahooapis.com/v1/public/yql?q=%s&format=json", Uri.encode(YQL));
+                String endpoint = String.format("https://query.yahooapis.com/v1/public/yql?q=%s&format=json", Uri.encode(YQL));
 
                 try {
                     URL url = new URL(endpoint);
@@ -100,12 +89,15 @@ public class YahooWeatherService {
                     if (count == 0) {
                         callback.serviceFailure(new LocationWeatherException("No weather information found"));
                         return;
+                    } else if (queryResults.optJSONObject("results").optJSONObject("channel").optJSONObject("location") == null) {
+                        callback.serviceFailure(new LocationWeatherException("Problem with infromation for current localization"));
+                        return;
+                    } else {
+                        Channel channel = new Channel();
+                        channel.populate(queryResults.optJSONObject("results").optJSONObject("channel"));
+
+                        callback.serviceSuccess(channel);
                     }
-
-                    Channel channel = new Channel();
-                    channel.populate(queryResults.optJSONObject("results").optJSONObject("channel"));
-
-                    callback.serviceSuccess(channel);
 
                 } catch (JSONException e) {
                     e.printStackTrace();

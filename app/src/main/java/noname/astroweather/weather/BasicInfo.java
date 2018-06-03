@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -36,6 +37,7 @@ public class BasicInfo extends Fragment implements WeatherServiceCallback {
     ImageView weatherImageView;
 
     private YahooWeatherService service;
+    private ProgressBar progressBar;
     private ProgressDialog dialog;
     SharedPreferences sharedPreferences;
 
@@ -54,26 +56,32 @@ public class BasicInfo extends Fragment implements WeatherServiceCallback {
         initTextViews(rootView);
         initImageView(rootView);
         initSharedPreferences();
-        initYahooWeatherService(sharedPreferences.getInt("Custom_Option_To_Refresh_Weather", getResources().getInteger(R.integer.Default_Option_To_Refresh_Weather)));
+        initProgressBar(rootView);
+        initYahooWeatherService();
+        setProgressBarVisibility(View.VISIBLE);
         refreshWeather();
 
-        /*dialog = new ProgressDialog(getActivity());
-        dialog.setMessage("Loading...");
-        dialog.show();*/
-
         return rootView;
+    }
+
+    private void setProgressBarVisibility(int visible) {
+        progressBar.setVisibility(visible);
+    }
+
+    private void initProgressBar(ViewGroup rootView) {
+        progressBar = (ProgressBar) rootView.findViewById(R.id.progressBar);
     }
 
     private void refreshWeather() {
         service.refreshWeather();
     }
 
-    private void initYahooWeatherService(int option) {
-        service = new YahooWeatherService(this, sharedPreferences, option);
+    private void initYahooWeatherService() {
+        service = new YahooWeatherService(this, sharedPreferences, sharedPreferences.getInt("Custom_Option_To_Refresh_Weather", getResources().getInteger(R.integer.Default_Option_To_Refresh_Weather)));
     }
 
     private void initSharedPreferences() {
-    sharedPreferences = getActivity().getSharedPreferences("config.xml", 0);
+        sharedPreferences = getActivity().getSharedPreferences("config.xml", 0);
     }
 
     private void initImageView(ViewGroup rootView) {
@@ -111,10 +119,12 @@ public class BasicInfo extends Fragment implements WeatherServiceCallback {
         }
         descriptionTextView.setText(item.getCondition().getDescription());
         airPressureTextView.setText(channel.getAtmosphere().getPressure().toString() + " hPa");
+        setProgressBarVisibility(View.INVISIBLE);
     }
 
     @Override
     public void serviceFailure(Exception ex) {
         Toast.makeText(getActivity(), ex.getMessage(), Toast.LENGTH_SHORT).show();
+        setProgressBarVisibility(View.INVISIBLE);
     }
 }
