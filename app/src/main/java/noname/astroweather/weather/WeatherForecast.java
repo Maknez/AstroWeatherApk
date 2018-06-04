@@ -27,9 +27,12 @@ public class WeatherForecast extends Fragment implements WeatherServiceCallback 
     SharedPreferences sharedPreferences;
     private ProgressBar progressBar;
 
-    public WeatherForecast() {
-    }
 
+    @Override
+    public void onResume() {
+        refreshWeather();
+        super.onResume();
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -43,8 +46,6 @@ public class WeatherForecast extends Fragment implements WeatherServiceCallback 
         initProgressBar(rootView);
         initYahooWeatherService();
         setProgressBarVisibility(View.VISIBLE);
-
-        refreshWeather();
 
         return rootView;
     }

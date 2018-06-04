@@ -25,7 +25,10 @@ public class WindAndHumidity extends Fragment implements WeatherServiceCallback 
     private SharedPreferences sharedPreferences;
     private ProgressBar progressBar;
 
-    public WindAndHumidity() {
+    @Override
+    public void onResume() {
+        refreshWeather();
+        super.onResume();
     }
 
     @Override
@@ -39,7 +42,6 @@ public class WindAndHumidity extends Fragment implements WeatherServiceCallback 
         initYahooWeatherService();
         initProgressBar(rootView);
         setProgressBarVisibility(View.VISIBLE);
-        refreshWeather();
 
         return rootView;
     }

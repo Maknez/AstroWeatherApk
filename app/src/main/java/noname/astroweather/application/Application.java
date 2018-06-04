@@ -132,10 +132,10 @@ public class Application extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.sync: {
+            /*case R.id.sync: {
                 //TODO: implement sync function
                 return true;
-            }
+            }*/
             case R.id.settings: {
                 startActivity(new Intent(this, Settings.class));
                 return true;

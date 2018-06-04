@@ -17,10 +17,6 @@ import noname.astroweather.weather.data.Item;
 import noname.astroweather.weather.data.WeatherServiceCallback;
 import noname.astroweather.weather.data.YahooWeatherService;
 
-
-/**
- * A simple {@link Fragment} subclass.
- */
 public class BasicInfo extends Fragment implements WeatherServiceCallback {
 
     TextView cityTextView;
@@ -39,6 +35,11 @@ public class BasicInfo extends Fragment implements WeatherServiceCallback {
 
     }
 
+    @Override
+    public void onStart() {
+        refreshWeather();
+        super.onStart();
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -53,8 +54,6 @@ public class BasicInfo extends Fragment implements WeatherServiceCallback {
         initProgressBar(rootView);
         initYahooWeatherService();
         setProgressBarVisibility(View.VISIBLE);
-        refreshWeather();
-
         return rootView;
     }
 
