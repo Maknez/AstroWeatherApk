@@ -64,4 +64,12 @@ public class DatabaseOperation extends SQLiteOpenHelper {
         Cursor cursor = SQ.query(LocalizationDatabase.TableInfo.TABLE_NAME, columns, null, null, null, null, null);
         return cursor;
     }
+
+
+    public void removeLocalization(DatabaseOperation dboperation, String cityName, String countryName) {
+        String selection = LocalizationDatabase.TableInfo.CITY_NAME + " LIKE ? AND " + LocalizationDatabase.TableInfo.COUNTRY_NAME + " LIKE ? ";
+        String args[] = {cityName, countryName};
+        SQLiteDatabase SQ = dboperation.getWritableDatabase();
+        SQ.delete(LocalizationDatabase.TableInfo.TABLE_NAME, selection, args);
+    }
 }

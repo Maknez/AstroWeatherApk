@@ -10,13 +10,17 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import noname.astroweather.R;
 
 public class DisplayLocalization extends AppCompatActivity {
 
-    ListView cityCountrylistView;
-    int currentItem;
+    private ListView cityCountryListView;
+    private int currentItem;
+    private LocalizationAdapter localizationAdapter;
+    private DatabaseOperation dbOperation;
+    private Cursor cursor;
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
@@ -30,16 +34,39 @@ public class DisplayLocalization extends AppCompatActivity {
         setContentView(R.layout.activity_display_localization);
 
         if (savedInstanceState != null) {
-            currentItem = (savedInstanceState.getInt("savedCurrentItem"));
+            setPosition(savedInstanceState.getInt("savedCurrentItem"));
         }
 
 
         initListView();
-        LocalizationAdapter localizationAdapter = new LocalizationAdapter(DisplayLocalization.this, R.layout.display_localization_row);
-        DatabaseOperation dboperation = new DatabaseOperation(DisplayLocalization.this);
-        Cursor cursor = dboperation.getInformation(dboperation);
-        cursor.moveToFirst();
+        initLocalizationAdapter();
+        initDatabaseOperation();
+        initCursor();
+        getLocalizationFromDatabase();
 
+        setLocalizationAdapterToCityCountryListView();
+
+        registerForContextMenu(cityCountryListView);
+
+        cityCountryListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                setPosition(position);
+                return false;
+            }
+        });
+    }
+
+    private void setLocalizationAdapterToCityCountryListView() {
+        cityCountryListView.setAdapter(localizationAdapter);
+    }
+
+    private void setPosition(int position) {
+        currentItem = position;
+    }
+
+    private void getLocalizationFromDatabase() {
+        cursor.moveToFirst();
         while (cursor.moveToNext()) {
             String city = cursor.getString(0);
             String country = cursor.getString(1);
@@ -48,19 +75,18 @@ public class DisplayLocalization extends AppCompatActivity {
             Localization localization = new Localization(city, country, latitude, longitude);
             localizationAdapter.add(localization);
         }
+    }
 
-        cityCountrylistView.setAdapter(localizationAdapter);
+    private void initCursor() {
+        cursor = dbOperation.getInformation(dbOperation);
+    }
 
-        registerForContextMenu(cityCountrylistView);
+    private void initDatabaseOperation() {
+        dbOperation = new DatabaseOperation(DisplayLocalization.this);
+    }
 
-        cityCountrylistView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                currentItem = position;
-
-                return false;
-            }
-        });
+    private void initLocalizationAdapter() {
+        localizationAdapter = new LocalizationAdapter(DisplayLocalization.this, R.layout.display_localization_row);
     }
 
     @Override
@@ -86,14 +112,17 @@ public class DisplayLocalization extends AppCompatActivity {
     }
 
     private void removeFromDatabase() {
-        //TODO: implement method
+        cursor.moveToPosition(currentItem + 1);
+        dbOperation.removeLocalization(dbOperation, cursor.getString(0), cursor.getString(1));
+        initLocalizationAdapter();
+        initDatabaseOperation();
+        initCursor();
+        getLocalizationFromDatabase();
+        setLocalizationAdapterToCityCountryListView();
+        Toast.makeText(DisplayLocalization.this, "Localization properly removed from Database!", Toast.LENGTH_SHORT).show();
     }
 
     private void setAsDefault() {
-
-        System.out.println("TESSSTTTT:    " + currentItem);
-        DatabaseOperation dboperation = new DatabaseOperation(DisplayLocalization.this);
-        Cursor cursor = dboperation.getInformation(dboperation);
         cursor.moveToPosition(currentItem + 1);
         SharedPreferences sharedPreferences = getSharedPreferences("config.xml", 0);
         SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -102,10 +131,11 @@ public class DisplayLocalization extends AppCompatActivity {
         editor.putString("Custom_Latitude", cursor.getString(2));
         editor.putString("Custom_Longitude", cursor.getString(3));
         editor.commit();
+        Toast.makeText(DisplayLocalization.this, "City " + cursor.getString(0) + " set as default!", Toast.LENGTH_SHORT).show();
     }
 
 
     private void initListView() {
-        cityCountrylistView = (ListView) findViewById(R.id.cityCountryListView);
+        cityCountryListView = (ListView) findViewById(R.id.cityCountryListView);
     }
 }
