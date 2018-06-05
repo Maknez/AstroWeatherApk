@@ -25,6 +25,8 @@ public class WeatherForecast extends Fragment implements WeatherServiceCallback 
     private ImageView[] weatherImageView = new ImageView[5];
     private YahooWeatherService service;
     SharedPreferences sharedPreferences;
+    SharedPreferences offlineDataSharedPreferences;
+    SharedPreferences.Editor editor;
     private ProgressBar progressBar;
 
 
@@ -68,6 +70,8 @@ public class WeatherForecast extends Fragment implements WeatherServiceCallback 
 
     private void initSharedPreferences() {
         sharedPreferences = getActivity().getSharedPreferences("config.xml", 0);
+        offlineDataSharedPreferences = getActivity().getSharedPreferences("offline_data.xml", 0);
+        editor = offlineDataSharedPreferences.edit();
     }
 
     private void initTextViews(ViewGroup rootView) {
@@ -103,9 +107,20 @@ public class WeatherForecast extends Fragment implements WeatherServiceCallback 
                     temperatureLowTextView[i].setText(temperatureLowInFarenheit + " " + getResources().getString(R.string.temperature_unit_farenheit));
                 }
                 weatherTextView[i].setText(channel.getItem().getForecast(i + 1).getDay());
+
+                editor.putInt("resourceIDOffline" + String.valueOf(i), getResourceID(channel, i + 1));
+                editor.putInt("temperatureLowInFarenheitOffline" + String.valueOf(i), temperatureLowInFarenheit);
+                editor.putInt("temperatureHighInFarenheitOffline" + String.valueOf(i), temperatureHighInFarenheit);
+                editor.putInt("temperatureLowInCelsiusOffline" + String.valueOf(i), temperatureLowInCelsius);
+                editor.putInt("temperatureHighInCelsiusOffline" + String.valueOf(i), temperatureHighInCelsius);
+                editor.putString("descriptionOffline" + String.valueOf(i), channel.getItem().getForecast(i + 1).getDay());
+                editor.commit();
             }
+
+
+
             setProgressBarVisibility(View.INVISIBLE);
-        } catch(IllegalStateException ex) {
+        } catch (IllegalStateException ex) {
         }
 
     }
@@ -117,6 +132,19 @@ public class WeatherForecast extends Fragment implements WeatherServiceCallback 
     @Override
     public void serviceFailure(Exception ex) {
 
+        int temperatureUnit = sharedPreferences.getInt("Temperature_Unit", (getResources().getInteger(R.integer.Default_Temperature_Unit)));
+        for (int i = 0; i < FORECAST_DAY_NUMBER; i++) {
+            weatherImageView[i].setImageResource(offlineDataSharedPreferences.getInt("resourceIDOffline" + String.valueOf(i), 44));
+
+            if (temperatureUnit == 0) {
+                temperatureHighTextView[i].setText(offlineDataSharedPreferences.getInt("temperatureHighInCelcius" + String.valueOf(i), 0));
+                temperatureLowTextView[i].setText(offlineDataSharedPreferences.getInt("temperatureLowInCelcius" + String.valueOf(i), 0));
+            } else if (temperatureUnit == 1) {
+                temperatureHighTextView[i].setText(offlineDataSharedPreferences.getInt("temperatureHighInFarenheit" + String.valueOf(i), 0));
+                temperatureLowTextView[i].setText(offlineDataSharedPreferences.getInt("temperatureLowInFarenheit" + String.valueOf(i), 0));
+            }
+            weatherTextView[i].setText(offlineDataSharedPreferences.getInt("descriptionOffline" + String.valueOf(i), 0));
+        }
         Toast.makeText(getActivity(), ex.getMessage(), Toast.LENGTH_SHORT).show();
         setProgressBarVisibility(View.INVISIBLE);
     }
