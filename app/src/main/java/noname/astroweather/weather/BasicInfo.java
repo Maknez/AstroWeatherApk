@@ -24,13 +24,15 @@ public class BasicInfo extends Fragment implements WeatherServiceCallback {
     TextView temperatureTextView;
     TextView airPressureTextView;
     TextView descriptionTextView;
+    TextView offlineDataTextView;
 
     ImageView weatherImageView;
 
     private YahooWeatherService service;
     private ProgressBar progressBar;
     SharedPreferences sharedPreferences;
-
+    SharedPreferences offlineDataSharedPreferences;
+    SharedPreferences.Editor editor;
     public BasicInfo() {
 
     }
@@ -75,6 +77,8 @@ public class BasicInfo extends Fragment implements WeatherServiceCallback {
 
     private void initSharedPreferences() {
         sharedPreferences = getActivity().getSharedPreferences("config.xml", 0);
+        offlineDataSharedPreferences = getActivity().getSharedPreferences("offline_data.xml", 0);
+        editor = offlineDataSharedPreferences.edit();
     }
 
     private void initImageView(ViewGroup rootView) {
@@ -87,6 +91,7 @@ public class BasicInfo extends Fragment implements WeatherServiceCallback {
         temperatureTextView = (TextView) rootView.findViewById(R.id.temperatureText);
         airPressureTextView = (TextView) rootView.findViewById(R.id.airPressureText);
         descriptionTextView = (TextView) rootView.findViewById(R.id.descriptionText);
+        offlineDataTextView = (TextView) rootView.findViewById(R.id.offlineDataTextView);
     }
 
     @Override
@@ -112,7 +117,17 @@ public class BasicInfo extends Fragment implements WeatherServiceCallback {
                 temperatureTextView.setText(temperatureInFarenheit + " " + getResources().getString(R.string.temperature_unit_farenheit));
             }
             descriptionTextView.setText(item.getCondition().getDescription());
-            airPressureTextView.setText(channel.getAtmosphere().getPressure().toString() + " hPa");
+            airPressureTextView.setText(channel.getAtmosphere().getPressure().toString() + " in");
+
+            editor.putInt("resourceIDOffline", resourceID);
+            editor.putString("cityOffline", channel.getLocation().getCity());
+            editor.putString("countryOffline", channel.getLocation().getCountry());
+            editor.putInt("temperatureInFarenheitOffline", temperatureInFarenheit);
+            editor.putInt("temperatureInCelsiusOffline", temperatureInCelsius);
+            editor.putString("descriptionOffline", item.getCondition().getDescription());
+            editor.putString("airPressureOffline", channel.getAtmosphere().getPressure().toString());
+            editor.commit();
+
             setProgressBarVisibility(View.INVISIBLE);
         } catch(IllegalStateException ex) {
         }
@@ -120,7 +135,25 @@ public class BasicInfo extends Fragment implements WeatherServiceCallback {
 
     @Override
     public void serviceFailure(Exception ex) {
-        Toast.makeText(getActivity(), ex.getMessage(), Toast.LENGTH_SHORT).show();
+        weatherImageView.setImageResource(offlineDataSharedPreferences.getInt("resourceIDOffline", 44));
+        cityTextView.setText(offlineDataSharedPreferences.getString("cityOffline", "cityName"));
+        countryTextView.setText(offlineDataSharedPreferences.getString("countryOffline", "countryName"));
+
+        int temperatureInFarenheit = offlineDataSharedPreferences.getInt("temperatureInFarenheitOffline", 0);
+        int temperatureInCelsius = offlineDataSharedPreferences.getInt("temperatureInCelsiusOffline", 0);
+        int temperatureUnit = sharedPreferences.getInt("Temperature_Unit", (getResources().getInteger(R.integer.Default_Temperature_Unit)));
+        if (temperatureUnit == 0) {
+            temperatureTextView.setText(temperatureInCelsius + " " + getResources().getString(R.string.temperature_unit_celsius));
+        } else if (temperatureUnit == 1) {
+            temperatureTextView.setText(temperatureInFarenheit + " " + getResources().getString(R.string.temperature_unit_farenheit));
+        }
+        descriptionTextView.setText(offlineDataSharedPreferences.getString("descriptionOffline", "description"));
+        airPressureTextView.setText(offlineDataSharedPreferences.getString("airPressureOffline", "airPressure") + " in");
+
+        offlineDataTextView.setVisibility(View.VISIBLE);
+
         setProgressBarVisibility(View.INVISIBLE);
+
+        Toast.makeText(getActivity(), ex.getMessage(), Toast.LENGTH_SHORT).show();
     }
 }
