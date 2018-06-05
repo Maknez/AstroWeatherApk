@@ -18,7 +18,7 @@ import noname.astroweather.adapters.spinneradapters.TemperatureUnitsSpinnerAdapt
 import noname.astroweather.adapters.spinneradapters.WindSpeedUnitsSpinnerAdapter;
 import noname.astroweather.weather.data.Channel;
 import noname.astroweather.weather.data.Item;
-import noname.astroweather.weather.data.WeatherServiceCallback;
+import noname.astroweather.weather.data.interfaces.WeatherServiceCallback;
 import noname.astroweather.weather.data.YahooWeatherService;
 import noname.astroweather.weather.database.DisplayLocalization;
 import noname.astroweather.weather.database.DatabaseOperation;

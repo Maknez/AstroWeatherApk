@@ -1,4 +1,4 @@
-package noname.astroweather.weather.data;
+package noname.astroweather.weather.data.interfaces;
 
 import org.json.JSONObject;
 

@@ -17,6 +17,7 @@ import java.net.URL;
 import java.net.URLConnection;
 
 import noname.astroweather.Exception.LocationWeatherException;
+import noname.astroweather.weather.data.interfaces.WeatherServiceCallback;
 
 
 public class YahooWeatherService {

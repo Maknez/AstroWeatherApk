@@ -13,7 +13,7 @@ import android.widget.Toast;
 import noname.astroweather.R;
 import noname.astroweather.weather.data.YahooWeatherService;
 import noname.astroweather.weather.data.Channel;
-import noname.astroweather.weather.data.WeatherServiceCallback;
+import noname.astroweather.weather.data.interfaces.WeatherServiceCallback;
 
 public class WindAndHumidity extends Fragment implements WeatherServiceCallback {
 
@@ -75,20 +75,24 @@ public class WindAndHumidity extends Fragment implements WeatherServiceCallback 
 
     @Override
     public void serviceSuccess(Channel channel) {
-        UnitsChanger unitsChanger = new UnitsChanger();
+        try{
+            UnitsChanger unitsChanger = new UnitsChanger();
 
-        int windPowerUnit = sharedPreferences.getInt("Wind_Speed_Unit", (getResources().getInteger(R.integer.Default_Wind_Speed_Unit)));
-        double windPowerInMPH = channel.getWind().getSpeed();
-        double windPowerInKMPH = unitsChanger.milesPerHourTokilometersPerHour(windPowerInMPH);
-        if (windPowerUnit == 0) {
-            windPowerTextView.setText(windPowerInMPH + " " + getResources().getString(R.string.wind_power_unit_mph));
-        } else if (windPowerUnit == 1) {
-            windPowerTextView.setText(windPowerInKMPH + " " + getResources().getString(R.string.wind_power_unit_kmph));
+            int windPowerUnit = sharedPreferences.getInt("Wind_Speed_Unit", (getResources().getInteger(R.integer.Default_Wind_Speed_Unit)));
+            double windPowerInMPH = channel.getWind().getSpeed();
+            double windPowerInKMPH = unitsChanger.milesPerHourTokilometersPerHour(windPowerInMPH);
+            if (windPowerUnit == 0) {
+                windPowerTextView.setText(windPowerInMPH + " " + getResources().getString(R.string.wind_power_unit_mph));
+            } else if (windPowerUnit == 1) {
+                windPowerTextView.setText(windPowerInKMPH + " " + getResources().getString(R.string.wind_power_unit_kmph));
+            }
+            windWayTextView.setText(channel.getWind().getDirection());
+            humidityTextView.setText(channel.getAtmosphere().getHumidity());
+            visibilityTextView.setText(channel.getAtmosphere().getVisibility());
+            setProgressBarVisibility(View.INVISIBLE);
+
+        }catch (IllegalStateException ex) {
         }
-        windWayTextView.setText(channel.getWind().getDirection());
-        humidityTextView.setText(channel.getAtmosphere().getHumidity());
-        visibilityTextView.setText(channel.getAtmosphere().getVisibility());
-        setProgressBarVisibility(View.INVISIBLE);
     }
 
     @Override

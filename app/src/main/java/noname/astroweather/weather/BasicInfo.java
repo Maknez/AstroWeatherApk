@@ -14,7 +14,7 @@ import android.widget.Toast;
 import noname.astroweather.R;
 import noname.astroweather.weather.data.Channel;
 import noname.astroweather.weather.data.Item;
-import noname.astroweather.weather.data.WeatherServiceCallback;
+import noname.astroweather.weather.data.interfaces.WeatherServiceCallback;
 import noname.astroweather.weather.data.YahooWeatherService;
 
 public class BasicInfo extends Fragment implements WeatherServiceCallback {
@@ -91,27 +91,31 @@ public class BasicInfo extends Fragment implements WeatherServiceCallback {
 
     @Override
     public void serviceSuccess(Channel channel) {
-        Item item = channel.getItem();
 
-        UnitsChanger unitsChanger = new UnitsChanger();
+        try {
+            Item item = channel.getItem();
 
-        int resourceID = getResources().getIdentifier("weather_icon_" + channel.getItem().getCondition().getCode(), "drawable", getContext().getPackageName());
+            UnitsChanger unitsChanger = new UnitsChanger();
 
-        weatherImageView.setImageResource(resourceID);
-        cityTextView.setText(channel.getLocation().getCity());
-        countryTextView.setText(channel.getLocation().getCountry());
+            int resourceID = getResources().getIdentifier("weather_icon_" + channel.getItem().getCondition().getCode(), "drawable", getContext().getPackageName());
 
-        int temperatureInFarenheit = item.getCondition().getTemperature();
-        int temperatureInCelsius = unitsChanger.fahrenheitToCelsius(temperatureInFarenheit);
-        int temperatureUnit = sharedPreferences.getInt("Temperature_Unit", (getResources().getInteger(R.integer.Default_Temperature_Unit)));
-        if (temperatureUnit == 0) {
-            temperatureTextView.setText(temperatureInCelsius + " " + getResources().getString(R.string.temperature_unit_celsius));
-        } else if (temperatureUnit == 1) {
-            temperatureTextView.setText(temperatureInFarenheit + " " + getResources().getString(R.string.temperature_unit_farenheit));
+            weatherImageView.setImageResource(resourceID);
+            cityTextView.setText(channel.getLocation().getCity());
+            countryTextView.setText(channel.getLocation().getCountry());
+
+            int temperatureInFarenheit = item.getCondition().getTemperature();
+            int temperatureInCelsius = unitsChanger.fahrenheitToCelsius(temperatureInFarenheit);
+            int temperatureUnit = sharedPreferences.getInt("Temperature_Unit", (getResources().getInteger(R.integer.Default_Temperature_Unit)));
+            if (temperatureUnit == 0) {
+                temperatureTextView.setText(temperatureInCelsius + " " + getResources().getString(R.string.temperature_unit_celsius));
+            } else if (temperatureUnit == 1) {
+                temperatureTextView.setText(temperatureInFarenheit + " " + getResources().getString(R.string.temperature_unit_farenheit));
+            }
+            descriptionTextView.setText(item.getCondition().getDescription());
+            airPressureTextView.setText(channel.getAtmosphere().getPressure().toString() + " hPa");
+            setProgressBarVisibility(View.INVISIBLE);
+        } catch(IllegalStateException ex) {
         }
-        descriptionTextView.setText(item.getCondition().getDescription());
-        airPressureTextView.setText(channel.getAtmosphere().getPressure().toString() + " hPa");
-        setProgressBarVisibility(View.INVISIBLE);
     }
 
     @Override

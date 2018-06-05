@@ -45,6 +45,7 @@ public class Application extends AppCompatActivity {
             runOnUiThread(new Runnable() {
                 public void run() {
                     try {
+
                         String curTime;
                         long analogClockTime = Calendar.getInstance().getTimeInMillis();
                         Calendar calendar = Calendar.getInstance();
@@ -68,7 +69,6 @@ public class Application extends AppCompatActivity {
                         } else {
                             curTime = curTime + second;
                         }
-
                         clockView.setText(curTime);
 
                     } catch (Exception e) {

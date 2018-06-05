@@ -4,6 +4,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONArray;
 
+import noname.astroweather.weather.data.interfaces.JSONPopulator;
+
 public class Item implements JSONPopulator {
 
     private Forecast[] forecast = new Forecast[6];

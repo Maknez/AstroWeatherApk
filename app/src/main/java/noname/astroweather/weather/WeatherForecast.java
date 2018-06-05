@@ -13,7 +13,7 @@ import android.widget.Toast;
 
 import noname.astroweather.R;
 import noname.astroweather.weather.data.Channel;
-import noname.astroweather.weather.data.WeatherServiceCallback;
+import noname.astroweather.weather.data.interfaces.WeatherServiceCallback;
 import noname.astroweather.weather.data.YahooWeatherService;
 
 public class WeatherForecast extends Fragment implements WeatherServiceCallback {
@@ -86,24 +86,28 @@ public class WeatherForecast extends Fragment implements WeatherServiceCallback 
 
     @Override
     public void serviceSuccess(Channel channel) {
-        UnitsChanger unitsChanger = new UnitsChanger();
-        int temperatureUnit = sharedPreferences.getInt("Temperature_Unit", (getResources().getInteger(R.integer.Default_Temperature_Unit)));
-        for (int i = 0; i < FORECAST_DAY_NUMBER; i++) {
-            weatherImageView[i].setImageResource(getResourceID(channel, i + 1));
-            int temperatureHighInFarenheit = channel.getItem().getForecast(i + 1).getTemperatureHigh();
-            int temperatureLowInFarenheit = channel.getItem().getForecast(i + 1).getTemperatureLow();
-            int temperatureHighInCelsius = unitsChanger.fahrenheitToCelsius(temperatureHighInFarenheit);
-            int temperatureLowInCelsius = unitsChanger.fahrenheitToCelsius(temperatureLowInFarenheit);
-            if (temperatureUnit == 0) {
-                temperatureHighTextView[i].setText(temperatureHighInCelsius + " " + getResources().getString(R.string.temperature_unit_celsius));
-                temperatureLowTextView[i].setText(temperatureLowInCelsius + " " + getResources().getString(R.string.temperature_unit_celsius));
-            } else if (temperatureUnit == 1) {
-                temperatureHighTextView[i].setText(temperatureHighInFarenheit + " " + getResources().getString(R.string.temperature_unit_farenheit));
-                temperatureLowTextView[i].setText(temperatureLowInFarenheit + " " + getResources().getString(R.string.temperature_unit_farenheit));
+        try {
+            UnitsChanger unitsChanger = new UnitsChanger();
+            int temperatureUnit = sharedPreferences.getInt("Temperature_Unit", (getResources().getInteger(R.integer.Default_Temperature_Unit)));
+            for (int i = 0; i < FORECAST_DAY_NUMBER; i++) {
+                weatherImageView[i].setImageResource(getResourceID(channel, i + 1));
+                int temperatureHighInFarenheit = channel.getItem().getForecast(i + 1).getTemperatureHigh();
+                int temperatureLowInFarenheit = channel.getItem().getForecast(i + 1).getTemperatureLow();
+                int temperatureHighInCelsius = unitsChanger.fahrenheitToCelsius(temperatureHighInFarenheit);
+                int temperatureLowInCelsius = unitsChanger.fahrenheitToCelsius(temperatureLowInFarenheit);
+                if (temperatureUnit == 0) {
+                    temperatureHighTextView[i].setText(temperatureHighInCelsius + " " + getResources().getString(R.string.temperature_unit_celsius));
+                    temperatureLowTextView[i].setText(temperatureLowInCelsius + " " + getResources().getString(R.string.temperature_unit_celsius));
+                } else if (temperatureUnit == 1) {
+                    temperatureHighTextView[i].setText(temperatureHighInFarenheit + " " + getResources().getString(R.string.temperature_unit_farenheit));
+                    temperatureLowTextView[i].setText(temperatureLowInFarenheit + " " + getResources().getString(R.string.temperature_unit_farenheit));
+                }
+                weatherTextView[i].setText(channel.getItem().getForecast(i + 1).getDay());
             }
-            weatherTextView[i].setText(channel.getItem().getForecast(i + 1).getDay());
+            setProgressBarVisibility(View.INVISIBLE);
+        } catch(IllegalStateException ex) {
         }
-        setProgressBarVisibility(View.INVISIBLE);
+
     }
 
     private int getResourceID(Channel channel, int currentDay) {

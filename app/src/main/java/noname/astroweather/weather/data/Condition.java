@@ -2,6 +2,8 @@ package noname.astroweather.weather.data;
 
 import org.json.JSONObject;
 
+import noname.astroweather.weather.data.interfaces.JSONPopulator;
+
 public class Condition implements JSONPopulator {
 
     private int code;
