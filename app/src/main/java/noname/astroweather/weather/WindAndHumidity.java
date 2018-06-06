@@ -24,6 +24,8 @@ public class WindAndHumidity extends Fragment implements WeatherServiceCallback 
     private YahooWeatherService service;
     private SharedPreferences sharedPreferences;
     private ProgressBar progressBar;
+    SharedPreferences offlineDataSharedPreferences;
+    SharedPreferences.Editor editor;
 
     @Override
     public void onResume() {
@@ -64,6 +66,8 @@ public class WindAndHumidity extends Fragment implements WeatherServiceCallback 
 
     private void initSharedPreferences() {
         sharedPreferences = getActivity().getSharedPreferences("config.xml", 0);
+        offlineDataSharedPreferences = getActivity().getSharedPreferences("offline_data.xml", 0);
+        editor = offlineDataSharedPreferences.edit();
     }
 
     private void initTextViews(ViewGroup rootView) {
@@ -75,7 +79,7 @@ public class WindAndHumidity extends Fragment implements WeatherServiceCallback 
 
     @Override
     public void serviceSuccess(Channel channel) {
-        try{
+        try {
             UnitsChanger unitsChanger = new UnitsChanger();
 
             int windPowerUnit = sharedPreferences.getInt("Wind_Speed_Unit", (getResources().getInteger(R.integer.Default_Wind_Speed_Unit)));
@@ -91,12 +95,30 @@ public class WindAndHumidity extends Fragment implements WeatherServiceCallback 
             visibilityTextView.setText(channel.getAtmosphere().getVisibility());
             setProgressBarVisibility(View.INVISIBLE);
 
-        }catch (IllegalStateException ex) {
+            editor.putString("windPowerInMPHOffline", String.valueOf(windPowerInMPH));
+            editor.putString("windPowerInKMPHOffline", String.valueOf(windPowerInKMPH));
+            editor.putString("windWayOffline", String.valueOf(channel.getWind().getDirection()));
+            editor.putString("humidityOffline", String.valueOf(channel.getAtmosphere().getHumidity()));
+            editor.putString("visibilityOffline", String.valueOf(channel.getAtmosphere().getVisibility()));
+            editor.commit();
+
+        } catch (IllegalStateException ex) {
         }
     }
 
     @Override
     public void serviceFailure(Exception ex) {
+
+        int windPowerUnit = sharedPreferences.getInt("Wind_Speed_Unit", (getResources().getInteger(R.integer.Default_Wind_Speed_Unit)));
+        if (windPowerUnit == 0) {
+            windPowerTextView.setText(offlineDataSharedPreferences.getInt("windPowerInMPHOffline", 0) + " " + getResources().getString(R.string.wind_power_unit_mph));
+        } else if (windPowerUnit == 1) {
+            windPowerTextView.setText(offlineDataSharedPreferences.getInt("windPowerInKMPHOffline", 0) + " " + getResources().getString(R.string.wind_power_unit_kmph));
+        }
+        windWayTextView.setText(offlineDataSharedPreferences.getString("windWayOffline", "WindWay"));
+        humidityTextView.setText(offlineDataSharedPreferences.getString("humidityOffline", "Humidity"));
+        visibilityTextView.setText(offlineDataSharedPreferences.getString("visibilityOffline", "Visibility"));
+
         Toast.makeText(getActivity(), ex.getMessage(), Toast.LENGTH_SHORT).show();
         setProgressBarVisibility(View.INVISIBLE);
     }
