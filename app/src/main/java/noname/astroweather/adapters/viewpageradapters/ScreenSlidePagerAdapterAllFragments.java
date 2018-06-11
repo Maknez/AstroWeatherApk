@@ -13,6 +13,7 @@ import noname.astroweather.weather.WindAndHumidity;
 public class ScreenSlidePagerAdapterAllFragments extends FragmentStatePagerAdapter {
 
     public static final int NUM_PAGES = 5;
+    private Fragment[] fragments = {new BasicInfo(), new WeatherForecast(), new WindAndHumidity(), new SunFragment(), new MoonFragment()};
 
     public ScreenSlidePagerAdapterAllFragments(FragmentManager fm) {
         super(fm);
@@ -20,28 +21,16 @@ public class ScreenSlidePagerAdapterAllFragments extends FragmentStatePagerAdapt
 
     @Override
     public Fragment getItem(int position) {
-        switch (position) {
-            case 0: {
-                return new BasicInfo();
-            }
-            case 1: {
-                return new WeatherForecast();
-            }
-            case 2: {
-                return new WindAndHumidity();
-            }
-            case 3: {
-                return new SunFragment();
-            }
-            case 4: {
-                return new MoonFragment();
-            }
-        }
-        return null;
+        return fragments[position];
     }
 
     @Override
     public int getCount() {
         return NUM_PAGES;
+    }
+
+    @Override
+    public int getItemPosition(Object object) {
+        return POSITION_NONE;
     }
 }
