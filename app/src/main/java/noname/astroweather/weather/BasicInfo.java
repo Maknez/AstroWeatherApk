@@ -19,16 +19,15 @@ import noname.astroweather.weather.data.YahooWeatherService;
 
 public class BasicInfo extends Fragment {
 
-    TextView cityTextView;
-    TextView countryTextView;
-    TextView temperatureTextView;
-    TextView airPressureTextView;
-    TextView descriptionTextView;
-    TextView offlineDataTextView;
-    ImageView weatherImageView;
+    private TextView cityTextView;
+    private TextView countryTextView;
+    private TextView temperatureTextView;
+    private TextView airPressureTextView;
+    private TextView descriptionTextView;
+    private ImageView weatherImageView;
 
-    SharedPreferences sharedPreferences;
-    SharedPreferences offlineDataSharedPreferences;
+    private SharedPreferences sharedPreferences;
+    private SharedPreferences offlineDataSharedPreferences;
 
     @Override
     public void onStart() {
@@ -64,7 +63,6 @@ public class BasicInfo extends Fragment {
         temperatureTextView = (TextView) rootView.findViewById(R.id.temperatureText);
         airPressureTextView = (TextView) rootView.findViewById(R.id.airPressureText);
         descriptionTextView = (TextView) rootView.findViewById(R.id.descriptionText);
-        offlineDataTextView = (TextView) rootView.findViewById(R.id.offlineDataTextView);
     }
 
     private void showDataFromSharedPreferences() {

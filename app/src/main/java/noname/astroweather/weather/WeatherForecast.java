@@ -24,8 +24,8 @@ public class WeatherForecast extends Fragment {
     private TextView[] temperatureLowTextView = new TextView[FORECAST_DAY_NUMBER];
     private ImageView[] weatherImageView = new ImageView[FORECAST_DAY_NUMBER];
 
-    SharedPreferences sharedPreferences;
-    SharedPreferences offlineDataSharedPreferences;
+    private SharedPreferences sharedPreferences;
+    private  SharedPreferences offlineDataSharedPreferences;
 
     @Override
     public void onStart() {

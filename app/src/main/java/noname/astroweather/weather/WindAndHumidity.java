@@ -21,8 +21,9 @@ public class WindAndHumidity extends Fragment {
     private TextView windWayTextView;
     private TextView humidityTextView;
     private TextView visibilityTextView;
+
     private SharedPreferences sharedPreferences;
-    SharedPreferences offlineDataSharedPreferences;
+    private SharedPreferences offlineDataSharedPreferences;
 
     @Override
     public void onStart() {

@@ -14,6 +14,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.Calendar;
 
@@ -27,7 +28,6 @@ import noname.astroweather.weather.data.Channel;
 import noname.astroweather.weather.data.Item;
 import noname.astroweather.weather.data.YahooWeatherService;
 import noname.astroweather.weather.data.interfaces.WeatherServiceCallback;
-
 
 public class Application extends AppCompatActivity implements WeatherServiceCallback {
 
@@ -151,6 +151,7 @@ public class Application extends AppCompatActivity implements WeatherServiceCall
         switch (item.getItemId()) {
             case R.id.sync: {
                 service.refreshWeather();
+                Toast.makeText(Application.this, "Data refreshed!", Toast.LENGTH_SHORT).show();
                 return true;
             }
             case R.id.settings: {
@@ -251,14 +252,22 @@ public class Application extends AppCompatActivity implements WeatherServiceCall
 
     @Override
     public void serviceSuccess(Channel channel) {
-        UnitsChanger unitsChanger = new UnitsChanger();
-        Item item = channel.getItem();
+        try {
+            UnitsChanger unitsChanger = new UnitsChanger();
+            Item item = channel.getItem();
 
-        saveBasicInfoDataFromYahooWeatherService(channel, unitsChanger, item);
-        saveWeatherForecastDataFromYahooWeatherService(channel, unitsChanger);
-        saveWindAndHumidityDataFromYahooWeatherService(channel, unitsChanger);
+            saveBasicInfoDataFromYahooWeatherService(channel, unitsChanger, item);
+            saveWeatherForecastDataFromYahooWeatherService(channel, unitsChanger);
+            saveWindAndHumidityDataFromYahooWeatherService(channel, unitsChanger);
 
-        refreshFragmentsData();
+            refreshFragmentsData();
+        } catch (IllegalStateException ex) {
+            Toast.makeText(Application.this, ex.getMessage(), Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    @Override
+    public void serviceFailure(Exception ex) {
     }
 
     private void refreshFragmentsData() {
@@ -319,10 +328,6 @@ public class Application extends AppCompatActivity implements WeatherServiceCall
 
     private int getResourceID(Channel channel, int currentDay) {
         return getResources().getIdentifier("weather_icon_" + channel.getItem().getForecast(currentDay).getCode(), "drawable", getPackageName());
-    }
-
-    @Override
-    public void serviceFailure(Exception ex) {
     }
 
     @Override
