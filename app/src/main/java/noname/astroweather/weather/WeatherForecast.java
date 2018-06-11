@@ -16,24 +16,21 @@ import noname.astroweather.weather.data.Channel;
 import noname.astroweather.weather.data.interfaces.WeatherServiceCallback;
 import noname.astroweather.weather.data.YahooWeatherService;
 
-public class WeatherForecast extends Fragment implements WeatherServiceCallback {
+public class WeatherForecast extends Fragment {
 
     private static final int FORECAST_DAY_NUMBER = 5;
-    private TextView[] weatherTextView = new TextView[5];
-    private TextView[] temperatureHighTextView = new TextView[5];
-    private TextView[] temperatureLowTextView = new TextView[5];
-    private ImageView[] weatherImageView = new ImageView[5];
-    private YahooWeatherService service;
+    private TextView[] weatherTextView = new TextView[FORECAST_DAY_NUMBER];
+    private TextView[] temperatureHighTextView = new TextView[FORECAST_DAY_NUMBER];
+    private TextView[] temperatureLowTextView = new TextView[FORECAST_DAY_NUMBER];
+    private ImageView[] weatherImageView = new ImageView[FORECAST_DAY_NUMBER];
+
     SharedPreferences sharedPreferences;
     SharedPreferences offlineDataSharedPreferences;
-    SharedPreferences.Editor editor;
-    private ProgressBar progressBar;
-
 
     @Override
-    public void onResume() {
-        refreshWeather();
-        super.onResume();
+    public void onStart() {
+        showDataFromSharedPreferences();
+        super.onStart();
     }
 
     @Override
@@ -45,33 +42,13 @@ public class WeatherForecast extends Fragment implements WeatherServiceCallback 
         initImageViews(rootView);
         initTextViews(rootView);
         initSharedPreferences();
-        initProgressBar(rootView);
-        initYahooWeatherService();
-        setProgressBarVisibility(View.VISIBLE);
 
         return rootView;
-    }
-
-    private void setProgressBarVisibility(int visible) {
-        progressBar.setVisibility(visible);
-    }
-
-    private void initProgressBar(ViewGroup rootView) {
-        progressBar = (ProgressBar) rootView.findViewById(R.id.progressBar);
-    }
-
-    private void refreshWeather() {
-        service.refreshWeather();
-    }
-
-    private void initYahooWeatherService() {
-        service = new YahooWeatherService(this, sharedPreferences, sharedPreferences.getInt("Custom_Option_To_Refresh_Weather", getResources().getInteger(R.integer.Default_Option_To_Refresh_Weather)));
     }
 
     private void initSharedPreferences() {
         sharedPreferences = getActivity().getSharedPreferences("config.xml", 0);
         offlineDataSharedPreferences = getActivity().getSharedPreferences("offline_data.xml", 0);
-        editor = offlineDataSharedPreferences.edit();
     }
 
     private void initTextViews(ViewGroup rootView) {
@@ -88,64 +65,23 @@ public class WeatherForecast extends Fragment implements WeatherServiceCallback 
         }
     }
 
-    @Override
-    public void serviceSuccess(Channel channel) {
-        try {
-            UnitsChanger unitsChanger = new UnitsChanger();
-            int temperatureUnit = sharedPreferences.getInt("Temperature_Unit", (getResources().getInteger(R.integer.Default_Temperature_Unit)));
-            for (int i = 0; i < FORECAST_DAY_NUMBER; i++) {
-                weatherImageView[i].setImageResource(getResourceID(channel, i + 1));
-                int temperatureHighInFarenheit = channel.getItem().getForecast(i + 1).getTemperatureHigh();
-                int temperatureLowInFarenheit = channel.getItem().getForecast(i + 1).getTemperatureLow();
-                int temperatureHighInCelsius = unitsChanger.fahrenheitToCelsius(temperatureHighInFarenheit);
-                int temperatureLowInCelsius = unitsChanger.fahrenheitToCelsius(temperatureLowInFarenheit);
-                if (temperatureUnit == 0) {
-                    temperatureHighTextView[i].setText(temperatureHighInCelsius + " " + getResources().getString(R.string.temperature_unit_celsius));
-                    temperatureLowTextView[i].setText(temperatureLowInCelsius + " " + getResources().getString(R.string.temperature_unit_celsius));
-                } else if (temperatureUnit == 1) {
-                    temperatureHighTextView[i].setText(temperatureHighInFarenheit + " " + getResources().getString(R.string.temperature_unit_farenheit));
-                    temperatureLowTextView[i].setText(temperatureLowInFarenheit + " " + getResources().getString(R.string.temperature_unit_farenheit));
-                }
-                weatherTextView[i].setText(channel.getItem().getForecast(i + 1).getDay());
-
-                editor.putInt("resourceIDOffline" + String.valueOf(i), getResourceID(channel, i + 1));
-                editor.putInt("temperatureLowInFarenheitOffline" + String.valueOf(i), temperatureLowInFarenheit);
-                editor.putInt("temperatureHighInFarenheitOffline" + String.valueOf(i), temperatureHighInFarenheit);
-                editor.putInt("temperatureLowInCelsiusOffline" + String.valueOf(i), temperatureLowInCelsius);
-                editor.putInt("temperatureHighInCelsiusOffline" + String.valueOf(i), temperatureHighInCelsius);
-                editor.putString("descriptionOffline" + String.valueOf(i), channel.getItem().getForecast(i + 1).getDay());
-                editor.commit();
-            }
-
-
-
-            setProgressBarVisibility(View.INVISIBLE);
-        } catch (IllegalStateException ex) {
-        }
-
-    }
-
-    private int getResourceID(Channel channel, int currentDay) {
-        return getResources().getIdentifier("weather_icon_" + channel.getItem().getForecast(currentDay).getCode(), "drawable", getContext().getPackageName());
-    }
-
-    @Override
-    public void serviceFailure(Exception ex) {
-
+    private void showDataFromSharedPreferences() {
         int temperatureUnit = sharedPreferences.getInt("Temperature_Unit", (getResources().getInteger(R.integer.Default_Temperature_Unit)));
         for (int i = 0; i < FORECAST_DAY_NUMBER; i++) {
-            weatherImageView[i].setImageResource(offlineDataSharedPreferences.getInt("resourceIDOffline", getResources().getIdentifier("weather_icon_" + 44, "drawable", getContext().getPackageName())));
+            int temperatureHighInFarenheit = offlineDataSharedPreferences.getInt("temperatureHighInFarenheitOffline" + String.valueOf(i), 0);
+            int temperatureLowInFarenheit = offlineDataSharedPreferences.getInt("temperatureLowInFarenheitOffline" + String.valueOf(i), 0);
+            int temperatureHighInCelsius = offlineDataSharedPreferences.getInt("temperatureHighInCelsiusOffline" + String.valueOf(i), 0);
+            int temperatureLowInCelsius = offlineDataSharedPreferences.getInt("temperatureLowInCelsiusOffline" + String.valueOf(i), 0);
 
+            weatherImageView[i].setImageResource(offlineDataSharedPreferences.getInt("resourceIDOffline" + String.valueOf(i), getResources().getIdentifier("weather_icon_" + 44, "drawable", getContext().getPackageName())));
             if (temperatureUnit == 0) {
-                temperatureHighTextView[i].setText(offlineDataSharedPreferences.getInt("temperatureHighInCelcius" + String.valueOf(i), 0));
-                temperatureLowTextView[i].setText(offlineDataSharedPreferences.getInt("temperatureLowInCelcius" + String.valueOf(i), 0));
+                temperatureHighTextView[i].setText(String.valueOf(temperatureHighInCelsius) + " " + getResources().getString(R.string.temperature_unit_celsius));
+                temperatureLowTextView[i].setText(String.valueOf(temperatureLowInCelsius) + " " + getResources().getString(R.string.temperature_unit_celsius));
             } else if (temperatureUnit == 1) {
-                temperatureHighTextView[i].setText(offlineDataSharedPreferences.getInt("temperatureHighInFarenheit" + String.valueOf(i), 0));
-                temperatureLowTextView[i].setText(offlineDataSharedPreferences.getInt("temperatureLowInFarenheit" + String.valueOf(i), 0));
+                temperatureHighTextView[i].setText(String.valueOf(temperatureHighInFarenheit) + " " + getResources().getString(R.string.temperature_unit_farenheit));
+                temperatureLowTextView[i].setText(String.valueOf(temperatureLowInFarenheit) + " " + getResources().getString(R.string.temperature_unit_farenheit));
             }
-            weatherTextView[i].setText(offlineDataSharedPreferences.getInt("descriptionOffline" + String.valueOf(i), 0));
+            weatherTextView[i].setText(offlineDataSharedPreferences.getString("descriptionOffline" + String.valueOf(i), "0"));
         }
-        Toast.makeText(getActivity(), ex.getMessage(), Toast.LENGTH_SHORT).show();
-        setProgressBarVisibility(View.INVISIBLE);
     }
 }
