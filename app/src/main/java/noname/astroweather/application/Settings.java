@@ -326,11 +326,11 @@ public class Settings extends AppCompatActivity implements WeatherServiceCallbac
     }
 
     private void getWindSpeedUnit() {
-        windSpeedSpinner.setSelection(getResources().getInteger(R.integer.Default_Wind_Speed_Unit));
+        windSpeedSpinner.setSelection(sharedPref.getInt("Wind_Speed_Unit",getResources().getInteger(R.integer.Default_Wind_Speed_Unit)));
     }
 
     private void getTemperatureUnit() {
-        temperatureSpinner.setSelection(getResources().getInteger(R.integer.Default_Temperature_Unit));
+        temperatureSpinner.setSelection(sharedPref.getInt("Temperature_Unit",getResources().getInteger(R.integer.Default_Temperature_Unit)));
     }
 
     private void getEditCity() {
@@ -440,6 +440,12 @@ public class Settings extends AppCompatActivity implements WeatherServiceCallbac
             }
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed(){
+        finish();
+        super.onBackPressed();
     }
 
 
