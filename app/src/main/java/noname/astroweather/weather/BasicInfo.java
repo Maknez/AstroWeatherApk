@@ -33,14 +33,11 @@ public class BasicInfo extends Fragment implements WeatherServiceCallback {
     SharedPreferences sharedPreferences;
     SharedPreferences offlineDataSharedPreferences;
     SharedPreferences.Editor editor;
-    public BasicInfo() {
-
-    }
 
     @Override
-    public void onStart() {
+    public void onResume() {
         refreshWeather();
-        super.onStart();
+        super.onResume();
     }
 
     @Override
@@ -135,7 +132,7 @@ public class BasicInfo extends Fragment implements WeatherServiceCallback {
 
     @Override
     public void serviceFailure(Exception ex) {
-        weatherImageView.setImageResource(offlineDataSharedPreferences.getInt("resourceIDOffline", 44));
+        weatherImageView.setImageResource(offlineDataSharedPreferences.getInt("resourceIDOffline", getResources().getIdentifier("weather_icon_" + 44, "drawable", getContext().getPackageName())));
         cityTextView.setText(offlineDataSharedPreferences.getString("cityOffline", "cityName"));
         countryTextView.setText(offlineDataSharedPreferences.getString("countryOffline", "countryName"));
 

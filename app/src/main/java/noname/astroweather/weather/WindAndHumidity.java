@@ -111,9 +111,9 @@ public class WindAndHumidity extends Fragment implements WeatherServiceCallback 
 
         int windPowerUnit = sharedPreferences.getInt("Wind_Speed_Unit", (getResources().getInteger(R.integer.Default_Wind_Speed_Unit)));
         if (windPowerUnit == 0) {
-            windPowerTextView.setText(offlineDataSharedPreferences.getInt("windPowerInMPHOffline", 0) + " " + getResources().getString(R.string.wind_power_unit_mph));
+            windPowerTextView.setText(offlineDataSharedPreferences.getString("windPowerInMPHOffline", "0") + " " + getResources().getString(R.string.wind_power_unit_mph));
         } else if (windPowerUnit == 1) {
-            windPowerTextView.setText(offlineDataSharedPreferences.getInt("windPowerInKMPHOffline", 0) + " " + getResources().getString(R.string.wind_power_unit_kmph));
+            windPowerTextView.setText(offlineDataSharedPreferences.getString("windPowerInKMPHOffline", "0") + " " + getResources().getString(R.string.wind_power_unit_kmph));
         }
         windWayTextView.setText(offlineDataSharedPreferences.getString("windWayOffline", "WindWay"));
         humidityTextView.setText(offlineDataSharedPreferences.getString("humidityOffline", "Humidity"));

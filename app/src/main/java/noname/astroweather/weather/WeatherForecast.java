@@ -134,7 +134,7 @@ public class WeatherForecast extends Fragment implements WeatherServiceCallback 
 
         int temperatureUnit = sharedPreferences.getInt("Temperature_Unit", (getResources().getInteger(R.integer.Default_Temperature_Unit)));
         for (int i = 0; i < FORECAST_DAY_NUMBER; i++) {
-            weatherImageView[i].setImageResource(offlineDataSharedPreferences.getInt("resourceIDOffline" + String.valueOf(i), 44));
+            weatherImageView[i].setImageResource(offlineDataSharedPreferences.getInt("resourceIDOffline", getResources().getIdentifier("weather_icon_" + 44, "drawable", getContext().getPackageName())));
 
             if (temperatureUnit == 0) {
                 temperatureHighTextView[i].setText(offlineDataSharedPreferences.getInt("temperatureHighInCelcius" + String.valueOf(i), 0));

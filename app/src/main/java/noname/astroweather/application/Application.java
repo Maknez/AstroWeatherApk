@@ -133,7 +133,6 @@ public class Application extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             /*case R.id.sync: {
-                //TODO: implement sync function
                 return true;
             }*/
             case R.id.settings: {
