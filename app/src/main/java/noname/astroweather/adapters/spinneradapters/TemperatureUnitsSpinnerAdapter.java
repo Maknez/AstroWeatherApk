@@ -11,34 +11,22 @@ import android.widget.TextView;
 import noname.astroweather.R;
 
 public class TemperatureUnitsSpinnerAdapter extends BaseAdapter {
-    Activity activity;
-    String[] units;
-    LayoutInflater inflater;
-
-
+    private String[] temperatureUnits;
+    private LayoutInflater inflater;
 
     public TemperatureUnitsSpinnerAdapter(Activity activity) {
-        this.activity = activity;
-        this.units = new String[]{"°C", "°F"};
+        this.temperatureUnits = new String[]{"°C", "°F"};
         this.inflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
     @Override
     public int getCount() {
-        return units.length;
+        return temperatureUnits.length;
     }
 
     @Override
     public Object getItem(int position) {
-        switch (position){
-            case 0: {
-                return units[0];
-            }
-            case 1: {
-                return units[1];
-            }
-        }
-        return 0;
+        return temperatureUnits[position];
     }
 
     @Override
@@ -48,9 +36,9 @@ public class TemperatureUnitsSpinnerAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        View row = inflater.inflate(R.layout.spinner_row, null);
-        TextView singleTemperatureUnit = (TextView) row.findViewById(R.id.singleUnit);
-        singleTemperatureUnit.setText(units[position]);
-        return row;
+        View singleUnitViewInSpinner = inflater.inflate(R.layout.spinner_row, null);
+        TextView singleTemperatureUnit = singleUnitViewInSpinner.findViewById(R.id.singleUnit);
+        singleTemperatureUnit.setText(temperatureUnits[position]);
+        return singleUnitViewInSpinner;
     }
 }
