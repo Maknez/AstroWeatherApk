@@ -4,15 +4,12 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,13 +19,13 @@ import noname.astroweather.R;
 import noname.astroweather.adapters.viewpageradapters.ScreenSlidePagerAdapterAllFragments;
 import noname.astroweather.adapters.viewpageradapters.ScreenSlidePagerAdapterSunMoon;
 import noname.astroweather.adapters.viewpageradapters.ScreenSlidePagerAdapterWeather;
-import noname.astroweather.weather.BasicInfo;
 import noname.astroweather.weather.UnitsChanger;
 import noname.astroweather.weather.data.Channel;
 import noname.astroweather.weather.data.Item;
 import noname.astroweather.weather.data.YahooWeatherService;
 import noname.astroweather.weather.data.interfaces.WeatherServiceCallback;
 
+//TODO: implement scrollView in Tablet Layouts
 public class Application extends AppCompatActivity implements WeatherServiceCallback {
 
     private TextView clockView;
@@ -124,20 +121,8 @@ public class Application extends AppCompatActivity implements WeatherServiceCall
     }
 
     @Override
-    public void onBackPressed() {/*
-        Configuration config = getResources().getConfiguration();
-        if (checkSize(config) && config.orientation == 2) {
-            if (mPagerSunMoon.getCurrentItem() == 0) {
-                System.exit(1);
-            } else {
-                mPagerSunMoon.setCurrentItem(mPagerSunMoon.getCurrentItem() - 1);
-            }
-        } else {
-            super.onBackPressed();
-        }
-*/
+    public void onBackPressed() {
         System.exit(1);
-
     }
 
     @Override
