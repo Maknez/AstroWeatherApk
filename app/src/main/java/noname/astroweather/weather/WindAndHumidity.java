@@ -6,14 +6,9 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import noname.astroweather.R;
-import noname.astroweather.weather.data.YahooWeatherService;
-import noname.astroweather.weather.data.Channel;
-import noname.astroweather.weather.data.interfaces.WeatherServiceCallback;
 
 public class WindAndHumidity extends Fragment {
 
@@ -21,8 +16,7 @@ public class WindAndHumidity extends Fragment {
     private TextView windWayTextView;
     private TextView humidityTextView;
     private TextView visibilityTextView;
-
-    private SharedPreferences sharedPreferences;
+    private SharedPreferences sharedPreferencesWithCustomValues;
     private SharedPreferences offlineDataSharedPreferences;
 
     @Override
@@ -37,33 +31,33 @@ public class WindAndHumidity extends Fragment {
         ViewGroup rootView = (ViewGroup) inflater.inflate(
                 R.layout.fragment_wind_and_humidity, container, false);
 
-        initTextViews(rootView);
-        initSharedPreferences();
-
+        initializeTextViews(rootView);
+        initializeSharedPreferences();
         return rootView;
     }
-    private void initSharedPreferences() {
-        sharedPreferences = getActivity().getSharedPreferences("config.xml", 0);
+    private void initializeSharedPreferences() {
+        sharedPreferencesWithCustomValues = getActivity().getSharedPreferences("config.xml", 0);
         offlineDataSharedPreferences = getActivity().getSharedPreferences("offline_data.xml", 0);
     }
 
-    private void initTextViews(ViewGroup rootView) {
-        windPowerTextView = (TextView) rootView.findViewById(R.id.windPowerText);
-        windWayTextView = (TextView) rootView.findViewById(R.id.windWayText);
-        humidityTextView = (TextView) rootView.findViewById(R.id.humidityText);
-        visibilityTextView = (TextView) rootView.findViewById(R.id.visibilityText);
+    private void initializeTextViews(ViewGroup rootView) {
+        windPowerTextView = rootView.findViewById(R.id.windPowerText);
+        windWayTextView = rootView.findViewById(R.id.windWayText);
+        humidityTextView = rootView.findViewById(R.id.humidityText);
+        visibilityTextView = rootView.findViewById(R.id.visibilityText);
     }
 
 
     public void showDataFromSharedPreferences(){
-        int windPowerUnit = sharedPreferences.getInt("Wind_Speed_Unit", (getResources().getInteger(R.integer.Default_Wind_Speed_Unit)));
+        int windPowerUnit = sharedPreferencesWithCustomValues.getInt("Wind_Speed_Unit", (getResources().getInteger(R.integer.Default_Wind_Speed_Unit)));
+
         if (windPowerUnit == 0) {
             windPowerTextView.setText(offlineDataSharedPreferences.getString("windPowerInMPHOffline", "0") + " " + getResources().getString(R.string.wind_power_unit_mph));
         } else if (windPowerUnit == 1) {
             windPowerTextView.setText(offlineDataSharedPreferences.getString("windPowerInKMPHOffline", "0") + " " + getResources().getString(R.string.wind_power_unit_kmph));
         }
-        windWayTextView.setText(offlineDataSharedPreferences.getString("windWayOffline", "WindWay"));
-        humidityTextView.setText(offlineDataSharedPreferences.getString("humidityOffline", "Humidity"));
-        visibilityTextView.setText(offlineDataSharedPreferences.getString("visibilityOffline", "Visibility"));
+        windWayTextView.setText(offlineDataSharedPreferences.getString("windWayOffline", "WindWay") + "°");
+        humidityTextView.setText(offlineDataSharedPreferences.getString("humidityOffline", "Humidity") + "%");
+        visibilityTextView.setText(offlineDataSharedPreferences.getString("visibilityOffline", "Visibility") + "m");
     }
 }
