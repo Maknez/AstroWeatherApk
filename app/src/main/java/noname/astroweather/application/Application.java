@@ -25,26 +25,17 @@ import noname.astroweather.weather.data.Item;
 import noname.astroweather.weather.data.YahooWeatherService;
 import noname.astroweather.weather.data.interfaces.WeatherServiceCallback;
 
-//TODO: implement scrollView in Tablet Layouts
 public class Application extends AppCompatActivity implements WeatherServiceCallback {
 
-    private TextView clockView;
-    private TextView longAndLatiView;
-    private ViewPager mPagerSunMoon;
-    private ViewPager mPagerWeather;
-    private ViewPager mPagerAllFragments;
-    private PagerAdapter mPagerAdapterSunMoon;
-    private PagerAdapter mPagerAdapterWeather;
-    private PagerAdapter mPagerAdapterAllFragments;
-    private Thread myThread;
-    private Clock clock;
-
-
-    private YahooWeatherService service;
-    private SharedPreferences sharedPreferences;
-    private SharedPreferences offlineDataSharedPreferences;
-    private SharedPreferences.Editor editor;
-
+    private TextView clockTextView;
+    private TextView longitudeAndLatitudeTextView;
+    private PagerAdapter sunMoonPagerAdapter;
+    private PagerAdapter weatherPagerAdapter;
+    private PagerAdapter allFragmentsPagerAdapter;
+    private Thread clockThread;
+    private YahooWeatherService yahooWeatherService;
+    private SharedPreferences sharedPreferencesWithCustomData;
+    private SharedPreferences.Editor offlineSharedPreferencesEditorToSaveDataFromYahooWeatherService;
 
     private class ClockActivity extends Clock {
 
@@ -81,7 +72,7 @@ public class Application extends AppCompatActivity implements WeatherServiceCall
                         } else {
                             curTime = curTime + second;
                         }
-                        clockView.setText(curTime);
+                        clockTextView.setText(curTime);
 
                     } catch (Exception e) {
                     }
@@ -97,27 +88,18 @@ public class Application extends AppCompatActivity implements WeatherServiceCall
     }
 
     public boolean isPortrait(Configuration config) {
-        if (config.orientation == 1) {
-            return true;
-        } else {
-            return false;
-        }
+        return config.orientation == 1;
     }
 
     public boolean isLandscape(Configuration config) {
-        if (config.orientation == 2) {
-            return true;
-        } else {
-            return false;
-        }
+        return config.orientation == 2;
     }
 
     public void showLongAndLati() {
-        SharedPreferences sharedPref = getSharedPreferences("config.xml", 0);
-        longAndLatiView.setText(
-                sharedPref.getString("Custom_Longitude", String.valueOf(getResources().getString(R.string.Default_Longitude))) +
+        longitudeAndLatitudeTextView.setText(
+                sharedPreferencesWithCustomData.getString("Custom_Longitude", String.valueOf(getResources().getString(R.string.Default_Longitude))) +
                         " , " +
-                        sharedPref.getString("Custom_Latitude", String.valueOf(getResources().getString(R.string.Default_Latitude))));
+                        sharedPreferencesWithCustomData.getString("Custom_Latitude", String.valueOf(getResources().getString(R.string.Default_Latitude))));
     }
 
     @Override
@@ -135,7 +117,8 @@ public class Application extends AppCompatActivity implements WeatherServiceCall
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.sync: {
-                service.refreshWeather();
+                yahooWeatherService.refreshWeather();
+                refreshFragmentsData();
                 Toast.makeText(Application.this, "Data refreshed!", Toast.LENGTH_SHORT).show();
                 return true;
             }
@@ -159,10 +142,10 @@ public class Application extends AppCompatActivity implements WeatherServiceCall
 
     @Override
     public void onStart() {
-        clock = new ClockActivity(this);
+        Clock clock = new ClockActivity(this);
         Runnable myRunnableThread = clock;
-        myThread = new Thread(myRunnableThread);
-        myThread.start();
+        clockThread = new Thread(myRunnableThread);
+        clockThread.start();
         super.onStart();
     }
 
@@ -199,40 +182,40 @@ public class Application extends AppCompatActivity implements WeatherServiceCall
     }
 
     private void initLongAndLatiView() {
-        longAndLatiView = (TextView) findViewById(R.id.longAndLati);
+        longitudeAndLatitudeTextView = findViewById(R.id.longAndLati);
     }
 
     private void initClockView() {
-        clockView = (TextView) findViewById(R.id.clockOnScreen);
+        clockTextView = findViewById(R.id.clockOnScreen);
     }
 
     private void initViewPagerSunMoon() {
-        mPagerSunMoon = (ViewPager) findViewById(R.id.viewPagerSunMoon);
-        mPagerAdapterSunMoon = new ScreenSlidePagerAdapterSunMoon(getSupportFragmentManager());
-        mPagerSunMoon.setAdapter(mPagerAdapterSunMoon);
+        ViewPager mPagerSunMoon = findViewById(R.id.viewPagerSunMoon);
+        sunMoonPagerAdapter = new ScreenSlidePagerAdapterSunMoon(getSupportFragmentManager());
+        mPagerSunMoon.setAdapter(sunMoonPagerAdapter);
     }
 
     private void initViewPagerAllFragments() {
-        mPagerAllFragments = (ViewPager) findViewById(R.id.viewPagerAllFragments);
-        mPagerAdapterAllFragments = new ScreenSlidePagerAdapterAllFragments(getSupportFragmentManager());
-        mPagerAllFragments.setAdapter(mPagerAdapterAllFragments);
+        ViewPager mPagerAllFragments = findViewById(R.id.viewPagerAllFragments);
+        allFragmentsPagerAdapter = new ScreenSlidePagerAdapterAllFragments(getSupportFragmentManager());
+        mPagerAllFragments.setAdapter(allFragmentsPagerAdapter);
     }
 
     private void initViewPagerWeather() {
-        mPagerWeather = (ViewPager) findViewById(R.id.viewPagerWeather);
-        mPagerAdapterWeather = new ScreenSlidePagerAdapterWeather(getSupportFragmentManager());
-        mPagerWeather.setAdapter(mPagerAdapterWeather);
+        ViewPager mPagerWeather = findViewById(R.id.viewPagerWeather);
+        weatherPagerAdapter = new ScreenSlidePagerAdapterWeather(getSupportFragmentManager());
+        mPagerWeather.setAdapter(weatherPagerAdapter);
     }
 
     private void initSharedPreferences() {
-        sharedPreferences = getSharedPreferences("config.xml", 0);
-        offlineDataSharedPreferences = getSharedPreferences("offline_data.xml", 0);
-        editor = offlineDataSharedPreferences.edit();
+        sharedPreferencesWithCustomData = getSharedPreferences("config.xml", 0);
+        SharedPreferences offlineDataSharedPreferences = getSharedPreferences("offline_data.xml", 0);
+        offlineSharedPreferencesEditorToSaveDataFromYahooWeatherService = offlineDataSharedPreferences.edit();
     }
 
     private void initYahooWeatherService() {
-        service = new YahooWeatherService(this, sharedPreferences, sharedPreferences.getInt("Custom_Option_To_Refresh_Weather", getResources().getInteger(R.integer.Default_Option_To_Refresh_Weather)));
-        service.refreshWeather();
+        yahooWeatherService = new YahooWeatherService(this, sharedPreferencesWithCustomData, sharedPreferencesWithCustomData.getInt("Custom_Option_To_Refresh_Weather", getResources().getInteger(R.integer.Default_Option_To_Refresh_Weather)));
+        yahooWeatherService.refreshWeather();
     }
 
     @Override
@@ -244,8 +227,8 @@ public class Application extends AppCompatActivity implements WeatherServiceCall
             saveBasicInfoDataFromYahooWeatherService(channel, unitsChanger, item);
             saveWeatherForecastDataFromYahooWeatherService(channel, unitsChanger);
             saveWindAndHumidityDataFromYahooWeatherService(channel, unitsChanger);
-
             refreshFragmentsData();
+
         } catch (IllegalStateException ex) {
             Toast.makeText(Application.this, ex.getMessage(), Toast.LENGTH_SHORT).show();
         }
@@ -253,17 +236,17 @@ public class Application extends AppCompatActivity implements WeatherServiceCall
 
     @Override
     public void serviceFailure(Exception ex) {
+        Toast.makeText(Application.this, "There is a problem with getting data from Yahoo Weather API! Try again later.", Toast.LENGTH_SHORT).show();
     }
 
     private void refreshFragmentsData() {
         Configuration config = getResources().getConfiguration();
         if (!checkSize(config)) {
             if (isLandscape(config)) {
-                mPagerAdapterAllFragments.notifyDataSetChanged();
-
+                allFragmentsPagerAdapter.notifyDataSetChanged();
             } else if (isPortrait(config)) {
-                mPagerAdapterWeather.notifyDataSetChanged();
-                mPagerAdapterSunMoon.notifyDataSetChanged();
+                weatherPagerAdapter.notifyDataSetChanged();
+                sunMoonPagerAdapter.notifyDataSetChanged();
             }
         }
     }
@@ -272,12 +255,12 @@ public class Application extends AppCompatActivity implements WeatherServiceCall
         double windPowerInMPH = channel.getWind().getSpeed();
         double windPowerInKMPH = unitsChanger.milesPerHourTokilometersPerHour(windPowerInMPH);
 
-        editor.putString("windPowerInMPHOffline", String.valueOf(windPowerInMPH));
-        editor.putString("windPowerInKMPHOffline", String.valueOf(windPowerInKMPH));
-        editor.putString("windWayOffline", String.valueOf(channel.getWind().getDirection()));
-        editor.putString("humidityOffline", String.valueOf(channel.getAtmosphere().getHumidity()));
-        editor.putString("visibilityOffline", String.valueOf(channel.getAtmosphere().getVisibility()));
-        editor.commit();
+        offlineSharedPreferencesEditorToSaveDataFromYahooWeatherService.putString("windPowerInMPHOffline", String.valueOf(windPowerInMPH));
+        offlineSharedPreferencesEditorToSaveDataFromYahooWeatherService.putString("windPowerInKMPHOffline", String.valueOf(windPowerInKMPH));
+        offlineSharedPreferencesEditorToSaveDataFromYahooWeatherService.putString("windWayOffline", String.valueOf(channel.getWind().getDirection()));
+        offlineSharedPreferencesEditorToSaveDataFromYahooWeatherService.putString("humidityOffline", String.valueOf(channel.getAtmosphere().getHumidity()));
+        offlineSharedPreferencesEditorToSaveDataFromYahooWeatherService.putString("visibilityOffline", String.valueOf(channel.getAtmosphere().getVisibility()));
+        offlineSharedPreferencesEditorToSaveDataFromYahooWeatherService.commit();
     }
 
     private void saveWeatherForecastDataFromYahooWeatherService(Channel channel, UnitsChanger unitsChanger) {
@@ -287,13 +270,13 @@ public class Application extends AppCompatActivity implements WeatherServiceCall
             int temperatureHighInCelsius = unitsChanger.fahrenheitToCelsius(temperatureHighInFarenheit);
             int temperatureLowInCelsius = unitsChanger.fahrenheitToCelsius(temperatureLowInFarenheit);
 
-            editor.putInt("resourceIDOffline" + String.valueOf(i), getResourceID(channel, i + 1));
-            editor.putInt("temperatureLowInFarenheitOffline" + String.valueOf(i), temperatureLowInFarenheit);
-            editor.putInt("temperatureHighInFarenheitOffline" + String.valueOf(i), temperatureHighInFarenheit);
-            editor.putInt("temperatureLowInCelsiusOffline" + String.valueOf(i), temperatureLowInCelsius);
-            editor.putInt("temperatureHighInCelsiusOffline" + String.valueOf(i), temperatureHighInCelsius);
-            editor.putString("descriptionOffline" + String.valueOf(i), channel.getItem().getForecast(i + 1).getDay());
-            editor.commit();
+            offlineSharedPreferencesEditorToSaveDataFromYahooWeatherService.putInt("resourceIDOffline" + String.valueOf(i), getResourceID(channel, i + 1));
+            offlineSharedPreferencesEditorToSaveDataFromYahooWeatherService.putInt("temperatureLowInFarenheitOffline" + String.valueOf(i), temperatureLowInFarenheit);
+            offlineSharedPreferencesEditorToSaveDataFromYahooWeatherService.putInt("temperatureHighInFarenheitOffline" + String.valueOf(i), temperatureHighInFarenheit);
+            offlineSharedPreferencesEditorToSaveDataFromYahooWeatherService.putInt("temperatureLowInCelsiusOffline" + String.valueOf(i), temperatureLowInCelsius);
+            offlineSharedPreferencesEditorToSaveDataFromYahooWeatherService.putInt("temperatureHighInCelsiusOffline" + String.valueOf(i), temperatureHighInCelsius);
+            offlineSharedPreferencesEditorToSaveDataFromYahooWeatherService.putString("descriptionOffline" + String.valueOf(i), channel.getItem().getForecast(i + 1).getDay());
+            offlineSharedPreferencesEditorToSaveDataFromYahooWeatherService.commit();
         }
     }
 
@@ -301,30 +284,31 @@ public class Application extends AppCompatActivity implements WeatherServiceCall
         int resourceID = getResources().getIdentifier("weather_icon_" + channel.getItem().getCondition().getCode(), "drawable", getPackageName());
         int temperatureInFarenheit = item.getCondition().getTemperature();
         int temperatureInCelsius = unitsChanger.fahrenheitToCelsius(temperatureInFarenheit);
-        editor.putInt("resourceIDOffline", resourceID);
-        editor.putString("cityOffline", channel.getLocation().getCity());
-        editor.putString("countryOffline", channel.getLocation().getCountry());
-        editor.putInt("temperatureInFarenheitOffline", temperatureInFarenheit);
-        editor.putInt("temperatureInCelsiusOffline", temperatureInCelsius);
-        editor.putString("descriptionOffline", item.getCondition().getDescription());
-        editor.putString("airPressureOffline", channel.getAtmosphere().getPressure().toString());
-        editor.commit();
+        offlineSharedPreferencesEditorToSaveDataFromYahooWeatherService.putInt("resourceIDOffline", resourceID);
+        offlineSharedPreferencesEditorToSaveDataFromYahooWeatherService.putString("cityOffline", channel.getLocation().getCity());
+        offlineSharedPreferencesEditorToSaveDataFromYahooWeatherService.putString("countryOffline", channel.getLocation().getCountry());
+        offlineSharedPreferencesEditorToSaveDataFromYahooWeatherService.putInt("temperatureInFarenheitOffline", temperatureInFarenheit);
+        offlineSharedPreferencesEditorToSaveDataFromYahooWeatherService.putInt("temperatureInCelsiusOffline", temperatureInCelsius);
+        offlineSharedPreferencesEditorToSaveDataFromYahooWeatherService.putString("descriptionOffline", item.getCondition().getDescription());
+        offlineSharedPreferencesEditorToSaveDataFromYahooWeatherService.putString("airPressureOffline", channel.getAtmosphere().getPressure().toString());
+        offlineSharedPreferencesEditorToSaveDataFromYahooWeatherService.commit();
     }
 
-    private int getResourceID(Channel channel, int currentDay) {
-        return getResources().getIdentifier("weather_icon_" + channel.getItem().getForecast(currentDay).getCode(), "drawable", getPackageName());
+    private int getResourceID(Channel channel, int oneOfForecastWeatherDay) {
+        return getResources().getIdentifier("weather_icon_" + channel.getItem().getForecast(oneOfForecastWeatherDay).getCode(), "drawable", getPackageName());
     }
 
     @Override
     public void onStop() {
-        myThread.interrupt();
+        clockThread.interrupt();
         super.onStop();
     }
 
     @Override
     public void onRestart() {
         showLongAndLati();
-        service.refreshWeather();
+        yahooWeatherService.refreshWeather();
+        refreshFragmentsData();
         super.onRestart();
     }
 }
