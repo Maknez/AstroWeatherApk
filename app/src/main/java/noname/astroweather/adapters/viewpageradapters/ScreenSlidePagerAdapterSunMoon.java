@@ -9,7 +9,7 @@ import noname.astroweather.astro.SunFragment;
 
 public class ScreenSlidePagerAdapterSunMoon extends FragmentStatePagerAdapter {
 
-    public static final int NUM_PAGES = 2;
+    public static final int NUMBER_OF_ALL_FRAGMENTS = 2;
     private Fragment[] fragments = {new SunFragment(), new MoonFragment()};
 
     public ScreenSlidePagerAdapterSunMoon(FragmentManager fm) {
@@ -22,12 +22,12 @@ public class ScreenSlidePagerAdapterSunMoon extends FragmentStatePagerAdapter {
     }
 
     @Override
-    public int getItemPosition(Object object) {
-        return POSITION_NONE;
+    public int getCount() {
+        return NUMBER_OF_ALL_FRAGMENTS;
     }
 
     @Override
-    public int getCount() {
-        return NUM_PAGES;
+    public int getItemPosition(Object object) {
+        return POSITION_NONE;
     }
 }
