@@ -60,7 +60,7 @@ public class Clock implements Runnable {
         nextRefreshTime = Calendar.getInstance().getTime();
         nextRefreshTime.setMinutes(nextRefreshTime.getMinutes() + Integer.parseInt(sharedPref.getString("Custom_Refresh", String.valueOf(thisActivity.getResources().getString(R.string.Default_Refresh)))));
     }
-    
+
     public void showText() {
     }
 
