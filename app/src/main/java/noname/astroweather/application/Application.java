@@ -119,7 +119,7 @@ public class Application extends AppCompatActivity implements WeatherServiceCall
         switch (item.getItemId()) {
             case R.id.sync: {
                 yahooWeatherService.refreshWeather();
-                refreshFragmentsData();
+                refreshWeatherFragmentsData();
                 Toast.makeText(Application.this, "Data refreshed!", Toast.LENGTH_SHORT).show();
                 return true;
             }
@@ -227,7 +227,7 @@ public class Application extends AppCompatActivity implements WeatherServiceCall
             saveBasicInfoDataFromYahooWeatherService(channel, unitsChanger, item);
             saveWeatherForecastDataFromYahooWeatherService(channel, unitsChanger);
             saveWindAndHumidityDataFromYahooWeatherService(channel, unitsChanger);
-            refreshFragmentsData();
+            refreshWeatherFragmentsData();
 
         } catch (IllegalStateException ex) {
             Toast.makeText(Application.this, ex.getMessage(), Toast.LENGTH_SHORT).show();
@@ -239,7 +239,7 @@ public class Application extends AppCompatActivity implements WeatherServiceCall
         Toast.makeText(Application.this, "There is a problem with getting data from Yahoo Weather API! Try again later.", Toast.LENGTH_SHORT).show();
     }
 
-    private void refreshFragmentsData() {
+    private void refreshWeatherFragmentsData() {
         Configuration config = getResources().getConfiguration();
         if (!checkSize(config)) {
             if (isLandscape(config)) {
@@ -308,7 +308,7 @@ public class Application extends AppCompatActivity implements WeatherServiceCall
     public void onRestart() {
         showLongAndLati();
         yahooWeatherService.refreshWeather();
-        refreshFragmentsData();
+        refreshWeatherFragmentsData();
         super.onRestart();
     }
 }
