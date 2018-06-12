@@ -3,19 +3,17 @@ package noname.astroweather.application;
 import android.app.Activity;
 import android.content.SharedPreferences;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
 import noname.astroweather.R;
 
 public class Clock implements Runnable {
-    private Activity thisActivity;
-    private Date nextRefreshTime;
+    private Activity activityOnThatClockIsRunning;
+    private Date timeOfNextRefresh;
 
     public Clock(Activity activity) {
-        thisActivity = activity;
+        activityOnThatClockIsRunning = activity;
     }
 
     public void run() {
@@ -31,7 +29,7 @@ public class Clock implements Runnable {
     }
 
     public void getClock() {
-        thisActivity.runOnUiThread(new Runnable() {
+        activityOnThatClockIsRunning.runOnUiThread(new Runnable() {
             public void run() {
                 try {
                     long analogClockTime = Calendar.getInstance().getTimeInMillis();
@@ -48,7 +46,7 @@ public class Clock implements Runnable {
     }
 
     private void refresh(int hour, int minute, int second) {
-        if ((nextRefreshTime.getHours() == hour) && (nextRefreshTime.getMinutes() == minute) && (nextRefreshTime.getSeconds() == second)) {
+        if ((timeOfNextRefresh.getHours() == hour) && (timeOfNextRefresh.getMinutes() == minute) && (timeOfNextRefresh.getSeconds() == second)) {
             setNewValue();
             showText();
             setNewRefreshTime();
@@ -56,9 +54,9 @@ public class Clock implements Runnable {
     }
 
     public void setNewRefreshTime() {
-        SharedPreferences sharedPref = thisActivity.getSharedPreferences("config.xml", 0);
-        nextRefreshTime = Calendar.getInstance().getTime();
-        nextRefreshTime.setMinutes(nextRefreshTime.getMinutes() + Integer.parseInt(sharedPref.getString("Custom_Refresh", String.valueOf(thisActivity.getResources().getString(R.string.Default_Refresh)))));
+        SharedPreferences sharedPref = activityOnThatClockIsRunning.getSharedPreferences("config.xml", 0);
+        timeOfNextRefresh = Calendar.getInstance().getTime();
+        timeOfNextRefresh.setMinutes(timeOfNextRefresh.getMinutes() + Integer.parseInt(sharedPref.getString("Custom_Refresh", String.valueOf(activityOnThatClockIsRunning.getResources().getString(R.string.Default_Refresh)))));
     }
 
     public void showText() {
