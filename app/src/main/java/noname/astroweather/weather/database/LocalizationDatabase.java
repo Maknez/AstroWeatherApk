@@ -4,7 +4,6 @@ import android.provider.BaseColumns;
 
 public class LocalizationDatabase {
     public LocalizationDatabase() {
-
     }
 
     public static abstract class TableInfo implements BaseColumns {
