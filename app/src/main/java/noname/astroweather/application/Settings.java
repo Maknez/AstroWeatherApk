@@ -25,30 +25,30 @@ import noname.astroweather.weather.database.DatabaseOperation;
 
 public class Settings extends AppCompatActivity implements WeatherServiceCallback {
 
-    private TextView editLongitude;
-    private TextView editLatitude;
-    private TextView editRefresh;
-    private TextView editCity;
-    private TextView editCountry;
+    private TextView longitudeTextView;
+    private TextView latitudeTextView;
+    private TextView refreshTextView;
+    private TextView cityTextView;
+    private TextView countryTextView;
 
-    private Button addToDatabase;
-    private Button getFromDatabase;
-    private Button saveValues;
-    private Button setDefaultValues;
+    private Button addToDatabaseButton;
+    private Button getFromDatabaseButton;
+    private Button saveCustomValuesButton;
+    private Button setDefaultValuesButton;
 
-    private Spinner temperatureSpinner;
-    private Spinner windSpeedSpinner;
+    private Spinner temperatureUnitSpinner;
+    private Spinner windSpeedUnitSpinner;
     private int temperatureUnit;
-    private int windUnit;
-    private int option;
-    private SharedPreferences sharedPref;
-    private SharedPreferences.Editor editor;
+    private int windSpeedUnit;
+    private int customOptionToGetWeatherDataFromYahooWeatherAPI;
+    private SharedPreferences sharedPreferencesWithCustomData;
+    private SharedPreferences.Editor sharedPreferencesWithCustomDataEditorToSaveCustomValues;
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
-        outState.putString("savedLongitude", String.valueOf(editLongitude.getText()));
-        outState.putString("savedLatitude", String.valueOf(editLatitude.getText()));
-        outState.putString("savedRefresh", String.valueOf(editRefresh.getText()));
+        outState.putString("savedLongitude", String.valueOf(longitudeTextView.getText()));
+        outState.putString("savedLatitude", String.valueOf(latitudeTextView.getText()));
+        outState.putString("savedRefresh", String.valueOf(refreshTextView.getText()));
         super.onSaveInstanceState(outState);
     }
 
@@ -67,12 +67,12 @@ public class Settings extends AppCompatActivity implements WeatherServiceCallbac
         getSettingsValues();
 
         if (savedInstanceState != null) {
-            editLongitude.setText(savedInstanceState.getString("savedLongitude"));
-            editLatitude.setText(savedInstanceState.getString("savedLatitude"));
-            editRefresh.setText(savedInstanceState.getString("savedRefresh"));
+            longitudeTextView.setText(savedInstanceState.getString("savedLongitude"));
+            latitudeTextView.setText(savedInstanceState.getString("savedLatitude"));
+            refreshTextView.setText(savedInstanceState.getString("savedRefresh"));
         }
 
-        saveValues.setOnClickListener(new View.OnClickListener() {
+        saveCustomValuesButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (isCityPossibleToSave() && isCountryPossibleToSave()) {
@@ -101,28 +101,28 @@ public class Settings extends AppCompatActivity implements WeatherServiceCallbac
             }
         });
 
-        setDefaultValues.setOnClickListener(new View.OnClickListener() {
+        setDefaultValuesButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                editLongitude.setText(getResources().getString(R.string.Default_Longitude));
-                editLatitude.setText(getResources().getString(R.string.Default_Latitude));
-                editRefresh.setText(getResources().getString(R.string.Default_Refresh));
-                temperatureSpinner.setSelection(getResources().getInteger(R.integer.Default_Temperature_Unit));
-                windSpeedSpinner.setSelection(getResources().getInteger(R.integer.Default_Wind_Speed_Unit));
-                editCity.setText(getResources().getString(R.string.Default_City));
-                editCountry.setText(getResources().getString(R.string.Default_Country));
+                longitudeTextView.setText(getResources().getString(R.string.Default_Longitude));
+                latitudeTextView.setText(getResources().getString(R.string.Default_Latitude));
+                refreshTextView.setText(getResources().getString(R.string.Default_Refresh));
+                temperatureUnitSpinner.setSelection(getResources().getInteger(R.integer.Default_Temperature_Unit));
+                windSpeedUnitSpinner.setSelection(getResources().getInteger(R.integer.Default_Wind_Speed_Unit));
+                cityTextView.setText(getResources().getString(R.string.Default_City));
+                countryTextView.setText(getResources().getString(R.string.Default_Country));
                 saveDefaultValues();
                 Toast.makeText(Settings.this, "Values set to default!", Toast.LENGTH_SHORT).show();
             }
         });
 
-        addToDatabase.setOnClickListener(new View.OnClickListener() {
+        addToDatabaseButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String cityName = editCity.getText().toString();
-                String countryName = editCountry.getText().toString();
-                String latitude = editLatitude.getText().toString();
-                String longitude = editLongitude.getText().toString();
+                String cityName = cityTextView.getText().toString();
+                String countryName = countryTextView.getText().toString();
+                String latitude = latitudeTextView.getText().toString();
+                String longitude = longitudeTextView.getText().toString();
                 if (cityName.isEmpty() || countryName.isEmpty() || latitude.isEmpty() || longitude.isEmpty()) {
                     Toast.makeText(Settings.this, "Localization cannot be added to Database!", Toast.LENGTH_SHORT).show();
                 } else {
@@ -133,7 +133,7 @@ public class Settings extends AppCompatActivity implements WeatherServiceCallbac
             }
         });
 
-        getFromDatabase.setOnClickListener(new View.OnClickListener() {
+        getFromDatabaseButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(Settings.this, DisplayLocalization.class));
@@ -143,22 +143,22 @@ public class Settings extends AppCompatActivity implements WeatherServiceCallbac
     }
 
     private void setLocalizationFromYahooWeatherService() {
-        YahooWeatherService service = new YahooWeatherService(this, sharedPref, option);
+        YahooWeatherService service = new YahooWeatherService(this, sharedPreferencesWithCustomData, customOptionToGetWeatherDataFromYahooWeatherAPI);
         service.refreshWeather();
     }
 
     private void setOptionToRefreshWeather(int newOptionValue) {
-        option = newOptionValue;
-        editor.putInt("Custom_Option_To_Refresh_Weather", newOptionValue);
-        editor.commit();
+        customOptionToGetWeatherDataFromYahooWeatherAPI = newOptionValue;
+        sharedPreferencesWithCustomDataEditorToSaveCustomValues.putInt("Custom_Option_To_Refresh_Weather", newOptionValue);
+        sharedPreferencesWithCustomDataEditorToSaveCustomValues.commit();
     }
 
     public boolean isLatitudePossibleToSave() {
-        String latitude = String.valueOf(editLatitude.getText());
+        String latitude = String.valueOf(latitudeTextView.getText());
         if (!latitude.equals("")) {
             if (latitude.endsWith(".")) {
                 latitude = latitude.substring(0, latitude.length() - 1);
-                editLatitude.setText(latitude);
+                latitudeTextView.setText(latitude);
             }
         }
         if (isNumeric(latitude)) {
@@ -174,11 +174,11 @@ public class Settings extends AppCompatActivity implements WeatherServiceCallbac
     }
 
     public boolean isLongitudePossibleToSave() {
-        String longitude = String.valueOf(editLongitude.getText());
+        String longitude = String.valueOf(longitudeTextView.getText());
         if (!longitude.equals("")) {
             if (longitude.endsWith(".")) {
                 longitude = longitude.substring(0, longitude.length() - 1);
-                editLongitude.setText(longitude);
+                longitudeTextView.setText(longitude);
             }
         }
         if (isNumeric(longitude)) {
@@ -194,22 +194,22 @@ public class Settings extends AppCompatActivity implements WeatherServiceCallbac
     }
 
     public boolean isCityPossibleToSave() {
-        String city = String.valueOf(editCity.getText());
+        String city = String.valueOf(cityTextView.getText());
         return !city.equals("");
     }
 
     public boolean isCountryPossibleToSave() {
-        String country = String.valueOf(editCountry.getText());
+        String country = String.valueOf(countryTextView.getText());
         return !country.equals("");
     }
 
     public boolean isRefreshPossibleToSave() {
-        String refresh = String.valueOf(editRefresh.getText());
+        String refresh = String.valueOf(refreshTextView.getText());
         if (refresh.equals("")) {
             Toast.makeText(Settings.this, "You cannot save empty value!", Toast.LENGTH_SHORT).show();
         } else if (refresh.endsWith(".")) {
             refresh = refresh.substring(0, refresh.length() - 1);
-            editRefresh.setText(refresh);
+            refreshTextView.setText(refresh);
         } else if (isMinutes(refresh)) {
             if ((Integer.valueOf(refresh) <= 60) && (Integer.valueOf(refresh) >= 1)) {
                 return true;
@@ -231,31 +231,31 @@ public class Settings extends AppCompatActivity implements WeatherServiceCallbac
     }
 
     private void initTextViews() {
-        editLongitude = findViewById(R.id.editLongitude);
-        editLatitude = findViewById(R.id.editLatitude);
-        editRefresh = findViewById(R.id.editRefresh);
-        editCity = findViewById(R.id.editCity);
-        editCountry = findViewById(R.id.editCountry);
+        longitudeTextView = findViewById(R.id.editLongitude);
+        latitudeTextView = findViewById(R.id.editLatitude);
+        refreshTextView = findViewById(R.id.editRefresh);
+        cityTextView = findViewById(R.id.editCity);
+        countryTextView = findViewById(R.id.editCountry);
     }
 
     private void initButtons() {
-        saveValues = findViewById(R.id.saveValues);
-        setDefaultValues = findViewById(R.id.setDefaultValues);
-        addToDatabase = findViewById(R.id.addToDatabase);
-        getFromDatabase = findViewById(R.id.getFromDatabase);
+        saveCustomValuesButton = findViewById(R.id.saveValues);
+        setDefaultValuesButton = findViewById(R.id.setDefaultValues);
+        addToDatabaseButton = findViewById(R.id.addToDatabase);
+        getFromDatabaseButton = findViewById(R.id.getFromDatabase);
     }
 
     private void initSharedPreferences() {
-        sharedPref = getSharedPreferences("config.xml", 0);
-        editor = sharedPref.edit();
+        sharedPreferencesWithCustomData = getSharedPreferences("config.xml", 0);
+        sharedPreferencesWithCustomDataEditorToSaveCustomValues = sharedPreferencesWithCustomData.edit();
     }
 
     private void initTemperatureSpinner() {
-        temperatureSpinner = findViewById(R.id.temperatureSpinner);
+        temperatureUnitSpinner = findViewById(R.id.temperatureSpinner);
         TemperatureUnitsSpinnerAdapter temperatureUnitsSpinnerAdapter = new TemperatureUnitsSpinnerAdapter(this);
-        temperatureSpinner.setAdapter(temperatureUnitsSpinnerAdapter);
-        temperatureSpinner.setSelection(sharedPref.getInt("Temperature_Unit", (getResources().getInteger(R.integer.Default_Temperature_Unit))));
-        temperatureSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        temperatureUnitSpinner.setAdapter(temperatureUnitsSpinnerAdapter);
+        temperatureUnitSpinner.setSelection(sharedPreferencesWithCustomData.getInt("Temperature_Unit", (getResources().getInteger(R.integer.Default_Temperature_Unit))));
+        temperatureUnitSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 switch (position) {
@@ -266,8 +266,8 @@ public class Settings extends AppCompatActivity implements WeatherServiceCallbac
                         temperatureUnit = 1;
                         break;
                 }
-                editor.putInt("Temperature_Unit", temperatureUnit);
-                editor.commit();
+                sharedPreferencesWithCustomDataEditorToSaveCustomValues.putInt("Temperature_Unit", temperatureUnit);
+                sharedPreferencesWithCustomDataEditorToSaveCustomValues.commit();
             }
 
             @Override
@@ -278,23 +278,23 @@ public class Settings extends AppCompatActivity implements WeatherServiceCallbac
     }
 
     private void initWindSpeedSpinner() {
-        windSpeedSpinner = findViewById(R.id.windSpeedSpinner);
+        windSpeedUnitSpinner = findViewById(R.id.windSpeedSpinner);
         WindSpeedUnitsSpinnerAdapter windSpeedUnitsSpinnerAdapter = new WindSpeedUnitsSpinnerAdapter(this);
-        windSpeedSpinner.setAdapter(windSpeedUnitsSpinnerAdapter);
-        windSpeedSpinner.setSelection(sharedPref.getInt("Wind_Speed_Unit", (getResources().getInteger(R.integer.Default_Wind_Speed_Unit))));
-        windSpeedSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        windSpeedUnitSpinner.setAdapter(windSpeedUnitsSpinnerAdapter);
+        windSpeedUnitSpinner.setSelection(sharedPreferencesWithCustomData.getInt("Wind_Speed_Unit", (getResources().getInteger(R.integer.Default_Wind_Speed_Unit))));
+        windSpeedUnitSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 switch (position) {
                     case 0:
-                        windUnit = 0;
+                        windSpeedUnit = 0;
                         break;
                     case 1:
-                        windUnit = 1;
+                        windSpeedUnit = 1;
                         break;
                 }
-                editor.putInt("Wind_Speed_Unit", windUnit);
-                editor.commit();
+                sharedPreferencesWithCustomDataEditorToSaveCustomValues.putInt("Wind_Speed_Unit", windSpeedUnit);
+                sharedPreferencesWithCustomDataEditorToSaveCustomValues.commit();
             }
 
             @Override
@@ -315,74 +315,74 @@ public class Settings extends AppCompatActivity implements WeatherServiceCallbac
     }
 
     private void getWindSpeedUnit() {
-        windSpeedSpinner.setSelection(sharedPref.getInt("Wind_Speed_Unit", getResources().getInteger(R.integer.Default_Wind_Speed_Unit)));
+        windSpeedUnitSpinner.setSelection(sharedPreferencesWithCustomData.getInt("Wind_Speed_Unit", getResources().getInteger(R.integer.Default_Wind_Speed_Unit)));
     }
 
     private void getTemperatureUnit() {
-        temperatureSpinner.setSelection(sharedPref.getInt("Temperature_Unit", getResources().getInteger(R.integer.Default_Temperature_Unit)));
+        temperatureUnitSpinner.setSelection(sharedPreferencesWithCustomData.getInt("Temperature_Unit", getResources().getInteger(R.integer.Default_Temperature_Unit)));
     }
 
     private void getEditCity() {
-        editCity.setText(sharedPref.getString("Custom_City", getResources().getString(R.string.Default_City)));
+        cityTextView.setText(sharedPreferencesWithCustomData.getString("Custom_City", getResources().getString(R.string.Default_City)));
     }
 
     private void getEditCountry() {
-        editCountry.setText(sharedPref.getString("Custom_Country", getResources().getString(R.string.Default_Country)));
+        countryTextView.setText(sharedPreferencesWithCustomData.getString("Custom_Country", getResources().getString(R.string.Default_Country)));
     }
 
     public void getEditLongitude() {
 
-        editLongitude.setText(sharedPref.getString("Custom_Longitude", String.valueOf(getResources().getString(R.string.Default_Longitude))));
+        longitudeTextView.setText(sharedPreferencesWithCustomData.getString("Custom_Longitude", String.valueOf(getResources().getString(R.string.Default_Longitude))));
     }
 
     public void getEditLatitude() {
 
-        editLatitude.setText(sharedPref.getString("Custom_Latitude", String.valueOf(getResources().getString(R.string.Default_Latitude))));
+        latitudeTextView.setText(sharedPreferencesWithCustomData.getString("Custom_Latitude", String.valueOf(getResources().getString(R.string.Default_Latitude))));
     }
 
     public void getEditRefresh() {
-        editRefresh.setText(sharedPref.getString("Custom_Refresh", String.valueOf(getResources().getString(R.string.Default_Refresh))));
+        refreshTextView.setText(sharedPreferencesWithCustomData.getString("Custom_Refresh", String.valueOf(getResources().getString(R.string.Default_Refresh))));
     }
 
     private void saveRefresh() {
-        String refresh = String.valueOf(editRefresh.getText());
-        editor.putString("Custom_Refresh", refresh);
-        editor.commit();
+        String refresh = String.valueOf(refreshTextView.getText());
+        sharedPreferencesWithCustomDataEditorToSaveCustomValues.putString("Custom_Refresh", refresh);
+        sharedPreferencesWithCustomDataEditorToSaveCustomValues.commit();
     }
 
     private void saveLatitude() {
-        String latitude = String.valueOf(editLatitude.getText());
-        editor.putString("Custom_Latitude", latitude);
-        editor.commit();
+        String latitude = String.valueOf(latitudeTextView.getText());
+        sharedPreferencesWithCustomDataEditorToSaveCustomValues.putString("Custom_Latitude", latitude);
+        sharedPreferencesWithCustomDataEditorToSaveCustomValues.commit();
     }
 
     private void saveLongitude() {
-        String longitude = String.valueOf(editLongitude.getText());
-        editor.putString("Custom_Longitude", longitude);
-        editor.commit();
+        String longitude = String.valueOf(longitudeTextView.getText());
+        sharedPreferencesWithCustomDataEditorToSaveCustomValues.putString("Custom_Longitude", longitude);
+        sharedPreferencesWithCustomDataEditorToSaveCustomValues.commit();
     }
 
     private void saveCity() {
-        String city = String.valueOf(editCity.getText());
-        editor.putString("Custom_City", city);
-        editor.commit();
+        String city = String.valueOf(cityTextView.getText());
+        sharedPreferencesWithCustomDataEditorToSaveCustomValues.putString("Custom_City", city);
+        sharedPreferencesWithCustomDataEditorToSaveCustomValues.commit();
     }
 
     private void saveCountry() {
-        String country = String.valueOf(editCountry.getText());
-        editor.putString("Custom_Country", country);
-        editor.commit();
+        String country = String.valueOf(countryTextView.getText());
+        sharedPreferencesWithCustomDataEditorToSaveCustomValues.putString("Custom_Country", country);
+        sharedPreferencesWithCustomDataEditorToSaveCustomValues.commit();
     }
 
     private void saveDefaultValues() {
-        editor.putInt("Temperature_Unit", temperatureSpinner.getSelectedItemPosition());
-        editor.putInt("Wind_Speed_Unit", windSpeedSpinner.getSelectedItemPosition());
-        editor.putString("Custom_City", editCity.getText().toString());
-        editor.putString("Custom_Country", editCountry.getText().toString());
-        editor.putString("Custom_Longitude", editLongitude.getText().toString());
-        editor.putString("Custom_Latitude", editLatitude.getText().toString());
-        editor.putString("Custom_Refresh", editRefresh.getText().toString());
-        editor.commit();
+        sharedPreferencesWithCustomDataEditorToSaveCustomValues.putInt("Temperature_Unit", temperatureUnitSpinner.getSelectedItemPosition());
+        sharedPreferencesWithCustomDataEditorToSaveCustomValues.putInt("Wind_Speed_Unit", windSpeedUnitSpinner.getSelectedItemPosition());
+        sharedPreferencesWithCustomDataEditorToSaveCustomValues.putString("Custom_City", cityTextView.getText().toString());
+        sharedPreferencesWithCustomDataEditorToSaveCustomValues.putString("Custom_Country", countryTextView.getText().toString());
+        sharedPreferencesWithCustomDataEditorToSaveCustomValues.putString("Custom_Longitude", longitudeTextView.getText().toString());
+        sharedPreferencesWithCustomDataEditorToSaveCustomValues.putString("Custom_Latitude", latitudeTextView.getText().toString());
+        sharedPreferencesWithCustomDataEditorToSaveCustomValues.putString("Custom_Refresh", refreshTextView.getText().toString());
+        sharedPreferencesWithCustomDataEditorToSaveCustomValues.commit();
     }
 
     private static boolean isNumeric(String string) {
@@ -432,18 +432,18 @@ public class Settings extends AppCompatActivity implements WeatherServiceCallbac
     @Override
     public void serviceSuccess(Channel channel) {
         Item item = channel.getItem();
-        if (option == 0) {
-            editLatitude.setText(String.valueOf(item.getLatitude()));
-            editLongitude.setText(String.valueOf(item.getLongitude()));
+        if (customOptionToGetWeatherDataFromYahooWeatherAPI == 0) {
+            latitudeTextView.setText(String.valueOf(item.getLatitude()));
+            longitudeTextView.setText(String.valueOf(item.getLongitude()));
             if (isLatitudePossibleToSave()) {
                 saveLatitude();
             }
             if (isLongitudePossibleToSave()) {
                 saveLongitude();
             }
-        } else if (option == 1) {
-            editCity.setText(channel.getLocation().getCity());
-            editCountry.setText(channel.getLocation().getCountry());
+        } else if (customOptionToGetWeatherDataFromYahooWeatherAPI == 1) {
+            cityTextView.setText(channel.getLocation().getCity());
+            countryTextView.setText(channel.getLocation().getCountry());
             if (isCityPossibleToSave()) {
                 saveCity();
             }
