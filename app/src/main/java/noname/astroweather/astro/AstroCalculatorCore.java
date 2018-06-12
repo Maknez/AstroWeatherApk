@@ -12,24 +12,24 @@ import java.util.Calendar;
 
 import noname.astroweather.R;
 
-public class AstroCore {
+public class AstroCalculatorCore {
 
     private final Activity activity;
 
-    public AstroCore(Activity activity) {
+    public AstroCalculatorCore(Activity activity) {
         this.activity = activity;
+        dateFormat = new SimpleDateFormat("yyyy.MM.dd HH:mm:ss");
     }
 
-    AstroCalculator astroCalculator;
-    AstroCalculator.Location location;
-    AstroDateTime astroDateTime;
-    DateFormat df = new SimpleDateFormat("yyyy.MM.dd HH:mm:ss");
-    String date;
-    SharedPreferences sharedPref;
+    private AstroCalculator astroCalculator;
+    private AstroCalculator.Location astroCalculatorLocation;
+    private AstroDateTime astroDateTime;
+    private DateFormat dateFormat;
+    private String date;
+    private SharedPreferences sharedPreferencesWithCustomValues;
 
-    public int getTimeZone() {
-
-        double longitude = Double.valueOf(sharedPref.getString("Custom_Longitude", String.valueOf(activity.getString(R.string.Default_Longitude))));
+    private int getTimeZone() {
+        double longitude = Double.valueOf(sharedPreferencesWithCustomValues.getString("Custom_Longitude", String.valueOf(activity.getString(R.string.Default_Longitude))));
         if (longitude >= 15 || longitude <= -15) {
             return (int) Math.floor((longitude + 15) / 30);
         } else {
@@ -38,7 +38,7 @@ public class AstroCore {
     }
 
     private void sharedPreferencesInit() {
-        sharedPref = activity.getSharedPreferences("config.xml", 0);
+        sharedPreferencesWithCustomValues = activity.getSharedPreferences("config.xml", 0);
     }
 
     public String getMoonInfo() {
@@ -69,33 +69,33 @@ public class AstroCore {
                 "\nTwilight evening: " + twilightEvening.substring(0, twilightEvening.length() - 6);
     }
 
-    public void astroInit() {
+    public void astroCalculatorCoreObjectsInitialize() {
         sharedPreferencesInit();
-        dateFormatInit();
-        astroDateTimeInit();
-        astroCalculatorLocationInit();
-        astroCalculatorInit();
+        dateFormatInitialize();
+        astroDateTimeInitialize();
+        astroCalculatorLocationInitialize();
+        astroCalculatorInitialize();
     }
 
-    private void dateFormatInit() {
-        date = df.format(Calendar.getInstance().getTime());
+    private void dateFormatInitialize() {
+        date = dateFormat.format(Calendar.getInstance().getTime());
     }
 
-    private void astroCalculatorInit() {
+    private void astroCalculatorInitialize() {
         astroCalculator = new AstroCalculator(
                 astroDateTime,
-                location
+                astroCalculatorLocation
         );
     }
 
-    private void astroCalculatorLocationInit() {
-        location = new AstroCalculator.Location(
-                Double.valueOf(sharedPref.getString("Custom_Longitude", String.valueOf(activity.getResources().getString(R.string.Default_Longitude)))),
-                Double.valueOf(sharedPref.getString("Custom_Latitude", String.valueOf(activity.getResources().getString(R.string.Default_Latitude))))
+    private void astroCalculatorLocationInitialize() {
+        astroCalculatorLocation = new AstroCalculator.Location(
+                Double.valueOf(sharedPreferencesWithCustomValues.getString("Custom_Longitude", String.valueOf(activity.getResources().getString(R.string.Default_Longitude)))),
+                Double.valueOf(sharedPreferencesWithCustomValues.getString("Custom_Latitude", String.valueOf(activity.getResources().getString(R.string.Default_Latitude))))
         );
     }
 
-    private void astroDateTimeInit() {
+    private void astroDateTimeInitialize() {
         astroDateTime = new AstroDateTime(
                 Integer.valueOf(date.substring(0, date.indexOf("."))),
                 Integer.valueOf(date.substring(date.indexOf(".") + 1, date.lastIndexOf("."))),
