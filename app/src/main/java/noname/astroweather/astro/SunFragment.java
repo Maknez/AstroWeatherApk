@@ -13,10 +13,10 @@ import noname.astroweather.application.Clock;
 import noname.astroweather.R;
 
 public class SunFragment extends Fragment {
-    TextView mView;
-    Thread myThread;
+    TextView sunFragmentDataTextView;
+    Thread threadOnThatClockIsRunning;
     Clock clock;
-    AstroCore astroCore;
+    AstroCalculatorCore astroCalculatorCore;
 
     private class ClockSunFragment extends Clock {
 
@@ -26,28 +26,27 @@ public class SunFragment extends Fragment {
 
         @Override
         public void setNewValue() {
-            astroCore = new AstroCore(getActivity());
-            astroCore.astroInit();
+            astroCalculatorCore = new AstroCalculatorCore(getActivity());
+            astroCalculatorCore.astroCalculatorCoreObjectsInitialize();
             super.setNewValue();
         }
 
         @Override
         public void showText() {
-            mView.setText(astroCore.getSunInfo());
+            sunFragmentDataTextView.setText(astroCalculatorCore.getSunInfo());
             super.showText();
         }
-
     }
 
     @Override
     public void onStart() {
-        astroCore = new AstroCore(getActivity());
-        astroCore.astroInit();
+        astroCalculatorCore = new AstroCalculatorCore(getActivity());
+        astroCalculatorCore.astroCalculatorCoreObjectsInitialize();
         clock = new ClockSunFragment(getActivity());
         Runnable myRunnableThread = clock;
         clock.setNewRefreshTime();
-        myThread = new Thread(myRunnableThread);
-        myThread.start();
+        threadOnThatClockIsRunning = new Thread(myRunnableThread);
+        threadOnThatClockIsRunning.start();
         super.onStart();
     }
 
@@ -57,27 +56,24 @@ public class SunFragment extends Fragment {
         ViewGroup rootView = (ViewGroup) inflater.inflate(
                 R.layout.fragment_sun, container, false);
 
-        astroCore = new AstroCore(getActivity());
-        astroCore.astroInit();
-
+        astroCalculatorCore = new AstroCalculatorCore(getActivity());
+        astroCalculatorCore.astroCalculatorCoreObjectsInitialize();
         clock = new ClockSunFragment(getActivity());
-        mView = rootView.findViewById(R.id.sloneczko);
+        sunFragmentDataTextView = rootView.findViewById(R.id.sloneczko);
 
         Configuration config = getResources().getConfiguration();
         if (config.orientation == 2) {
-            mView.setBackgroundResource(R.drawable.sun_landscape);
+            sunFragmentDataTextView.setBackgroundResource(R.drawable.sun_landscape);
         } else if (config.orientation == 1) {
-            mView.setBackgroundResource(R.drawable.sun_portrait);
+            sunFragmentDataTextView.setBackgroundResource(R.drawable.sun_portrait);
         }
-
-        mView.setText(astroCore.getSunInfo());
-
+        sunFragmentDataTextView.setText(astroCalculatorCore.getSunInfo());
         return rootView;
     }
 
     @Override
     public void onStop() {
-        myThread.interrupt();
+        threadOnThatClockIsRunning.interrupt();
         super.onStop();
     }
 }
