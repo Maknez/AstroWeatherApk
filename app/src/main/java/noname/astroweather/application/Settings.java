@@ -20,7 +20,7 @@ import noname.astroweather.weather.data.Channel;
 import noname.astroweather.weather.data.Item;
 import noname.astroweather.weather.data.interfaces.WeatherServiceCallback;
 import noname.astroweather.weather.data.YahooWeatherService;
-import noname.astroweather.weather.database.DisplayLocalization;
+import noname.astroweather.weather.database.DisplayLocalizationStorage;
 import noname.astroweather.weather.database.DatabaseOperation;
 
 public class Settings extends AppCompatActivity implements WeatherServiceCallback {
@@ -136,7 +136,7 @@ public class Settings extends AppCompatActivity implements WeatherServiceCallbac
         getFromDatabaseButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(Settings.this, DisplayLocalization.class));
+                startActivity(new Intent(Settings.this, DisplayLocalizationStorage.class));
             }
         });
 
