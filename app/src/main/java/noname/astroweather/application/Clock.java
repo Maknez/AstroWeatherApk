@@ -11,21 +11,18 @@ import java.util.Date;
 import noname.astroweather.R;
 
 public class Clock implements Runnable {
-    Activity thisActivity;
-    Date nextRefreshTime;
-    DateFormat df = new SimpleDateFormat("yyyy.MM.dd HH:mm:ss");
-    String date;
+    private Activity thisActivity;
+    private Date nextRefreshTime;
 
     public Clock(Activity activity) {
         thisActivity = activity;
     }
 
-
     public void run() {
         while (!Thread.currentThread().isInterrupted()) {
             try {
                 getClock();
-                Thread.sleep(1000); // Pause of 1 Second
+                Thread.sleep(1000);
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
             } catch (Exception e) {
@@ -34,7 +31,6 @@ public class Clock implements Runnable {
     }
 
     public void getClock() {
-
         thisActivity.runOnUiThread(new Runnable() {
             public void run() {
                 try {
@@ -45,14 +41,13 @@ public class Clock implements Runnable {
                     int minute = calendar.get(Calendar.MINUTE);
                     int second = calendar.get(Calendar.SECOND);
                     refresh(hour, minute, second);
-
                 } catch (Exception e) {
                 }
             }
         });
     }
 
-    public void refresh(int hour, int minute, int second) {
+    private void refresh(int hour, int minute, int second) {
         if ((nextRefreshTime.getHours() == hour) && (nextRefreshTime.getMinutes() == minute) && (nextRefreshTime.getSeconds() == second)) {
             setNewValue();
             showText();
@@ -65,8 +60,7 @@ public class Clock implements Runnable {
         nextRefreshTime = Calendar.getInstance().getTime();
         nextRefreshTime.setMinutes(nextRefreshTime.getMinutes() + Integer.parseInt(sharedPref.getString("Custom_Refresh", String.valueOf(thisActivity.getResources().getString(R.string.Default_Refresh)))));
     }
-
-
+    
     public void showText() {
     }
 
