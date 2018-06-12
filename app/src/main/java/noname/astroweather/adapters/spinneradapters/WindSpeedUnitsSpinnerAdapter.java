@@ -11,8 +11,8 @@ import android.widget.TextView;
 import noname.astroweather.R;
 
 public class WindSpeedUnitsSpinnerAdapter extends BaseAdapter {
-    String[] windSpeedUnits;
-    LayoutInflater inflater;
+    private String[] windSpeedUnits;
+    private LayoutInflater inflater;
 
     public WindSpeedUnitsSpinnerAdapter(Activity activity) {
         this.windSpeedUnits = new String[]{"mph", "kmph"};
