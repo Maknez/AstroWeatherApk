@@ -415,7 +415,7 @@ public class Settings extends AppCompatActivity implements WeatherServiceCallbac
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.activity_menu, menu);
+        getMenuInflater().inflate(R.menu.settings_activity_menu, menu);
         return true;
     }
 
@@ -423,7 +423,6 @@ public class Settings extends AppCompatActivity implements WeatherServiceCallbac
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.settings: {
-//                startActivity(new Intent(this, Settings.class));
                 return true;
             }
 
