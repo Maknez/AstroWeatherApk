@@ -30,9 +30,12 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".application.Application" />
         </activity>
-        <activity
-            android:name=".weather.database.DisplayLocalizationStorage"
-            android:screenOrientation="portrait" />
+        <activity android:name=".weather.database.DisplayLocalizationStorage"
+            android:screenOrientation="portrait">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".application.Settings" />
+        </activity>
     </application>
 
 </manifest>
