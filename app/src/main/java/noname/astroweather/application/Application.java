@@ -104,6 +104,7 @@ public class Application extends AppCompatActivity implements WeatherServiceCall
 
     @Override
     public void onBackPressed() {
+        moveTaskToBack(true);
         System.exit(1);
     }
 
