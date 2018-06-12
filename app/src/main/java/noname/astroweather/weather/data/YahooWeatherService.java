@@ -19,7 +19,6 @@ import java.net.URLConnection;
 import noname.astroweather.Exception.LocationWeatherException;
 import noname.astroweather.weather.data.interfaces.WeatherServiceCallback;
 
-
 public class YahooWeatherService {
     private WeatherServiceCallback callback;
     private Exception error;
@@ -33,7 +32,6 @@ public class YahooWeatherService {
         this.option = option;
     }
 
-
     @SuppressLint("StaticFieldLeak")
     public void refreshWeather() {
 
@@ -41,7 +39,7 @@ public class YahooWeatherService {
             @Override
             protected String doInBackground(String... strings) {
                 if (option == 0) {
-                    String cityCountryToFind = sharedPreferences.getString("Custom_City", "Będków") + ", " + sharedPreferences.getString("Custom_Country", "Poland");
+                    String cityCountryToFind = sharedPreferences.getString("Custom_City", "Bedkow") + ", " + sharedPreferences.getString("Custom_Country", "Poland");
                     YQL = String.format("select * from weather.forecast where woeid in (select woeid from geo.places(1) where text=\"%s\")", cityCountryToFind);
                 } else if (option == 1) {
 
@@ -49,7 +47,6 @@ public class YahooWeatherService {
                     System.out.println(longLangToFind);
                     YQL = String.format("select * from weather.forecast where woeid in (SELECT woeid FROM geo.places WHERE text=\"(%s)\")", longLangToFind);
                 }
-
 
                 String endpoint = String.format("https://query.yahooapis.com/v1/public/yql?q=%s&format=json", Uri.encode(YQL));
 
@@ -63,7 +60,6 @@ public class YahooWeatherService {
                     while ((line = reader.readLine()) != null) {
                         result.append(line);
                     }
-
                     return result.toString();
 
                 } catch (MalformedURLException e) {
@@ -84,7 +80,6 @@ public class YahooWeatherService {
 
                 try {
                     JSONObject data = new JSONObject(s);
-
                     JSONObject queryResults = data.optJSONObject("query");
                     int count = queryResults.optInt("count");
                     if (count == 0) {
@@ -96,7 +91,6 @@ public class YahooWeatherService {
                     } else {
                         Channel channel = new Channel();
                         channel.populate(queryResults.optJSONObject("results").optJSONObject("channel"));
-
                         callback.serviceSuccess(channel);
                     }
 
