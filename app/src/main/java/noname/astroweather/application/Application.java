@@ -143,8 +143,7 @@ public class Application extends AppCompatActivity implements WeatherServiceCall
 
     @Override
     public void onStart() {
-        Clock clock = new ClockActivity(this);
-        Runnable myRunnableThread = clock;
+        Runnable myRunnableThread = new ClockActivity(this);
         clockThread = new Thread(myRunnableThread);
         clockThread.start();
         super.onStart();
@@ -291,7 +290,7 @@ public class Application extends AppCompatActivity implements WeatherServiceCall
         offlineSharedPreferencesEditorToSaveDataFromYahooWeatherService.putInt("temperatureInFarenheitOffline", temperatureInFarenheit);
         offlineSharedPreferencesEditorToSaveDataFromYahooWeatherService.putInt("temperatureInCelsiusOffline", temperatureInCelsius);
         offlineSharedPreferencesEditorToSaveDataFromYahooWeatherService.putString("descriptionOffline", item.getCondition().getDescription());
-        offlineSharedPreferencesEditorToSaveDataFromYahooWeatherService.putString("airPressureOffline", channel.getAtmosphere().getPressure().toString());
+        offlineSharedPreferencesEditorToSaveDataFromYahooWeatherService.putString("airPressureOffline", channel.getAtmosphere().getPressure());
         offlineSharedPreferencesEditorToSaveDataFromYahooWeatherService.commit();
     }
 
