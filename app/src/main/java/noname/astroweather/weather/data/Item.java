@@ -33,13 +33,12 @@ public class Item implements JSONPopulator {
     public void populate(JSONObject data) {
         condition = new Condition();
         condition.populate(data.optJSONObject("condition"));
-
         latitude = data.optDouble("long");
         longitude = data.optDouble("lat");
 
 
         JSONArray jsonArray = data.optJSONArray("forecast");
-        for(int i = 0; i < 6; i++) {
+        for (int i = 0; i < 6; i++) {
             try {
                 forecast[i] = new Forecast();
                 forecast[i].populate(jsonArray.getJSONObject(i));
