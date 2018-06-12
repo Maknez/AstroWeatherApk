@@ -35,6 +35,7 @@ public class WindAndHumidity extends Fragment {
         initializeSharedPreferences();
         return rootView;
     }
+
     private void initializeSharedPreferences() {
         sharedPreferencesWithCustomValues = getActivity().getSharedPreferences("config.xml", 0);
         offlineDataSharedPreferences = getActivity().getSharedPreferences("offline_data.xml", 0);
@@ -48,7 +49,7 @@ public class WindAndHumidity extends Fragment {
     }
 
 
-    public void showDataFromSharedPreferences(){
+    public void showDataFromSharedPreferences() {
         int windPowerUnit = sharedPreferencesWithCustomValues.getInt("Wind_Speed_Unit", (getResources().getInteger(R.integer.Default_Wind_Speed_Unit)));
 
         if (windPowerUnit == 0) {
