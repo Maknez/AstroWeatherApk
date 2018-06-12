@@ -13,10 +13,10 @@ import noname.astroweather.application.Clock;
 import noname.astroweather.R;
 
 public class MoonFragment extends Fragment {
-    TextView mView;
-    Thread myThread;
+    TextView moonFragmentDataTextView;
+    Thread threadOnThatClockIsRunning;
     Clock clock;
-    AstroCore astroCore;
+    AstroCalculatorCore astroCalculatorCore;
 
     class ClockMoonFragment extends Clock {
 
@@ -26,28 +26,27 @@ public class MoonFragment extends Fragment {
 
         @Override
         public void setNewValue() {
-            astroCore = new AstroCore(getActivity());
-            astroCore.astroInit();
+            astroCalculatorCore = new AstroCalculatorCore(getActivity());
+            astroCalculatorCore.astroCalculatorCoreObjectsInitialize();
             super.setNewValue();
         }
 
         @Override
         public void showText() {
-            mView.setText(astroCore.getMoonInfo());
+            moonFragmentDataTextView.setText(astroCalculatorCore.getMoonInfo());
             super.showText();
         }
     }
 
     @Override
     public void onStart() {
-        astroCore = new AstroCore(getActivity());
-        astroCore.astroInit();
+        astroCalculatorCore = new AstroCalculatorCore(getActivity());
+        astroCalculatorCore.astroCalculatorCoreObjectsInitialize();
         clock = new MoonFragment.ClockMoonFragment(getActivity());
         Runnable myRunnableThread = clock;
         clock.setNewRefreshTime();
-        myThread = new Thread(myRunnableThread);
-        myThread.start();
-
+        threadOnThatClockIsRunning = new Thread(myRunnableThread);
+        threadOnThatClockIsRunning.start();
         super.onStart();
     }
 
@@ -57,27 +56,24 @@ public class MoonFragment extends Fragment {
         ViewGroup rootView = (ViewGroup) inflater.inflate(
                 R.layout.fragment_moon, container, false);
 
-        astroCore = new AstroCore(getActivity());
-        astroCore.astroInit();
-
+        astroCalculatorCore = new AstroCalculatorCore(getActivity());
+        astroCalculatorCore.astroCalculatorCoreObjectsInitialize();
         clock = new MoonFragment.ClockMoonFragment(getActivity());
-        mView = rootView.findViewById(R.id.ksiezyczek);
+        moonFragmentDataTextView = rootView.findViewById(R.id.ksiezyczek);
 
         Configuration config = getResources().getConfiguration();
         if (config.orientation == 2) {
-            mView.setBackgroundResource(R.drawable.moon_landscape);
+            moonFragmentDataTextView.setBackgroundResource(R.drawable.moon_landscape);
         } else if (config.orientation == 1) {
-            mView.setBackgroundResource(R.drawable.moon_portrait);
+            moonFragmentDataTextView.setBackgroundResource(R.drawable.moon_portrait);
         }
-
-        mView.setText(astroCore.getMoonInfo());
-
+        moonFragmentDataTextView.setText(astroCalculatorCore.getMoonInfo());
         return rootView;
     }
 
     @Override
     public void onStop() {
-        myThread.interrupt();
+        threadOnThatClockIsRunning.interrupt();
         super.onStop();
     }
 }
