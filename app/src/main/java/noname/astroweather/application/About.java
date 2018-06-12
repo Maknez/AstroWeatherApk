@@ -10,23 +10,15 @@ import noname.astroweather.R;
 
 public class About extends AppCompatActivity {
 
-    private int currentFragmentState = 0;
-
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putInt("currentFragment", currentFragmentState);
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about);
-
-        if (savedInstanceState != null) {
-            currentFragmentState = savedInstanceState.getInt("currentFragment");
-        }
-
     }
 
     @Override
@@ -42,12 +34,9 @@ public class About extends AppCompatActivity {
                 startActivity(new Intent(this, Settings.class));
                 return true;
             }
-
             case R.id.about: {
-                //       startActivity(new Intent(this, About.class));
                 return true;
             }
-
             case R.id.exit: {
                 moveTaskToBack(true);
                 android.os.Process.killProcess(android.os.Process.myPid());
