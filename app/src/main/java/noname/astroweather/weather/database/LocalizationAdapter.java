@@ -20,7 +20,6 @@ public class LocalizationAdapter extends ArrayAdapter {
         super(context, resource);
     }
 
-
     @Override
     public void add(Object object) {
         list.add(object);
@@ -53,7 +52,7 @@ public class LocalizationAdapter extends ArrayAdapter {
         } else {
             localizationRow = (LocalizationRow) row.getTag();
         }
-        Localization localization = (Localization)getItem(position);
+        Localization localization = (Localization) getItem(position);
         localizationRow.cityNameRow.setText(localization.getCity());
         localizationRow.countryNameRow.setText(localization.getCountry());
 
