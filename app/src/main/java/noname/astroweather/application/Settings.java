@@ -46,6 +46,8 @@ public class Settings extends AppCompatActivity implements WeatherServiceCallbac
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
+        outState.putString("savedCity", String.valueOf(cityTextView.getText()));
+        outState.putString("savedCountry", String.valueOf(countryTextView.getText()));
         outState.putString("savedLongitude", String.valueOf(longitudeTextView.getText()));
         outState.putString("savedLatitude", String.valueOf(latitudeTextView.getText()));
         outState.putString("savedRefresh", String.valueOf(refreshTextView.getText()));
@@ -67,6 +69,8 @@ public class Settings extends AppCompatActivity implements WeatherServiceCallbac
         getSettingsValues();
 
         if (savedInstanceState != null) {
+            cityTextView.setText(savedInstanceState.getString("savedCity"));
+            countryTextView.setText(savedInstanceState.getString("savedCountry"));
             longitudeTextView.setText(savedInstanceState.getString("savedLongitude"));
             latitudeTextView.setText(savedInstanceState.getString("savedLatitude"));
             refreshTextView.setText(savedInstanceState.getString("savedRefresh"));
@@ -433,8 +437,8 @@ public class Settings extends AppCompatActivity implements WeatherServiceCallbac
     public void serviceSuccess(Channel channel) {
         Item item = channel.getItem();
         if (customOptionToGetWeatherDataFromYahooWeatherAPI == 0) {
-            latitudeTextView.setText(String.valueOf(item.getLatitude()));
-            longitudeTextView.setText(String.valueOf(item.getLongitude()));
+            latitudeTextView.setText(String.valueOf(item.getLongitude()));
+            longitudeTextView.setText(String.valueOf(item.getLatitude()));
             if (isLatitudePossibleToSave()) {
                 saveLatitude();
             }
