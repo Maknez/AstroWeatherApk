@@ -103,6 +103,7 @@
             android:layout_width="wrap_content"
             android:layout_height="25dp"
             android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
             android:src="@drawable/yahoo"
             app:layout_constraintStart_toStartOf="@+id/guideline4"
             app:layout_constraintTop_toTopOf="@+id/guideline16" />
@@ -112,7 +113,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            app:layout_constraintGuide_begin="563dp" />
+            app:layout_constraintGuide_begin="576dp" />
 
         <android.support.constraint.Guideline
             android:id="@+id/guideline15"

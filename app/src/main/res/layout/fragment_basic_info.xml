@@ -121,7 +121,7 @@
             android:layout_marginTop="8dp"
             android:text="@string/temperature"
             app:layout_constraintStart_toStartOf="@+id/guideline"
-            app:layout_constraintTop_toTopOf="@+id/guideline6" />
+            app:layout_constraintTop_toTopOf="@+id/countryText" />
 
         <TextView
             android:id="@+id/textView13"
