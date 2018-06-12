@@ -5,7 +5,6 @@ import org.json.JSONObject;
 import noname.astroweather.weather.data.interfaces.JSONPopulator;
 
 public class Channel implements JSONPopulator {
-    private Units units;
     private Item item;
     private Wind wind;
     private Location location;
@@ -14,23 +13,21 @@ public class Channel implements JSONPopulator {
     public Item getItem() {
         return item;
     }
-    public Units getUnits() {
-        return units;
-    }
+
     public Wind getWind() {
         return wind;
     }
+
     public Location getLocation() {
         return location;
     }
+
     public Atmosphere getAtmosphere() {
         return atmosphere;
     }
 
     @Override
     public void populate(JSONObject data) {
-        units = new Units();
-        units.populate(data.optJSONObject("units"));
 
         item = new Item();
         item.populate(data.optJSONObject("item"));
@@ -43,5 +40,5 @@ public class Channel implements JSONPopulator {
 
         atmosphere = new Atmosphere();
         atmosphere.populate(data.optJSONObject("atmosphere"));
-     }
+    }
 }
