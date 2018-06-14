@@ -25,12 +25,14 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".application.Application" />
         </activity>
-        <activity android:name=".application.About">
+        <activity android:name=".application.About"
+            android:label="About">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".application.Application" />
         </activity>
         <activity android:name=".weather.database.DisplayLocalizationStorage"
+            android:label="Storage"
             android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
