@@ -27,6 +27,10 @@ import noname.astroweather.weather.data.interfaces.WeatherServiceCallback;
 
 public class Application extends AppCompatActivity implements WeatherServiceCallback {
 
+    private static final int FORECAST_DAY_NUMBER = 5;
+    private static final int PORTRAIT_ORIENTATION = 1;
+    private static final int LANDSCAPE_ORIENTATION = 2;
+
     private TextView clockTextView;
     private TextView longitudeAndLatitudeTextView;
     private PagerAdapter sunMoonPagerAdapter;
@@ -88,11 +92,11 @@ public class Application extends AppCompatActivity implements WeatherServiceCall
     }
 
     public boolean isPortrait(Configuration config) {
-        return config.orientation == 1;
+        return config.orientation == PORTRAIT_ORIENTATION;
     }
 
     public boolean isLandscape(Configuration config) {
-        return config.orientation == 2;
+        return config.orientation == LANDSCAPE_ORIENTATION;
     }
 
     public void showLongAndLati() {
@@ -264,7 +268,7 @@ public class Application extends AppCompatActivity implements WeatherServiceCall
     }
 
     private void saveWeatherForecastDataFromYahooWeatherService(Channel channel, UnitsChanger unitsChanger) {
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < FORECAST_DAY_NUMBER; i++) {
             int temperatureHighInFarenheit = channel.getItem().getForecast(i + 1).getTemperatureHigh();
             int temperatureLowInFarenheit = channel.getItem().getForecast(i + 1).getTemperatureLow();
             int temperatureHighInCelsius = unitsChanger.fahrenheitToCelsius(temperatureHighInFarenheit);
